@@ -1,0 +1,15 @@
+package com.kwfw.findiary;
+
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@MapperScan("com.kwfw.findiary.mapper")
+public class FinDiaryApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(FinDiaryApplication.class, args);
+    }
+
+}

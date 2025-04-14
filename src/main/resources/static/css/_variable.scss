@@ -1,0 +1,26 @@
+/* @extend */
+%form-style-base{font-family: inherit; height:30px; border:1px solid var(--color-input-border) !important; background: #fff; padding:0 0 0 10px !important; vertical-align:middle; font-size: 12px; color:var(--color-input) !important; outline:none; border-radius: 2px;}
+
+
+
+%flex-center{display:flex; align-items: center; justify-content: center;}
+%flex-column{display:flex; flex-direction: column;}
+%inline-flex-center{display:inline-flex; align-items: center; justify-content: center;}
+
+%flex-item{
+    &{@extend %flex-center; justify-content: space-between;}
+    .item{
+        &{flex:1; display: flex;}
+        &.item-c{justify-content: center;}
+        &.item-r{justify-content: flex-end;}
+    }
+}
+
+
+
+%scrollbar{
+    &::-webkit-scrollbar { width: 8px; height: 8px; }
+    &::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.12); border-radius: 10px; }
+    &::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.25);}
+    &::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 10px; }
+}

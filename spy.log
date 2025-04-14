@@ -1,0 +1,1 @@
+1744555404093|0|statement|connection 0|url jdbc:p6spy:mariadb://192.168.35.27:3306/kwdb|SELECT             *         FROM             TB_USER_INFO|SELECT             *         FROM             TB_USER_INFO

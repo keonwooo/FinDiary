@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<meta name="_csrf_header" content="X-CSRF-TOKEN">
+<meta name="_csrf" content="your-csrf-token-value">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinDiary</title>
+    <script src="../js/login/login.js"></script>
+    <th:block th:replace="common/jsCommon :: jsCommon"></th:block>
+    <th:block th:replace="common/cssCommon :: cssCommon"></th:block>
+</head>
+
+<body class="login">
+<section class="login_container">
+    <div class="loginWrap">
+        <div class="t">
+            <h1></h1>
+            <span>
+				FinDiary 방문을 환영합니다.
+			</span>
+        </div>
+        <div class="b">
+            <ul>
+                <li>
+                    <input id="user_id" type="text" placeholder="아이디"><i class="xi xi-mail-o"></i>
+                    <!-- 유효성 검사시 사용 -->
+                    <!--<p class="txt_info txt_error"><i class="xi xi-error-o"></i> 유효한 아이디가 아닙니다.</p>-->
+                </li>
+                <li>
+                    <input id="user_password" type="password" placeholder="비밀번호"><i class="xi xi-lock-o"></i>
+                </li>
+                <li>
+                    <a href="javascript:login();" class="btn-login">LOGIN</a>
+                </li>
+            </ul>
+            <p>
+<!--                <a href="javascript:;" data-toggle="modal" data-target="#popup_loginPw">비밀번호 재설정</a>-->
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer class="footerWrap">
+    <div class="login_footer">
+        <h1></h1>
+        ©KWFW All rights reserved.
+    </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="popup_loginPw">
+    <div class="modal-dialog">
+        <div class="modal-content modal-sm">
+            <div class="modal-header">
+                <!--                <h4 class="modal-title">비밀번호 재설정</h4>-->
+                <!--                <button type="button" class="close" data-dismiss="modal">-->
+                <!--                    <span aria-hidden="true"></span>-->
+                <!--                </button>-->
+            </div>
+            <div class="modal-body">
+                <p>
+                    최초에 제공한 사용자 정보를 입력해 주십시오.<br>
+                    이메일 주소로 임시 비밀번호가 발급 됩니다.
+                </p>
+
+                <div class="line"></div>
+
+                <table class="tableType table_view">
+                    <colgroup>
+                        <col width="30%">
+                        <col width="*">
+                    </colgroup>
+                    <tr>
+                        <th>사용자 이름</th>
+                        <td>
+                            <input type="text" class="w100p">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>이메일 주소</th>
+                        <td>
+                            <input type="text" class="w100p">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>연락처</th>
+                        <td>
+                            <input type="text" class="w100p">
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn-md btn-primary" data-dismiss="modal">발급</a>
+                <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">취소</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //Modal -->
+
+</body>
+</html>

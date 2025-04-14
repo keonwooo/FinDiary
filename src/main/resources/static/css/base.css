@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+*, *::before, *::after {box-sizing: border-box; }
+html,body{position:relative; height:100%; margin:0; padding:0; letter-spacing: 0;}
+body,p,h1,h2,h3,h4,h5,h6,p,ul,ol,li,dl,dt,dd,table,th,tr,td,thead,tbody,form,fieldset,legend,input,textarea,button{margin:0;padding:0; font-weight:400;}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display: block;}
+ul,ol,li,dl,dt,dd {list-style:none;}
+i,em,address,u{font-style:normal; text-decoration:none; }
+label,button{cursor:pointer; margin-bottom:0;}
+button{position:relative;}
+hr,legend {position:absolute;left:-1000%;top:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+fieldset,iframe {border:none;vertical-align:middle;}
+img{vertical-align:middle; max-width:100%;border:none; margin:0; padding:0;}
+caption{display:none; line-height:0;visibility:hidden;font-size:0}
+input,select,button,textarea{vertical-align:middle; }
+button{border:none;}
+table{border:none; padding:0; border-spacing:0;table-layout:inherit;}
+th,td{padding:0; margin:0;}
+a{text-decoration:none; color:inherit; color:inherit; cursor: pointer; }
+a:link,a:visited{text-decoration:none;}
+a:hover,a:focus,a:active{text-decoration:none;}

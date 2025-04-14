@@ -1,0 +1,45 @@
+
+@font-face {
+  font-family: 'inter';
+  font-style:  normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../../fonts/inter/Inter-Light.woff2?v={{font_v}}") format("woff2"),
+       url("../../fonts/inter/Inter-Light.woff?v={{font_v}}") format("woff");
+}
+
+@font-face {
+  font-family: 'inter';
+  font-style:  normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../fonts/inter/Inter-Regular.woff2?v={{font_v}}") format("woff2"),
+       url("../../fonts/inter/Inter-Regular.woff?v={{font_v}}") format("woff");
+}
+
+@font-face {
+  font-family: 'inter';
+  font-style:  normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../../fonts/inter/Inter-Medium.woff2?v={{font_v}}") format("woff2"),
+       url("../../fonts/inter/Inter-Medium.woff?v={{font_v}}") format("woff");
+}
+
+@font-face {
+  font-family: 'inter';
+  font-style:  normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../../fonts/inter/Inter-SemiBold.woff2?v={{font_v}}") format("woff2"),
+       url("../../fonts/inter/Inter-SemiBold.woff?v={{font_v}}") format("woff");
+}
+
+@font-face {
+  font-family: 'inter';
+  font-style:  normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../fonts/inter/Inter-Bold.woff2?v={{font_v}}") format("woff2"),
+       url("../../fonts/inter/Inter-Bold.woff?v={{font_v}}") format("woff");
+}
