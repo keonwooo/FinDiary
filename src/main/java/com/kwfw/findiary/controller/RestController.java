@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("api")
 public class RestController {
-    private final Logger logger = LoggerFactory.getLogger(RestController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(RestController.class);
 
     @Autowired
     private LoginService loginService;
@@ -21,11 +21,7 @@ public class RestController {
     @ResponseBody
     @PostMapping("login")
     public String login(@RequestBody UserInfoVO userInfoVO) {
-        logger.info("::: login Controller START :::");
-
         loginService.login(userInfoVO);
-
-        logger.info("::: login Controller END :::");
         return null;
     }
 }
