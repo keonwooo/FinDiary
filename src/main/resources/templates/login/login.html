@@ -7,9 +7,11 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinDiary</title>
-    <script src="../js/login/login.js"></script>
     <th:block th:replace="common/jsCommon :: jsCommon"></th:block>
+    <script src="../js/login/login.js"></script>
+
     <th:block th:replace="common/cssCommon :: cssCommon"></th:block>
+    <link type="text/css" rel="stylesheet" href="../css/login/login.css">
 </head>
 
 <body class="login">
@@ -24,19 +26,29 @@
         <div class="b">
             <ul>
                 <li>
-                    <input id="user_id" type="text" placeholder="아이디"><i class="xi xi-mail-o"></i>
+                    <div id="div_user_id">
+                        <input id="user_id" class="login_input_group" type="text" placeholder="아이디"><i class="xi xi-mail-o"></i>
+                    </div>
                     <!-- 유효성 검사시 사용 -->
                     <!--<p class="txt_info txt_error"><i class="xi xi-error-o"></i> 유효한 아이디가 아닙니다.</p>-->
                 </li>
                 <li>
-                    <input id="user_password" type="password" placeholder="비밀번호"><i class="xi xi-lock-o"></i>
+                    <div id="div_user_password">
+                        <input id="user_password" class="login_input_group" type="password" placeholder="비밀번호" ><i class="xi xi-lock-o"></i>
+                    </div>
+                </li>
+                <li>
+                    <p class="txt_info txt_error" id="result-container" style="display: none">
+                        <i class="xi xi-error-o"></i>
+                        <span class="span_warn_msg"></span>
+                    </p>
                 </li>
                 <li>
                     <a href="javascript:login();" class="btn-login">LOGIN</a>
                 </li>
             </ul>
             <p>
-<!--                <a href="javascript:;" data-toggle="modal" data-target="#popup_loginPw">비밀번호 재설정</a>-->
+                <!--                <a href="javascript:;" data-toggle="modal" data-target="#popup_loginPw">비밀번호 재설정</a>-->
             </p>
         </div>
     </div>

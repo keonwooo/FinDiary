@@ -1,3 +1,5 @@
+const _$ = jQuery;
+
 jQuery(function() {
     jQuery.ajaxSetup({
         type: "post",
@@ -70,16 +72,3 @@ const kwfw = {
         });
     }
 }
-
-//function ajaxKw(userOption) {
-//    $.ajax({
-//        type: data.type,
-//        url: data.url,
-//        dataType: "json",
-//        data: data.data
-//    }).done((abc) => {
-//        console.log(abc);
-//    }).fail((err) => {
-//        console.log(err);
-//    });
-//}

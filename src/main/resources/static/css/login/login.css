@@ -1,0 +1,9 @@
+.c_validation_wrong {
+    border: 1px solid #f42b3e !important;
+    transition: border-color 0.5s ease, opacity 0.5s ease;
+    opacity: 1;
+}
+
+.border-fade-out {
+    opacity: 0;
+}

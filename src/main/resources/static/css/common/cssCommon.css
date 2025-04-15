@@ -1,0 +1,12 @@
+/* 초기 상태: 안 보이는 상태 */
+.fade-toggle {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: none; /* 토글 시에만 block으로 바뀜 */
+}
+
+/* 보이게 할 때 */
+.fade-toggle.show {
+    display: block;
+    opacity: 1;
+}
