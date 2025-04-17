@@ -10,5 +10,8 @@
             *
         FROM
             TB_USER_INFO
+        WHERE
+            user_id = #{user_id}
+            AND user_password = #{user_password}
     </select>
 </mapper>

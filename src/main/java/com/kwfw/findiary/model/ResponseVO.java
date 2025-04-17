@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ResponseVO {
-    private String responseCode;
-    private String responseMsg;
-    private Object responseData;
+    private String response_code;
+    private String response_msg;
+    private Object response_data;
 }

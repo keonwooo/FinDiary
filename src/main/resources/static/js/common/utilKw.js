@@ -22,11 +22,12 @@ const kwfw = {
             contentType: "application/json",
             dataType: "json",
             callBackFn: null,
-            completeCallBackFn: null,
             progress: true
         };
 
         jQuery.extend(true, option, userOption);
+
+        console.log("ajax data : " + JSON.stringify(userOption));
 
         return jQuery.ajax({
             url: option.url,

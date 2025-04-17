@@ -1,4 +1,4 @@
-package com.kwfw.findiary.controller;
+package com.kwfw.findiary.controller.api;
 
 import com.google.gson.Gson;
 import com.kwfw.findiary.model.ResponseVO;
@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("api")
-public class RestController {
+@RequestMapping("api/login")
+public class LoginController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(RestController.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
     Gson GSON = new Gson();
 
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("login")
+    @PostMapping("login-check")
     public @ResponseBody String login(@RequestBody UserInfoVO userInfoVO) {
         ResponseVO responseVO = loginService.login(userInfoVO);
 
