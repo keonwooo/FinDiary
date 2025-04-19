@@ -271,6 +271,34 @@ header .top-menu li .depth2 > a:first-child {
   padding-top: 10px;
   border-top: 1px solid #dbdbdb;
 }
+.leftMenu .depth0 {
+  position: relative;
+  display: block;
+  min-height: 45px;
+  padding: 0 10px;
+}
+.leftMenu .depth0 > a {
+  position: relative;
+  display: block;
+  height: 45px;
+  line-height: 45px;
+  padding-left: 10px;
+  font-size: 14px;
+  color: #6d6f77;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.leftMenu .depth0 > a i {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  line-height: 20px;
+  text-align: left;
+  font-size: 20px;
+  vertical-align: middle;
+  font-weight: 300;
+  color: #afb6c0;
+}
 .leftMenu .depth1 {
   position: relative;
   display: block;
