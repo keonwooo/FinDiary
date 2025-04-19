@@ -334,7 +334,7 @@ header .top-menu li .depth2 > a:first-child {
   width: 100%;
   padding: 0 0 0 19px;
   overflow: hidden;
-  transition: ease 0.3s;
+  transition: ease 0.5s;
 }
 .leftMenu .depth2 a {
   position: relative;
@@ -430,7 +430,7 @@ body.left_hide .container {
 }
 body.left_hide header .l-item {
   width: 0;
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 body.left_hide header .menu-link:before {
   content: "\e93f";

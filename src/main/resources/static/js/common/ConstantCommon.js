@@ -1,0 +1,5 @@
+const RESPONSE_CODE_SUCCESS = "0000";
+const RESPONSE_CODE_SUCCESS_STR = "SUCCESS";
+
+const LOGIN_CODE_FAIL = "1000";
+const LOGIN_CODE_FAIL_STR = "Check id or password";

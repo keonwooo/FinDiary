@@ -93,7 +93,11 @@ const LoginView = {
             ,user_password: user_password
         }
 
-        LoginApi.getLoginCheck(params);
+        const response = LoginApi.getLoginCheck(params);
+        if (response.responseJSON.response_code === RESPONSE_CODE_SUCCESS) {
+            console.log(response);
+            window.location.href = "/home";
+        }
     },
     loginValidation: function()
     {
