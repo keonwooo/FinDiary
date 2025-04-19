@@ -96,7 +96,7 @@ const LoginView = {
         const response = LoginApi.getLoginCheck(params);
         if (response.responseJSON.response_code === RESPONSE_CODE_SUCCESS) {
             console.log(response);
-            window.location.href = "/home";
+            window.location.href = "/dashboard";
         }
     },
     loginValidation: function()

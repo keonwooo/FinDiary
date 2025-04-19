@@ -8,17 +8,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ViewController {
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpSession session) {
+        String user = (String) session.getAttribute("login-user");
+        if (user != null) {
+            return "redirect:/dashboard";
+        }
         return "login/login";
     }
 
-    @GetMapping("/home")
-    public String home(HttpSession session) {
+    @GetMapping("/dashboard")
+    public String dashboard(HttpSession session) {
         String user = (String) session.getAttribute("login-user");
         if (user == null) {
             return "redirect:/login";
         }
 
-        return "home/home";
+        return "dashboard/dashboard";
     }
 }
