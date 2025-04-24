@@ -1,0 +1,29 @@
+/* 일요일 날짜: 빨간색 */
+.fc-day-sun a {
+    color: red;
+}
+
+/* 토요일 날짜: 파란색 */
+.fc-day-sat a {
+    color: blue;
+}
+
+/* 헤더 부분 */
+.fc-toolbar-title {
+    font-size: 20px;
+}
+
+/* 요일 이름 (Sun, Mon, ...) */
+.fc-col-header-cell-cushion {
+    font-size: 16px;
+}
+
+/* 날짜 숫자 (1, 2, 3, ...) */
+.fc-daygrid-day-number {
+    font-size: 16px;
+}
+
+/* 이벤트 텍스트 */
+.fc-event-title {
+    font-size: 16px;
+}

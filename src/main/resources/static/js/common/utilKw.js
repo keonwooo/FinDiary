@@ -71,5 +71,5 @@ const kwfw = {
                 console.log("ajax Error ::: ", xhr)
             }
         });
-    }
+    },
 }
