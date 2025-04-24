@@ -1,0 +1,27 @@
+<section class="sideWrap" th:fragment="sidebar">
+    <ul class="leftMenu">
+        <li class="depth0">
+            <a th:href="@{/dashboard}">
+                <i class="ri-dashboard-line"></i>
+                <em>대시보드</em>
+            </a>
+        </li>
+        <li class="depth0">
+            <a th:href="@{/diary}">
+                <i class="ri-booklet-line"></i>
+                <em>매매일지</em>
+            </a>
+        </li>
+        <li class="depth1">
+            <a href="javascript:;">
+                <i class="ri-settings-line"></i>
+                <em>설정</em>
+            </a>
+            <ul class="depth2">
+                <li>
+                    <a href="javascript:;">설정</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main}">
+<meta name="_csrf_header" content="X-CSRF-TOKEN">
+<meta name="_csrf" content="your-csrf-token-value">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinDiary</title>
+    <script src="../js/dashboard/dashboard-view.js"></script>
+    <script src="../js/dashboard/dashboard-api.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="../css/dashboard/dashboard.css">
+</head>
+
+<section class="contents" layout:fragment="content">
+    <div class="tit-h2">
+        <div class="l-item">
+            <h2><i class="ri-dashboard-line"></i> 대시보드</h2>
+        </div>
+        <div class="r-item">
+        </div>
+    </div>
+
+    <div class="contBox">
+        여기에 본문 콘텐츠 들어감
+    </div>
+</section>
+</html>

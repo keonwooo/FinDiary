@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>FinDiary</title>
+    <th:block th:replace="common/jsCommon :: jsCommon"></th:block>
+    <th:block th:replace="common/cssCommon :: cssCommon"></th:block>
+</head>
+<body class="main-body">
+    <header th:replace="fragments/header :: header"></header>
+
+    <section class="sideWrap" th:replace="fragments/sidebar :: sidebar"></section>
+
+    <!-- templates/layouts/main.html -->
+    <article class="container">
+        <section layout:fragment="content"></section>
+
+        <footer th:replace="fragments/footer :: footer"></footer>
+    </article>
+
+<!--    <article class="container" layout:fragment="content"></article>-->
+
+<!--    <footer class="footerWrap" th:replace="fragments/footer :: footer"></footer>-->
+
+</body>
+</html>

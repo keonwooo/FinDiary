@@ -17,12 +17,12 @@ public class ViewController {
     }
 
     @GetMapping("/dashboard")
-    public String dashboard(HttpSession session) {
-        String user = (String) session.getAttribute("login-user");
-        if (user == null) {
-            return "redirect:/login";
-        }
+    public String dashboard() {
+        return "pages/dashboard";
+    }
 
-        return "dashboard/dashboard";
+    @GetMapping("/diary")
+    public String diary() {
+        return "pages/diary";
     }
 }
