@@ -46,7 +46,7 @@ const DiaryView = {
     {
         console.log(`${this.name} definePage ::::: `);
 
-        this.calendarRendering();
+        getCalendar();
     },
 
 
@@ -71,9 +71,8 @@ const DiaryView = {
      * Main Function Object
      ********************************************************************************/
 
-    calendarRendering: function() {
-        console.log(`${this.name} calendarRendering ::::: `);
-        getCalendar();
+    test123: function() {
+
     },
 
     /********************************************************************************

@@ -24,9 +24,24 @@
             <h2><i class="ri-booklet-line"></i> 매매일지</h2>
         </div>
         <div class="r-item">
-            <div>
-                <label><input type="checkbox" id="toggle-kr" checked> 한국</label>
-                <label><input type="checkbox" id="toggle-us" checked> 미국</label>
+            <div class="dropdown-wrap selectDrop-wrap">
+                <div class="dropdown-toggle">
+                    <div class="selectDrop-tit">국가</div>
+                </div>
+                <ul class="dropdown selectDrop-cont on">
+                    <li>
+                        <label class="formWrap item depth1">
+                            <input type="checkbox" id="toggle-kr" checked>
+                            <span>한국</span>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="formWrap item depth1">
+                            <input type="checkbox" id="toggle-us" checked>
+                            <span>미국</span>
+                        </label>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

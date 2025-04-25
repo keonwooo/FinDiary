@@ -19,7 +19,11 @@ function getCalendar() {
         events: [],
         datesSet: () => {
             fetchHolidays();
-        }
+        },
+        dateClick: function(event) {
+            console.log(event);
+            _$("#add-trading-popup").addClass("modal-active");
+        },
     });
 
     calendar.render();
@@ -63,7 +67,7 @@ const renderHolidays = () => {
         const trimmedTitle = title.length > 30 ? title.substring(0, 30) + '...' : title;
 
         calendar.addEvent({
-            title,
+            title: trimmedTitle,
             start: date,
             allDay: true,
             display: 'background',

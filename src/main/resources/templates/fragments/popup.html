@@ -1,0 +1,104 @@
+<!-- modal 활성화시 class 추가 : modal-active -->
+<section th:fragment="popup">
+    <div class="modal" id="add-trading-popup">
+        <div class="modal-dialog">
+            <div class="modal-content modal-sm">
+                <div class="modal-header">
+                    <h4 class="modal-title">매매 기록 추가</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <table class="tableType table_input_line">
+                            <colgroup>
+                                <col width="80">
+                                <col width="*">
+                            </colgroup>
+                            <tr>
+                                <th>종목</th>
+                                <td>
+                                    <label>
+                                        <input type="text" id="add-trading-ticker" placeholder="종목"
+                                               class="w50p">
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>매매 일자</th>
+                                <td>
+                                    <div class="input-group date datepicker">
+                                        <input class="form-control" type="text" id="add-trading-date"
+                                               placeholder="yyyy-mm-dd" readonly="">
+                                        <span class="input-group-addon"></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>주문 방식</th>
+                                <td>
+                                    <div class="radio_toggle">
+                                        <label class="formWrap">
+                                            <input type="radio" name="add-trading-orderMethod" checked="">
+                                            <span>매수</span>
+                                        </label>
+                                        <label class="formWrap">
+                                            <input type="radio" name="add-trading-orderMethod">
+                                            <span>매도</span>
+                                        </label>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>체결 단가</th>
+                                <td>
+                                    <label>
+                                        <input type="text" id="add-trading-contractPrice" placeholder="1주당 가격" class="w30p">
+                                        <select class="w10p">
+                                            <option>$</option>
+                                            <option>₩</option>
+                                        </select>
+                                    </label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="l-item">
+                    </div>
+                    <div class="r-item">
+                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">초기화</a>
+                        <a href="javascript:;" class="btn-md btn-ghost" data-dismiss="modal">닫기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="notification-popup">
+        <div class="modal-dialog">
+            <div class="modal-content modal-xs">
+                <div class="modal-header">
+                    <h4 class="modal-title">페이지 삭제 확인</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="modal-body type-alert">
+                    현재 페이지를 삭제하시겠습니까? <br>
+                    (alert 안내용 팝업)
+                </div>
+                <div class="modal-footer">
+                    <div class="l-item">
+                    </div>
+                    <div class="r-item">
+                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">취소</a>
+                        <a href="javascript:;" class="btn-md btn-danger" data-dismiss="modal">삭제</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
