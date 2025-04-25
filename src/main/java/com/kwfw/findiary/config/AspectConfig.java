@@ -23,7 +23,7 @@ public class AspectConfig {
         String methodName = joinPoint.getSignature().getName();
         try {
             LOGGER.info("::: {} BEGIN :::", methodName);
-            LOGGER.info("{} PARAMS ::: {}", methodName, JsonHelper.objToJsonString(joinPoint.getArgs()));
+//            LOGGER.info("{} PARAMS ::: {}", methodName, JsonHelper.objToJsonString(joinPoint.getArgs()));
             return joinPoint.proceed();
         } finally {
             LOGGER.info("::: {} END :::", methodName);

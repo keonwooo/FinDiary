@@ -1,0 +1,5 @@
+const header = {
+    logout: function() {
+
+    }
+}

@@ -21,7 +21,7 @@ public class LoginService {
         UserInfoVO vo = loginMapper.login(userInfoVO);
 
         if (vo != null) {
-            session.setAttribute("login-user", vo.getUser_id());
+            session.setAttribute(ConstantCommon.SESSION_LOGIN_USER, vo);
         }
 
         return vo;

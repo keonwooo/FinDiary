@@ -8,5 +8,6 @@ public class ConstantCommon {
     public static final String LOGIN_CODE_FAIL = "1000";
     public static final String LOGIN_CODE_FAIL_STR = "Check id or password";
 
+    public static final String SESSION_LOGIN_USER = "login-user";
 
 }
