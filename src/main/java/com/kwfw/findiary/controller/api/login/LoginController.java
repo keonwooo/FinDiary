@@ -20,7 +20,7 @@ public class LoginController {
 
     Gson GSON = new Gson();
 
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @PostMapping("login-check")
     public @ResponseBody String login(@RequestBody UserInfoVO userInfoVO, HttpSession session) {

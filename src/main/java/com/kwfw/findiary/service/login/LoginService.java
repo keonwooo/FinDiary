@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private LoginMapper loginMapper;
+    private final LoginMapper loginMapper;
 
     public UserInfoVO login(UserInfoVO userInfoVO, HttpSession session) {
         UserInfoVO vo = loginMapper.login(userInfoVO);

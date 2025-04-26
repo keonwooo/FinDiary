@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SampleService {
 
-    private SampleMapper SampleMapper;
-
     public SampleVO login(SampleVO userInfoVO, HttpSession session) {
 //        SampleVO vo = SampleMapper.login(userInfoVO);
 //
