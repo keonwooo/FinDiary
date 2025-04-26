@@ -72,6 +72,7 @@ const DiaryView = {
      ********************************************************************************/
 
     test123: function() {
+        console.log(`${this.name} getUserDiaries ::::`);
 
     },
 

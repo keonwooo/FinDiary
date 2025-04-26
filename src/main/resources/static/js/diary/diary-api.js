@@ -39,6 +39,11 @@ const DiaryApi = {
         return efw.ajax({url: `${DiaryApi.requestmapping}/cate-save-disp-order`, params});
     },
 
+    // get 개인 일지
+    getUserEvents: (params) => {
+        return kwfw.ajax({url: `${DiaryApi.requestmapping}/getUserDiaries`, params});
+    },
+
 
     /********************************************************************************
      * Dummay Object : 더미

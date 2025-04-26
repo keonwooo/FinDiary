@@ -17,11 +17,21 @@
                                 <col width="*">
                             </colgroup>
                             <tr>
+                                <th>계좌</th>
+                                <td>
+                                    <div class="form-mix">
+                                        <select class="w70p">
+                                            <option>1234-5678 [무한매수용]</option>
+                                            <option>8765-4321 [장기투자용]</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>종목</th>
                                 <td>
                                     <label>
-                                        <input type="text" id="add-trading-ticker" placeholder="종목"
-                                               class="w50p">
+                                        <input type="text" id="add-trading-ticker" placeholder="종목" class="w50p">
                                     </label>
                                 </td>
                             </tr>
@@ -29,8 +39,7 @@
                                 <th>매매 일자</th>
                                 <td>
                                     <div class="input-group date datepicker">
-                                        <input class="form-control" type="text" id="add-trading-date"
-                                               placeholder="yyyy-mm-dd" readonly="">
+                                        <input class="form-control" type="text" id="add-trading-date" placeholder="yyyy-mm-dd" readonly="">
                                         <span class="input-group-addon"></span>
                                     </div>
                                 </td>
@@ -54,11 +63,20 @@
                                 <th>체결 단가</th>
                                 <td>
                                     <label>
-                                        <input type="text" id="add-trading-contractPrice" placeholder="1주당 가격" class="w30p">
+                                        <input type="text" id="add-trading-contractPrice" placeholder="1주당 가격"
+                                               class="w30p">
                                         <select class="w10p">
                                             <option>$</option>
                                             <option>₩</option>
                                         </select>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>수량</th>
+                                <td>
+                                    <label>
+                                        <input type="text" id="add-trading-count" placeholder="수량" class="w30p">
                                     </label>
                                 </td>
                             </tr>
@@ -67,9 +85,10 @@
                 </div>
                 <div class="modal-footer">
                     <div class="l-item">
+                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">초기화</a>
                     </div>
                     <div class="r-item">
-                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">초기화</a>
+                        <a href="javascript:;" class="btn-md btn-primary">등록</a>
                         <a href="javascript:;" class="btn-md btn-ghost" data-dismiss="modal">닫기</a>
                     </div>
                 </div>
