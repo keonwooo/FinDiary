@@ -1,18 +1,19 @@
 const _$ = jQuery;
 
-jQuery(function() {
+jQuery(function () {
     jQuery.ajaxSetup({
         type: "post",
         dataType: "json",
-        beforeSend: function(x) {
+        beforeSend: function (x) {
             x.setRequestHeader("_ajax", "true");
         },
-        complete: function(x, status) { }
+        complete: function (x, status) {
+        }
     })
 });
 
 const kwfw = {
-    ajax: function(userOption) {
+    ajax: function (userOption) {
         const option = {
             url: null,
             params: null,
@@ -37,28 +38,27 @@ const kwfw = {
             type: option.type,
             contentType: option.contentType,
             dataType: option.dataType,
-            beforeSend: function(xhr) {
+            beforeSend: function (xhr) {
                 const header = $("meta[name='_csrf_header']").attr('content');
                 const token = $("meta[name='_csrf']").attr('content');
-                if(token && header) {
+                if (token && header) {
                     xhr.setRequestHeader(jQuery("meta[name='_csrf_header']").attr("content"), jQuery("meta[name='_csrf']").attr("content"));
                 }
             },
-            success: function(data) {
+            success: function (data) {
                 let ajaxData;
                 let jsonFlag;
 
                 try {
                     ajaxData = eval("(" + data + ")");
                     jsonFlag = true;
-                }
-                catch (e) {
+                } catch (e) {
                     ajaxData = data;
                     jsonFlag = false;
                 }
 
-                if (jsonFlag == true) {
-                    if (ajaxData != null && ajaxData.error && ajaxData.error == "true") {
+                if (jsonFlag) {
+                    if (ajaxData != null && ajaxData.error && ajaxData.error === "true") {
                         console.log('ajax Error ::: ' + ajaxData.error);
                         console.log('ajax Error ajaxData ::: ' + ajaxData);
                     }
@@ -68,10 +68,10 @@ const kwfw = {
                     option.callBackFn(ajaxData);
                 }
             },
-            complete: function(data) {
-                
+            complete: function (data) {
+
             },
-            error: function(xhr) {
+            error: function (xhr) {
                 console.log("ajax Error ::: ", xhr)
             }
         });

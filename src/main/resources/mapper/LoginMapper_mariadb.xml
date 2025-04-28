@@ -6,14 +6,11 @@
 <!-- SQL Mapping -->
 <mapper namespace="com.kwfw.findiary.mapper.login.LoginMapper">
     <select id="login" parameterType="com.kwfw.findiary.model.UserInfoVO" resultType="com.kwfw.findiary.model.UserInfoVO">
-        SELECT
-            user_id
-            , user_name
-            , descr
-        FROM
-            TB_USER_INFO
-        WHERE
-            user_id = #{user_id}
-            AND user_password = #{user_password}
+        SELECT user_id
+             , user_name
+             , descr
+        FROM TB_USER_INFO
+        WHERE user_id = #{user_id}
+          AND user_password = #{user_password}
     </select>
 </mapper>

@@ -14,8 +14,9 @@ const animateCSS = (element, animation, prefix = 'animate__') =>
             resolve('Animation ended');
         }
 
-        node.addEventListener('animationend', handleAnimationEnd, { once: true });
+        node.addEventListener('animationend', handleAnimationEnd, {once: true});
     });
+
 /* animateCSS 함수 사용 */
 function ex_animateCSS() {
     animateCSS('.my-element', 'bounce'); // 선택자 와 애니메이션 명을 써주면 된다.

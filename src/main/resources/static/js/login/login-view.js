@@ -1,14 +1,14 @@
 /********************************************************************************
-* @classDescription 사용자 샘플 페이지 js
-* @author kw
-* @version 1.0
-* -------------------------------------------------------------------------------
-* Modification Information
-* Date              Developer           Content
-* ----------        -------------       -------------------------
-* 2025/04/17        김건우               신규생성
-* -------------------------------------------------------------------------------
-*********************************************************************************/
+ * @classDescription 사용자 샘플 페이지 js
+ * @author kw
+ * @version 1.0
+ * -------------------------------------------------------------------------------
+ * Modification Information
+ * Date              Developer           Content
+ * ----------        -------------       -------------------------
+ * 2025/04/17        김건우               신규생성
+ * -------------------------------------------------------------------------------
+ *********************************************************************************/
 "use strict";
 /********************************************************************************
  * Global Variable : 전역변수
@@ -20,38 +20,35 @@ let gSampleLet;           //let 샘플임
 /********************************************************************************
  * Page Load : After DOM Ready
  ********************************************************************************/
-function onloadpage()
-{
+function onloadpage() {
     //페이지 정의
     LoginView.definePage();
     //이벤트 정의
     LoginView.defineEvent();
     //초기 데이터 로딩
     LoginView.initDataLoading();
-} 
+}
 
 /********************************************************************************
- * Page Object 
+ * Page Object
  ********************************************************************************/
 const LoginView = {
     /********************************************************************************
      * Variable Object : 페이지 내 전역 Object
      ********************************************************************************/
     name: "LoginView",
-     
+
     /********************************************************************************
      * Define Page Object (layout, grid,tree..정의)
      ********************************************************************************/
-    definePage: function()
-    {
+    definePage: function () {
         console.log(`${this.name} definePage ::::: `);
     },
 
     /********************************************************************************
      * Define Event Object
      ********************************************************************************/
-    defineEvent: function()
-    {
+    defineEvent: function () {
         console.log(`${this.name} defineEvent ::::: `);
 
         // enter 이벤트
@@ -62,26 +59,26 @@ const LoginView = {
         });
 
         // 아이디, 비밀번호 입력시 공백 제거
-        _$(".login_input_group").on({'keyup keydown paste focusout': (event) => {
+        _$(".login_input_group").on({
+            'keyup keydown paste focusout': (event) => {
                 let obj = $(event.target);
                 let val = obj.val();
-                obj.val(val.replace(/ /g,''));
-            }});
+                obj.val(val.replace(/ /g, ''));
+            }
+        });
     },
-    
+
     /********************************************************************************
      * Init Data Loading Object
      ********************************************************************************/
-    initDataLoading: function()
-    {
+    initDataLoading: function () {
         console.log(`${this.name} initDataLoading ::::: `);
     },
-    
+
     /********************************************************************************
      * Main Function Object
      ********************************************************************************/
-    goLogin: function()
-    {
+    goLogin: function () {
         if (!LoginView.loginValidation()) {
             return null;
         }
@@ -90,7 +87,7 @@ const LoginView = {
 
         const params = {
             user_id: user_id
-            ,user_password: user_password
+            , user_password: user_password
         }
 
         const response = LoginApi.getLoginCheck(params);
@@ -99,8 +96,7 @@ const LoginView = {
             window.location.href = "/dashboard";
         }
     },
-    loginValidation: function()
-    {
+    loginValidation: function () {
         let validation = true;
 
         const user_id = _$("#user_id").val().trim();
@@ -132,7 +128,7 @@ const LoginView = {
 
 
 /********************************************************************************
- * Page Public Object (외부접근용) 
+ * Page Public Object (외부접근용)
  ********************************************************************************/
 var PublicLoginView = {
     name: "PublicLoginView",

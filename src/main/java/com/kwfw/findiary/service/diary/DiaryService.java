@@ -1,13 +1,11 @@
 package com.kwfw.findiary.service.diary;
 
 import com.kwfw.findiary.mapper.diary.DiaryMapper;
-import com.kwfw.findiary.mapper.login.LoginMapper;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.DiaryVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
