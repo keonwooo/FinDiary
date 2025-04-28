@@ -5,6 +5,9 @@ jQuery(document).ready(function () {
         }
     } catch (e) {
         console.log("onloadpage error=", e);
+    } finally {
+        const pathName = this.location.pathname.replace("/", '');
+        _$("." + pathName).addClass("active");
     }
 });
 

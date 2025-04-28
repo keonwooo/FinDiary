@@ -299,6 +299,73 @@ header .top-menu li .depth2 > a:first-child {
   font-weight: 300;
   color: #afb6c0;
 }
+.leftMenu .depth0 > a:after {
+  clear: both;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  width: 34px;
+  height: 45px;
+  line-height: 45px;
+  color: #aaa;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+}
+.leftMenu .depth0 > a i {
+  display: inline-block;
+  width: 22px;
+  height: 20px;
+  line-height: 20px;
+  text-align: left;
+  font-size: 20px;
+  vertical-align: middle;
+  font-weight: 300;
+  color: #afb6c0;
+}
+
+.leftMenu .depth2 {
+  height: 0;
+  width: 100%;
+  padding: 0 0 0 19px;
+  overflow: hidden;
+  transition: ease 0.5s;
+}
+.leftMenu .depth2 a {
+  position: relative;
+  display: block;
+  padding: 5px 0 5px 14px;
+  color: #777;
+  font-size: 13px;
+}
+.leftMenu .depth2 a:hover,
+.leftMenu .depth2 a.active {
+  color: #333;
+  font-weight: 600;
+}
+.leftMenu .depth2 a.active:before {
+  clear: both;
+  position: absolute;
+  left: 0;
+  top: 13px;
+  display: block;
+  content: "";
+  width: 6px;
+  height: 2px;
+  background: #333;
+}
+.leftMenu .depth0:has(a.active) > a {
+  color: #3569fd;
+  background: rgba(53, 105, 253, 0.1);
+}
+.leftMenu .depth0:has(a.active) > a:after {
+  color: #3569fd;
+}
+.leftMenu .depth0:has(a.active) > a i {
+  color: #3569fd;
+}
+
 .leftMenu .depth1 {
   position: relative;
   display: block;

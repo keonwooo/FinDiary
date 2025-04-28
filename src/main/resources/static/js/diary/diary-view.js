@@ -46,6 +46,7 @@ const DiaryView = {
     {
         console.log(`${this.name} definePage ::::: `);
 
+        // get 캘린더 정보
         getCalendar();
     },
 
