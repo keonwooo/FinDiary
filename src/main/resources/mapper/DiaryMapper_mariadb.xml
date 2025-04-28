@@ -7,13 +7,12 @@
 <mapper namespace="com.kwfw.findiary.mapper.diary.DiaryMapper">
     <select id="getUserDiary" parameterType="com.kwfw.findiary.model.DiaryVO" resultType="com.kwfw.findiary.model.DiaryDto">
         SELECT
-            user_id
-            , user_name
-            , descr
+            *
         FROM
-            TB_USER_INFO
+            TB_STOCK_INFO
         WHERE
-            user_id = #{user_id}
-            AND user_password = #{user_password}
+            1 = 1
+            AND account_num = #{search_account_num}
+            AND trading_date LIKE CONCAT(#{search_date}, '%');
     </select>
 </mapper>

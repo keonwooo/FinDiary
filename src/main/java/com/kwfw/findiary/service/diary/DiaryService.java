@@ -4,18 +4,19 @@ import com.kwfw.findiary.mapper.diary.DiaryMapper;
 import com.kwfw.findiary.mapper.login.LoginMapper;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.DiaryVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DiaryService {
 
-    private DiaryMapper diaryMapper;
+    private final DiaryMapper diaryMapper;
 
     public List<DiaryDto> getUserDiary(DiaryVO diaryVO) {
-        List<DiaryDto> diaryDtoList = diaryMapper.getUserDiary(diaryVO);
-        return diaryDtoList;
+        return diaryMapper.getUserDiary(diaryVO);
     }
 }

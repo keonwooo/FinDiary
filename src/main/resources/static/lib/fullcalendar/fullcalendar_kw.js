@@ -20,7 +20,7 @@ function getCalendar() {
         datesSet: () => {
             fetchHolidays();
         },
-        dateClick: function(event) {
+        dateClick: function (event) {
             console.log(event);
             _$("#add-trading-popup").addClass("modal-active");
         },
@@ -51,11 +51,12 @@ const fetchHolidays = async () => {
 const fetchUserEvents = async () => {
     const year = calendar.getDate().getFullYear();
     const month = calendar.getDate().getMonth() + 1;
+    const date_yyyyMM = year.toString() + month.toString().padStart(2, '0');
 
     // const userEvents = await fetch(`/api/getUserDiaries?year=${year}&month=${month}`).then(res => res.json());
     const data = {
-        "search_date" : year + month,
-
+        "search_date": date_yyyyMM,
+        "search_account_num": '1234-5678'
     }
     return DiaryApi.getUserEvents(data); // [{ title, start, end?, ... }]
 };
@@ -71,7 +72,7 @@ const renderCalendarEvents = async () => {
 
     const eventsMap = {};
     shownCountries.forEach(country => {
-        allHolidays[country].forEach(({ date, name }) => {
+        allHolidays[country].forEach(({date, name}) => {
             if (!eventsMap[date]) eventsMap[date] = new Set();
             eventsMap[date].add(name);
         });
@@ -96,9 +97,9 @@ const renderCalendarEvents = async () => {
     const userEvents = await fetchUserEvents();
     userEvents.forEach(event => {
         calendar.addEvent({
-            title: event.title,
-            start: event.start,
-            end: event.start,
+            title: getName(event),
+            start: event.trading_date,
+            end: event.trading_date,
             allDay: true,
             backgroundColor: '#3498db',
             borderColor: '#2980b9',
@@ -106,6 +107,12 @@ const renderCalendarEvents = async () => {
         });
     });
 };
+
+function getName(event) {
+    const ticker = event.ticker;
+    const name = event.stock_name;
+    return "[" + ticker + "]" + name;
+}
 
 //
 // const renderHolidays = () => {

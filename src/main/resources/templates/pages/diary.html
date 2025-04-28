@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/main}">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/main}">
 <meta name="_csrf_header" content="X-CSRF-TOKEN">
 <meta name="_csrf" content="your-csrf-token-value">
 
@@ -24,30 +24,48 @@
             <h2><i class="ri-booklet-line"></i> 매매일지</h2>
         </div>
         <div class="r-item">
-            <div class="dropdown-wrap selectDrop-wrap">
-                <div class="dropdown-toggle">
-                    <div class="selectDrop-tit">국가</div>
-                </div>
-                <ul class="dropdown selectDrop-cont on">
-                    <li>
-                        <label class="formWrap item depth1">
-                            <input type="checkbox" id="toggle-kr" checked>
-                            <span>한국</span>
-                        </label>
-                    </li>
-                    <li>
-                        <label class="formWrap item depth1">
-                            <input type="checkbox" id="toggle-us" checked>
-                            <span>미국</span>
-                        </label>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 
-    <div class="contBox">
-        <div id='calendar'></div>
+    <div class="contBox-wrap type-column">
+        <div class="contBox">
+            <div class="searchBox-wrap">
+                <div class="form-mix l-item">
+                    <dl class="form-item">
+                        <dt>공휴일</dt>
+                        <dd>
+                            <div class="dropdown-wrap selectDrop-wrap">
+                                <div class="dropdown-toggle">
+                                    <div class="selectDrop-tit">국가</div>
+                                </div>
+                                <ul class="dropdown selectDrop-cont on">
+                                    <li>
+                                        <label class="formWrap item depth1">
+                                            <input type="checkbox" id="toggle-kr" checked>
+                                            <span>한국</span>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="formWrap item depth1">
+                                            <input type="checkbox" id="toggle-us" checked>
+                                            <span>미국</span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div class="form-mix r-item">
+                    <div class="form-mix end">
+                        <a href="javascript:;" class="btn-md btn-primary">조회</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="contBox">
+            <div id='calendar'></div>
+        </div>
     </div>
 </section>
 </html>

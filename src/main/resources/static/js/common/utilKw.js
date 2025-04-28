@@ -38,7 +38,11 @@ const kwfw = {
             contentType: option.contentType,
             dataType: option.dataType,
             beforeSend: function(xhr) {
-                xhr.setRequestHeader(jQuery("meta[name='_csrf_header']").attr("content"), jQuery("meta[name='_csrf']").attr("content"));
+                const header = $("meta[name='_csrf_header']").attr('content');
+                const token = $("meta[name='_csrf']").attr('content');
+                if(token && header) {
+                    xhr.setRequestHeader(jQuery("meta[name='_csrf_header']").attr("content"), jQuery("meta[name='_csrf']").attr("content"));
+                }
             },
             success: function(data) {
                 let ajaxData;
