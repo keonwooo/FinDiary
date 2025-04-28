@@ -57,6 +57,7 @@ const DiaryView = {
     {
         console.log(`${this.name} defineEvent ::::: `);
 
+        this.getSearchInfo();
     },
 
     /********************************************************************************
@@ -71,9 +72,8 @@ const DiaryView = {
      * Main Function Object
      ********************************************************************************/
 
-    test123: function() {
-        console.log(`${this.name} getUserDiaries ::::`);
-
+    getSearchInfo: function() {
+        console.log(`${this.name} getSearchInfo ::::`);
     },
 
     /********************************************************************************

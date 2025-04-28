@@ -1,13 +1,23 @@
 package com.kwfw.findiary.controller.view;
 
 import com.kwfw.findiary.common.ConstantCommon;
+import com.kwfw.findiary.model.BankAccountDto;
+import com.kwfw.findiary.model.UserInfoVO;
+import com.kwfw.findiary.service.bankAccount.BankAccountService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @Controller
 public class ViewController {
+
+    private final BankAccountService bankAccountService;
 
     @GetMapping("/")
     public String index(HttpSession session) {
@@ -33,7 +43,14 @@ public class ViewController {
     }
 
     @GetMapping("/diary")
-    public String diary() {
+    public String diary(HttpSession session, Model model) {
+        // get 로그인 정보
+        UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
+
+        // get 계좌 정보
+        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNum(loginUserInfo);
+
+        model.addAttribute("bankAccountList", bankAccountList);
         return "pages/diary";
     }
 }

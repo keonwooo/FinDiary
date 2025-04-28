@@ -24,26 +24,10 @@ const DiaryApi = {
     /********************************************************************************
      * Main Object
      ********************************************************************************/
-    //분류 트리 XML 조회
-    getCateTreeXml: (params) => {
-        return efw.ajax({url: `${DiaryApi.requestmapping}/cate-tree-xml`, params});
-    },
-
-    //분류 저장
-    saveCate: (params) => {
-        return efw.ajax({url: `${DiaryApi.requestmapping}/cate-save`, params});
-    },
-
-    //분류 표시순서 저장
-    saveCateDispOrder: (params) => {
-        return efw.ajax({url: `${DiaryApi.requestmapping}/cate-save-disp-order`, params});
-    },
-
     // get 개인 일지
     getUserEvents: (params) => {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/getUserDiaries`, params});
     },
-
 
     /********************************************************************************
      * Dummay Object : 더미

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL Mapping -->
+<mapper namespace="com.kwfw.findiary.mapper.bankAccountMapper.BankAccountMapper">
+    <select id="getSearchBankAccountNum" parameterType="com.kwfw.findiary.model.UserInfoVO" resultType="com.kwfw.findiary.model.BankAccountDto">
+        SELECT account_num, account_name, user_id
+        FROM TB_BANK_ACCOUNT_INFO
+        WHERE 1 = 1
+          AND user_id = #{user_id}
+          AND status = 1
+    </select>
+</mapper>

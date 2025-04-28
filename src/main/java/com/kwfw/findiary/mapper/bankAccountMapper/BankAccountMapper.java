@@ -1,0 +1,12 @@
+package com.kwfw.findiary.mapper.bankAccountMapper;
+
+import com.kwfw.findiary.model.BankAccountDto;
+import com.kwfw.findiary.model.UserInfoVO;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface BankAccountMapper {
+    List<BankAccountDto> getSearchBankAccountNum(UserInfoVO userInfoVO);
+}

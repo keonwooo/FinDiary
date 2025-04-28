@@ -63,18 +63,14 @@
                                     <div class="selectDrop-tit">계좌</div>
                                 </div>
                                 <ul class="dropdown selectDrop-cont on">
-                                    <li>
-                                        <label class="formWrap item depth1">
-                                            <input type="checkbox" checked>
-                                            <span>1234-5678</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="formWrap item depth1">
-                                            <input type="checkbox" checked>
-                                            <span>8765-4321</span>
-                                        </label>
-                                    </li>
+                                    <th:block th:each="account : ${bankAccountList}">
+                                        <li>
+                                            <label class="formWrap item depth1">
+                                                <input type="checkbox" checked />
+                                                <span th:text="'[' + ${account.account_num} + '] ' + ${account.account_name}"></span>
+                                            </label>
+                                        </li>
+                                    </th:block>
                                 </ul>
                             </div>
                         </dd>
