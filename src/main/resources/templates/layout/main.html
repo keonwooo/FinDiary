@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <title>FinDiary</title>
-    <th:block th:replace="common/jsCommon :: jsCommon"></th:block>
-    <th:block th:replace="common/cssCommon :: cssCommon"></th:block>
+    <th:block th:replace="~{common/jsCommon :: jsCommon}"></th:block>
+    <th:block th:replace="~{common/cssCommon :: cssCommon}"></th:block>
 </head>
 <body class="main-body">
-    <header th:replace="fragments/header :: header"></header>
+    <header th:replace="~{fragments/header :: header}"></header>
 
-    <section class="sideWrap" th:replace="fragments/sidebar :: sidebar"></section>
+    <section class="sideWrap" th:replace="~{fragments/sidebar :: sidebar}"></section>
 
-    <th:block th:replace="fragments/popup :: popup"></th:block>
+    <th:block th:replace="~{fragments/popup :: popup}"></th:block>
 
     <!-- templates/layouts/main.html -->
     <article class="container">
         <section layout:fragment="content"></section>
 
-        <footer th:replace="fragments/footer :: footer"></footer>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
     </article>
 
 <!--    <article class="container" layout:fragment="content"></article>-->

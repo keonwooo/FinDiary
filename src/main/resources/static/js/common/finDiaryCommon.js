@@ -7,7 +7,9 @@ jQuery(document).ready(function () {
         console.log("onloadpage error=", e);
     } finally {
         const pathName = this.location.pathname.replace("/", '');
-        _$("." + pathName).addClass("active");
+        if (pathName !== "") {
+            _$("." + pathName).addClass("active");
+        }
     }
 });
 
