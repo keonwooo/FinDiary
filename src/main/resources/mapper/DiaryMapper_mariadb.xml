@@ -9,7 +9,12 @@
         SELECT *
         FROM TB_TRADING_INFO
         WHERE 1 = 1
-          AND account_num = #{search_account_num}
-          AND trading_date LIKE CONCAT(#{search_date}, '%')
+        <if test="search_selected_account_num != null and search_selected_account_num.size > 0">
+            AND account_num IN
+            <foreach item="account_num" collection="search_selected_account_num" open="(" separator="," close=")">
+                #{account_num}
+            </foreach>
+        </if>
+        AND trading_date LIKE CONCAT(#{search_date}, '%')
     </select>
 </mapper>

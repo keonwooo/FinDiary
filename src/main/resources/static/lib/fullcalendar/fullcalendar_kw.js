@@ -28,8 +28,15 @@ function getCalendar() {
 
     calendar.render();
 
-    document.querySelector('#toggle-kr').addEventListener('change', renderCalendarEvents);
-    document.querySelector('#toggle-us').addEventListener('change', renderCalendarEvents);
+    // 공휴일 change event
+    document.querySelectorAll('.search-country-checkbox').forEach(toggle => {
+        toggle.addEventListener('change', renderCalendarEvents);
+    });
+
+    // 계좌 change event
+    document.querySelectorAll('.search-account-checkbox').forEach(toggle => {
+        toggle.addEventListener('change', renderCalendarEvents);
+    });
 }
 
 // 공휴일 정보 get
@@ -53,10 +60,15 @@ const fetchUserEvents = async () => {
     const month = calendar.getDate().getMonth() + 1;
     const date_yyyyMM = year.toString() + month.toString().padStart(2, '0');
 
-    // const userEvents = await fetch(`/api/getUserDiaries?year=${year}&month=${month}`).then(res => res.json());
+    const search_account_num = FinDiary.getMultiSelected(".search-account-checkbox");
+
+    if (search_account_num.length === 0) {
+        return;
+    }
+
     const data = {
         "search_date": date_yyyyMM,
-        "search_account_num": '1234-5678'
+        "search_selected_account_num": search_account_num
     }
     return DiaryApi.getUserEvents(data); // [{ title, start, end?, ... }]
 };
@@ -95,15 +107,26 @@ const renderCalendarEvents = async () => {
 
     // 사용자 일정 렌더링
     const userEvents = await fetchUserEvents();
-    userEvents.forEach(event => {
+    userEvents?.forEach(event => {
+        const trading_type = event.trading_type;
+        let background_color = '#e74c3c';
+        let border_color = '#c0392b';
+
+        if (trading_type === TRADING_TYPE_SELL) {
+            background_color = '#3498db';
+            border_color = '#2980b9';
+        }
+
         calendar.addEvent({
             title: getName(event),
             start: event.trading_date,
             end: event.trading_date,
             allDay: true,
-            backgroundColor: '#3498db',
-            borderColor: '#2980b9',
-            textColor: '#ffffff'
+            className: ['all-font10'],
+            backgroundColor: background_color,
+            borderColor: border_color,
+            textColor: '#ffffff',
+            fontSize: '3px'
         });
     });
 };
@@ -113,36 +136,3 @@ function getName(event) {
     const name = event.stock_name;
     return "[" + ticker + "]" + name;
 }
-
-//
-// const renderHolidays = () => {
-//     calendar.getEvents().forEach(event => event.remove());
-//
-//     const shownCountries = [];
-//     if (document.querySelector('#toggle-kr').checked) shownCountries.push('kr');
-//     if (document.querySelector('#toggle-us').checked) shownCountries.push('us');
-//
-//     const eventsMap = {};
-//
-//     shownCountries.forEach(country => {
-//         allHolidays[country].forEach(({date, name}) => {
-//             if (!eventsMap[date]) eventsMap[date] = new Set();
-//             eventsMap[date].add(name);
-//         });
-//     });
-//
-//     Object.entries(eventsMap).forEach(([date, names]) => {
-//         const title = Array.from(names).join(', ');
-//         const trimmedTitle = title.length > 30 ? title.substring(0, 30) + '...' : title;
-//
-//         calendar.addEvent({
-//             title: trimmedTitle,
-//             start: date,
-//             allDay: true,
-//             display: 'background',
-//             backgroundColor: '#ffe6e6',
-//             borderColor: '#e74c3c',
-//             textColor: '#c0392b'
-//         });
-//     });
-// };

@@ -75,12 +75,25 @@ const DiaryView = {
 
     getSearchInfo: function() {
         console.log(`${this.name} getSearchInfo ::::`);
+
+        // 국가별 공휴일 조회 select event
+        FinDiary.multiSelectEvent(
+            '.search-country-checkbox'
+            , 'display-selectedCountry'
+            , '국가 선택'
+        );
+
+        // 계좌 조회 select event
+        FinDiary.multiSelectEvent(
+            '.search-account-checkbox'
+            , 'display-selectedAccounts'
+            , '계좌 선택'
+        );
     },
 
     /********************************************************************************
      * User Object : 사용자 정의 함수 정의
      ********************************************************************************/
-    userCustom: function() {},
 
     /********************************************************************************
      * Dummay Object : 더미

@@ -36,18 +36,21 @@
                         <dd>
                             <div class="dropdown-wrap selectDrop-wrap">
                                 <div class="dropdown-toggle">
-                                    <div class="selectDrop-tit">국가</div>
+                                    <div class="selectDrop-tit w80px" id="display-selectedCountry">국가</div>
+                                    <input type="hidden" id="search_selected_country"/>
                                 </div>
                                 <ul class="dropdown selectDrop-cont on">
                                     <li>
                                         <label class="formWrap item depth1">
-                                            <input type="checkbox" id="toggle-kr" checked>
+                                            <input type="checkbox" id="toggle-kr" class="search-country-checkbox" checked
+                                                   th:data-label="한국">
                                             <span>한국</span>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="formWrap item depth1">
-                                            <input type="checkbox" id="toggle-us" checked>
+                                            <input type="checkbox" id="toggle-us" class="search-country-checkbox" checked
+                                                   th:data-label="미국">
                                             <span>미국</span>
                                         </label>
                                     </li>
@@ -60,13 +63,17 @@
                         <dd>
                             <div class="dropdown-wrap selectDrop-wrap">
                                 <div class="dropdown-toggle">
-                                    <div class="selectDrop-tit">계좌</div>
+                                    <div class="selectDrop-tit w150px" id="display-selectedAccounts">계좌</div>
+                                    <input type="hidden" id="search_selected_account_num"/>
                                 </div>
                                 <ul class="dropdown selectDrop-cont on">
                                     <th:block th:each="account : ${bankAccountList}">
                                         <li>
                                             <label class="formWrap item depth1">
-                                                <input type="checkbox" checked />
+                                                <!--                                                <input type="checkbox" checked />-->
+                                                <input type="checkbox" class="search-account-checkbox"
+                                                       th:data-label="'[' + ${account.account_num} + '] ' + ${account.account_name}"
+                                                       th:value="${account.account_num}"/>
                                                 <span th:text="'[' + ${account.account_num} + '] ' + ${account.account_name}"></span>
                                             </label>
                                         </li>
@@ -77,9 +84,9 @@
                     </dl>
                 </div>
                 <div class="form-mix r-item">
-                    <div class="form-mix end">
-                        <a href="javascript:;" class="btn-md btn-primary">조회</a>
-                    </div>
+<!--                    <div class="form-mix end">-->
+<!--                        <a href="javascript:;" class="btn-md btn-primary">조회</a>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
