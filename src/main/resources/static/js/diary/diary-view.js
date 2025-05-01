@@ -20,8 +20,7 @@ let gSampleLet;           //let 샘플임
 /********************************************************************************
  * Page Load : After DOM Ready
  ********************************************************************************/
-function onloadpage()
-{
+function onloadpage() {
     //페이지 정의
     DiaryView.definePage();
     //이벤트 정의
@@ -42,20 +41,17 @@ const DiaryView = {
     /********************************************************************************
      * Define Page Object (UI 랜더링)
      ********************************************************************************/
-    definePage: function()
-    {
+    definePage: function () {
         console.log(`${this.name} definePage ::::: `);
 
         // get 캘린더 정보
-        getCalendar();
+        KW_FullCalendar.getCalendar();
     },
-
 
     /********************************************************************************
      * Define Event Object (이벤트 바인딩, 클릭, 변경, 입력 등)
      ********************************************************************************/
-    defineEvent: function()
-    {
+    defineEvent: function () {
         console.log(`${this.name} defineEvent ::::: `);
 
         this.getSearchInfo();
@@ -64,8 +60,7 @@ const DiaryView = {
     /********************************************************************************
      * Init Data Loading Object (최초 진입 시 백엔드로부터 데이터 받아와 UI 반영)
      ********************************************************************************/
-    initDataLoading: function()
-    {
+    initDataLoading: function () {
         console.log(`${this.name} initDataLoading ::::: `);
     },
 
@@ -73,7 +68,7 @@ const DiaryView = {
      * Main Function Object
      ********************************************************************************/
 
-    getSearchInfo: function() {
+    getSearchInfo: function () {
         console.log(`${this.name} getSearchInfo ::::`);
 
         // 국가별 공휴일 조회 select event
@@ -94,11 +89,17 @@ const DiaryView = {
     /********************************************************************************
      * User Object : 사용자 정의 함수 정의
      ********************************************************************************/
+    settingAddDiary: function (event) {
+
+
+        _$("#add-trading-popup").addClass("modal-active");
+    },
 
     /********************************************************************************
      * Dummay Object : 더미
      ********************************************************************************/
-    endPage: function() {}
+    endPage: function () {
+    }
 };
 
 
