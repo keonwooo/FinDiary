@@ -78,6 +78,7 @@ const FinDiary = {
         // select 요소 생성
         const selectEl = document.createElement('select');
         selectEl.className = 'w70p';
+        selectEl.id = 'add-trading-selected-bankaccount';
 
         // 옵션 동적으로 추가
         contents.forEach(content => {

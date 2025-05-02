@@ -96,13 +96,13 @@ const DiaryView = {
         // 계좌 select box rendering
         const userBankAccountNumList = DiaryApi.getUserBankAccountNum();
         const renderSelectBox = userBankAccountNumList.responseJSON
-                .map(cb => {
-                    return {
-                        "value": cb.account_num,
-                        "textContent": FinDiary.getNumberAndName(cb.account_num, cb.account_name)
-                    }
-                })
-            ;
+            .map(cb => {
+                return {
+                    "value": cb.account_num,
+                    "textContent": FinDiary.getNumberAndName(cb.account_num, cb.account_name)
+                }
+            })
+        ;
         FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
 
         // set 매매 일자
@@ -113,7 +113,7 @@ const DiaryView = {
         _$("#add-trading-popup").addClass("modal-active");
     },
 
-    resetAddDiary: function() {
+    resetAddDiary: function () {
         document.querySelectorAll('.select').selectedIndex = 0;
 
         _$("#add-trading-ticker").val("");
@@ -125,6 +125,71 @@ const DiaryView = {
 
         _$("#add-trading-contractPrice").val("");
         _$("#add-trading-count").val("");
+
+        this.resetAddWarningMsg();
+    },
+
+    resetAddWarningMsg: function () {
+        _$("#add-trading-ticker-error").hide();
+        _$("#add-trading-contractPrice-error").hide();
+        _$("#add-trading-count-error").hide();
+    },
+
+    addDiary: function () {
+        if (this.diaryValidationCheck()) {
+            const bankAccount = _$("#add-trading-selected-bankaccount").val()?.trim();
+            const ticker = _$("#add-trading-ticker").val()?.trim();
+            const date = _$("#add-trading-date").val()?.trim().replaceAll('/', '');
+            const orderMethod = $('input[name="add-trading-orderMethod"]:checked').val();
+            const price = _$("#add-trading-contractPrice").val()?.trim();
+            const property = _$("#add-trading-selected-property").val();
+            const count = _$("#add-trading-count").val()?.trim();
+
+            const data = {
+                "account_num": bankAccount
+                , "ticker": ticker
+                , "trading_date": date
+                , "trading_type": orderMethod
+                , "trading_price": price
+                , "currency": property
+                , "trading_count": count
+            }
+
+            const flag = DiaryApi.insertTradingDiary(data);
+            if (flag.responseJSON) {
+                _$("#add-trading-popup").removeClass("modal-active");
+            } else {
+                _$("#notification-popup").addClass("modal-active");
+            }
+        }
+    },
+
+    diaryValidationCheck: function () {
+        let flag = true;
+        this.resetAddWarningMsg();
+
+        const ticker = _$("#add-trading-ticker").val()?.trim();
+        if (!ticker && ticker.length === 0) {
+            flag = false;
+            wrongDivAnimation("#add-trading-ticker");
+            _$("#add-trading-ticker-error").show();
+        }
+
+        const price = _$("#add-trading-contractPrice").val()?.trim();
+        if (!price && price.length === 0) {
+            flag = false;
+            wrongDivAnimation("#add-trading-contractPrice");
+            _$("#add-trading-contractPrice-error").show();
+        }
+
+        const count = _$("#add-trading-count").val()?.trim();
+        if (!count && count.length === 0) {
+            flag = false;
+            wrongDivAnimation("#add-trading-count");
+            _$("#add-trading-count-error").show();
+        }
+
+        return flag;
     },
 
     /********************************************************************************

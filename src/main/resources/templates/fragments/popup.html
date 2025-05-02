@@ -22,8 +22,6 @@
                                 <th>계좌</th>
                                 <td>
                                     <div class="select" id="add-trading-bankaccount">
-                                        <select class="w70p">
-                                        </select>
                                     </div>
                                 </td>
                             </tr>
@@ -33,6 +31,7 @@
                                     <label>
                                         <input type="text" id="add-trading-ticker" placeholder="종목" class="w50p">
                                     </label>
+                                    <p class="txt_info txt_error" id="add-trading-ticker-error"><i class="xi xi-error-o"></i>종목명을 입력해 주세요.</p>
                                 </td>
                             </tr>
                             <tr>
@@ -49,11 +48,11 @@
                                 <td>
                                     <div class="radio_toggle">
                                         <label class="formWrap">
-                                            <input type="radio" name="add-trading-orderMethod" checked="">
+                                            <input type="radio" name="add-trading-orderMethod" value="buy" checked>
                                             <span>매수</span>
                                         </label>
                                         <label class="formWrap">
-                                            <input type="radio" name="add-trading-orderMethod">
+                                            <input type="radio" name="add-trading-orderMethod" value="sell">
                                             <span>매도</span>
                                         </label>
                                     </div>
@@ -65,11 +64,12 @@
                                     <label>
                                         <input type="text" id="add-trading-contractPrice" placeholder="1주당 가격"
                                                class="w30p" autocomplete="off">
-                                        <select class="w20p select">
-                                            <option>$</option>
-                                            <option>₩</option>
+                                        <select class="w20p select" id="add-trading-selected-property">
+                                            <option value="dollar">$</option>
+                                            <option value="won">₩</option>
                                         </select>
                                     </label>
+                                    <p class="txt_info txt_error" id="add-trading-contractPrice-error"><i class="xi xi-error-o"></i>체결 단가를 입력해 주세요.</p>
                                 </td>
                             </tr>
                             <tr>
@@ -79,6 +79,7 @@
                                         <input type="text" id="add-trading-count" placeholder="수량" class="w30p"
                                                autocomplete="off">
                                     </label>
+                                    <p class="txt_info txt_error" id="add-trading-count-error"><i class="xi xi-error-o"></i>수량을 입력해 주세요.</p>
                                 </td>
                             </tr>
                         </table>
@@ -89,7 +90,7 @@
                         <a href="javascript:DiaryView.resetAddDiary();" class="btn-md btn-basic">초기화</a>
                     </div>
                     <div class="r-item">
-                        <a href="javascript:;" class="btn-md btn-primary">등록</a>
+                        <a href="javascript:DiaryView.addDiary();" class="btn-md btn-primary">등록</a>
                         <a href="javascript:;" class="btn-md btn-ghost" data-dismiss="modal">닫기</a>
                     </div>
                 </div>
@@ -101,21 +102,20 @@
         <div class="modal-dialog">
             <div class="modal-content modal-xs">
                 <div class="modal-header">
-                    <h4 class="modal-title">페이지 삭제 확인</h4>
+                    <h4 class="modal-title">실패</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="modal-body type-alert">
-                    현재 페이지를 삭제하시겠습니까? <br>
-                    (alert 안내용 팝업)
+                    매매 기록 추가에 실패하였습니다.
                 </div>
                 <div class="modal-footer">
                     <div class="l-item">
                     </div>
                     <div class="r-item">
-                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">취소</a>
-                        <a href="javascript:;" class="btn-md btn-danger" data-dismiss="modal">삭제</a>
+                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">닫기</a>
+<!--                        <a href="javascript:;" class="btn-md btn-danger" data-dismiss="modal">삭제</a>-->
                     </div>
                 </div>
             </div>

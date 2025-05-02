@@ -17,4 +17,28 @@
         </if>
         AND trading_date LIKE CONCAT(#{search_date}, '%')
     </select>
+
+    <insert id="insertTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">
+        INSERT INTO kwdb.TB_TRADING_INFO
+        ( ticker
+        , stock_name
+        , trading_count
+        , trading_type
+        , trading_price
+        , currency
+        , trading_date
+        , account_num
+        , status
+        , descr)
+        VALUES ( #{ticker}
+               , ''
+               , #{trading_count}
+               , #{trading_type}
+               , #{trading_price}
+               , #{currency}
+               , #{trading_date}
+               , #{account_num}
+               , 1
+               , NULL)
+    </insert>
 </mapper>

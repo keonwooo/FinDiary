@@ -17,4 +17,8 @@ public class DiaryService {
     public List<DiaryDto> getUserDiary(DiaryVO diaryVO) {
         return diaryMapper.getUserDiary(diaryVO);
     }
+
+    public boolean insertTradingDiary(DiaryDto diaryDto) {
+        return diaryMapper.insertTradingDiary(diaryDto) > 0;
+    }
 }

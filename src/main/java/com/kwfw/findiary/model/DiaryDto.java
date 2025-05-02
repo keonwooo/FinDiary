@@ -4,11 +4,15 @@ import lombok.Data;
 
 @Data
 public class DiaryDto {
+    private int trading_num;
+    private int trading_count;
+    private int status;
+
+    private float trading_price;
+
     private String ticker;
     private String stock_name;
-    private String trading_count;
     private String trading_type;
-    private String trading_price;
     private String currency;
     private String trading_date;
     private String account_num;

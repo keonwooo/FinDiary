@@ -164,6 +164,7 @@ tr.highlight_danger td,
 }
 
 .txt_error {
+  display: none;
   margin-top: 10px;
   min-height: 1.2em;
   line-height: 1.2;

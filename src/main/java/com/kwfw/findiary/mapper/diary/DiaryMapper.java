@@ -9,4 +9,6 @@ import java.util.List;
 @Mapper
 public interface DiaryMapper {
     List<DiaryDto> getUserDiary(DiaryVO diaryVO);
+
+    int insertTradingDiary(DiaryDto diaryDto);
 }

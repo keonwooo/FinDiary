@@ -34,16 +34,10 @@ public class DiaryController {
     private final BankAccountService bankAccountService;
 
     @PostMapping("/getUserDiaries")
-    public ResponseEntity<List<DiaryDto>> getUserDiary(
-            @RequestBody DiaryVO diaryVO,
-            HttpSession session) {
-        // 로그인 유저 정보
-        UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
-        DiaryDto diaryDto = new DiaryDto();
+    public ResponseEntity<List<DiaryDto>> getUserDiary(@RequestBody DiaryVO diaryVO) {
 
         List<DiaryDto> userDiaries = diaryService.getUserDiary(diaryVO);
 
-        //            log.warn("유저 데이터가 없습니다. year={}, month={}", year, month);
         return ResponseEntity.ok(Objects.requireNonNullElse(userDiaries, Collections.emptyList()));
     }
 
@@ -54,5 +48,10 @@ public class DiaryController {
         List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNum(loginUserInfo);
 
         return ResponseEntity.ok(Objects.requireNonNullElse(bankAccountList, Collections.emptyList()));
+    }
+
+    @PostMapping("/insertTradingDiary")
+    public ResponseEntity<Boolean> insertTradingDiary(@RequestBody DiaryDto diaryDto) {
+        return ResponseEntity.ok(diaryService.insertTradingDiary(diaryDto));
     }
 }
