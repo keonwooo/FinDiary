@@ -76,4 +76,16 @@ const kwfw = {
             }
         });
     },
+
+    /********************************************************************************
+     * formatDateToYMD
+     * Date -> yyyy/mm/dd
+     ********************************************************************************/
+    formatDateToYMD: function (date) {
+        const yyyy = date.getFullYear();
+        const mm = String(date.getMonth() + 1).padStart(2, '0'); // 1월은 0이므로 +1
+        const dd = String(date.getDate()).padStart(2, '0');
+
+        return `${yyyy}/${mm}/${dd}`;
+    }
 }

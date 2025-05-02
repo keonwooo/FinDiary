@@ -15,12 +15,12 @@ jQuery(document).ready(function () {
 
 const FinDiary = {
     /********************************************************************************
-     * multiSelectEvent : Multi Select 이벤트 등록
+     * eventMultiSelectBox : Multi Select 이벤트 등록
      * inputSelector    : input tag selector 명
      * displayId        : 보여지는 id 명
      * nonSelectedText  : 선택 하지 않았을 때 보여줄 text
      ********************************************************************************/
-    multiSelectEvent: function (inputSelector, displayId, nonSelectedText) {
+    eventMultiSelectBox: function (inputSelector, displayId, nonSelectedText) {
         const checkboxes = document.querySelectorAll(inputSelector);
         const display = document.getElementById(displayId);
 
@@ -50,6 +50,11 @@ const FinDiary = {
 
         updateSelectedAccounts(); // 초기 상태 반영
     },
+
+    /********************************************************************************
+     * getMultiSelected : Multi Select check된 값 get
+     * inputSelector    : input tag selector 명
+     ********************************************************************************/
     getMultiSelected: function(inputSelector) {
         const checkboxes = document.querySelectorAll(inputSelector);
 
@@ -57,8 +62,54 @@ const FinDiary = {
             .filter(cb => cb.checked)
             .map(cb => cb.value);
     },
-    movePageFnc: function (page) {
 
-        kwfw.ajax()
-    }
+    /********************************************************************************
+     * renderSelectBox  : Select 이벤트 등록
+     * selectorId    : input tag selector id
+     * contents         : 등록할 contents (JSON or Array)
+     ********************************************************************************/
+    renderSelectBox: function(selectorId, contents = []) {
+        const container = document.getElementById(selectorId);
+        if (!container) return;
+
+        // 기존 내용 초기화
+        container.innerHTML = '';
+
+        // select 요소 생성
+        const selectEl = document.createElement('select');
+        selectEl.className = 'w70p';
+
+        // 옵션 동적으로 추가
+        contents.forEach(content => {
+            const optionEl = document.createElement('option');
+            optionEl.value = content.value;
+            optionEl.textContent = content.textContent;
+            // optionEl.textContent = `${content.value} [${content.label}]`;
+            selectEl.appendChild(optionEl);
+        });
+
+        container.appendChild(selectEl);
+    },
+
+    /********************************************************************************
+     * getNumberAndName : number와 name을 `[number] name` 으로 반환
+     * number           : number
+     * name             : name
+     ********************************************************************************/
+    getNumberAndName: function (number, name) {
+        return "[" + number + "] " + name;
+    },
+
+    /********************************************************************************
+     * resetRadio       : radio 태그의 값을 초기화
+     * name             : radio name
+     * defaultIndex     : 초기화 값
+     ********************************************************************************/
+    resetRadio: function (name, defaultIndex = 0) {
+        const radios = document.querySelectorAll(`input[name="${name}"]`);
+        radios.forEach((radio, index) => {
+            radio.checked = (index === defaultIndex);
+        });
+    },
+
 }

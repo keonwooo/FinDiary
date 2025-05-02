@@ -1,6 +1,8 @@
 <!-- modal 활성화시 class 추가 : modal-active -->
 <section th:fragment="popup">
     <div class="modal" id="add-trading-popup">
+        <input type="hidden" id="add-trading-selecteddate"/>
+
         <div class="modal-dialog">
             <div class="modal-content modal-sm">
                 <div class="modal-header">
@@ -19,10 +21,8 @@
                             <tr>
                                 <th>계좌</th>
                                 <td>
-                                    <div class="form-mix">
+                                    <div class="select" id="add-trading-bankaccount">
                                         <select class="w70p">
-                                            <option>1234-5678 [무한매수용]</option>
-                                            <option>8765-4321 [장기투자용]</option>
                                         </select>
                                     </div>
                                 </td>
@@ -38,9 +38,9 @@
                             <tr>
                                 <th>매매 일자</th>
                                 <td>
-                                    <div class="input-group date datepicker">
-                                        <input class="form-control" type="text" id="add-trading-date" placeholder="yyyy-mm-dd" readonly="">
-                                        <span class="input-group-addon"></span>
+                                    <div class="datepicker-wrap">
+                                        <input type="text" class="datepicker w120px" id="add-trading-date"
+                                               name="add-trading-date" onkeydown="return false" autocomplete="off"/>
                                     </div>
                                 </td>
                             </tr>
@@ -64,8 +64,8 @@
                                 <td>
                                     <label>
                                         <input type="text" id="add-trading-contractPrice" placeholder="1주당 가격"
-                                               class="w30p">
-                                        <select class="w10p">
+                                               class="w30p" autocomplete="off">
+                                        <select class="w20p select">
                                             <option>$</option>
                                             <option>₩</option>
                                         </select>
@@ -76,7 +76,8 @@
                                 <th>수량</th>
                                 <td>
                                     <label>
-                                        <input type="text" id="add-trading-count" placeholder="수량" class="w30p">
+                                        <input type="text" id="add-trading-count" placeholder="수량" class="w30p"
+                                               autocomplete="off">
                                     </label>
                                 </td>
                             </tr>
@@ -85,7 +86,7 @@
                 </div>
                 <div class="modal-footer">
                     <div class="l-item">
-                        <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">초기화</a>
+                        <a href="javascript:DiaryView.resetAddDiary();" class="btn-md btn-basic">초기화</a>
                     </div>
                     <div class="r-item">
                         <a href="javascript:;" class="btn-md btn-primary">등록</a>

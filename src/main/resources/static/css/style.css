@@ -2822,6 +2822,186 @@ detail style start
   display: none;
 }
 
+/* datepicker start */
+.datepicker-range-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+}
+.datepicker-range-wrap > :first-of-type {
+  margin-right: 4px;
+}
+.datepicker-range-wrap > :last-of-type {
+  margin-left: 4px;
+}
+
+/* 2023.08.07 ksy desc: .->/ 구분자 변경으로 input 잘림 */
+.datepicker-wrap {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 115px;
+}
+.datepicker-wrap > input {
+  padding-right: 28px;
+}
+.datepicker-wrap .ui-datepicker-trigger {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+}
+
+.ui-datepicker.ui-widget-content {
+  width: 320px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.2);
+  border: solid 0.5px #ddd;
+  padding: 0 20px;
+  background-color: #fff;
+  z-index: 1050 !important;
+}
+
+.ui-datepicker .ui-datepicker-header {
+  position: relative;
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: 0;
+  margin-bottom: 10px;
+}
+
+.ui-datepicker .ui-datepicker-header::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: calc(100% + 40px);
+  height: 1px;
+  background-color: #e7e7e7;
+}
+
+.ui-datepicker .ui-datepicker-title {
+  margin: 0;
+  height: 62px;
+  line-height: 62px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  padding-left: 4px;
+  text-align: left;
+}
+
+/* 2023.08.17 obkwon : 캘린더 간격수정 */
+.ui-datepicker .ui-datepicker-title .ui-datepicker-year {
+  width: 30%;
+}
+
+.ui-datepicker .ui-datepicker-title .ui-datepicker-month {
+  width: 20%;
+  margin-left: 10px;
+}
+/* 2023.08.17 obkwon : 캘린더 간격수정 */
+
+.ui-datepicker .ui-datepicker-prev {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 36px;
+  left: auto;
+  width: 32px;
+  height: 32px;
+}
+
+.ui-datepicker .ui-datepicker-next {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: -4px;
+  left: auto;
+  width: 32px;
+  height: 32px;
+}
+
+.ui-datepicker .ui-datepicker-prev span,
+.ui-datepicker .ui-datepicker-next span {
+  margin: 0;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+}
+
+.ui-datepicker .ui-datepicker-prev span {
+  background-image: url("../images/datepicker/btn-datepicker-prev.png");
+}
+
+.ui-datepicker .ui-datepicker-next span {
+  background-image: url("../images/datepicker/btn-datepicker-next.png");
+}
+
+.ui-datepicker th {
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #949494;
+}
+
+.ui-datepicker td {
+  padding: 0;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+  padding: 0;
+  border: 0 !important;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 400 !important;
+  color: #333 !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  line-height: 40px;
+  background-color: transparent !important;
+}
+
+.ui-datepicker.ui-widget-content td a.ui-state-hover {
+  background-color: #ededed !important;
+}
+
+.ui-datepicker.ui-widget-content td a.ui-state-highlight {
+  background-color: #e6efff !important;
+}
+
+.ui-datepicker.ui-widget-content td a.ui-state-active {
+  background-color: #046fd9 !important;
+  color: #fff !important;
+}
+
+.ui-datepicker table {
+  margin-bottom: 20px;
+}
+/* datepicker end */
+
 /* ====================================================================
 etc start
 ==================================================================== */

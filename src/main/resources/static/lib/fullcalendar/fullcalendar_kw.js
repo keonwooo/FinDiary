@@ -22,7 +22,6 @@ const KW_FullCalendar = {
                 KW_FullCalendar.fetchHolidays();
             },
             dateClick: function (event) {
-                console.log(event);
                 DiaryView.settingAddDiary(event);
             },
         });
@@ -39,6 +38,7 @@ const KW_FullCalendar = {
             toggle.addEventListener('change', KW_FullCalendar.renderCalendarEvents);
         });
     },
+
     // 공휴일 정보 get
     fetchHolidays: async function () {
         const year = calendar.getDate().getFullYear();
@@ -53,6 +53,7 @@ const KW_FullCalendar = {
 
         await KW_FullCalendar.renderCalendarEvents();
     },
+
     // 일지 get
     fetchUserEvents: async function () {
         const year = calendar.getDate().getFullYear();
@@ -72,6 +73,7 @@ const KW_FullCalendar = {
         return DiaryApi.getUserEvents(data); // [{ title, start, end?, ... }]
     },
 
+    // calendar event render
     renderCalendarEvents: async function () {
         // 기존 이벤트 모두 제거
         calendar.getEvents().forEach(event => event.remove());
@@ -117,7 +119,7 @@ const KW_FullCalendar = {
             }
 
             calendar.addEvent({
-                title: KW_FullCalendar.getStockDiaryName(event),
+                title: FinDiary.getNumberAndName(event.ticker, event.stock_name),
                 start: event.trading_date,
                 end: event.trading_date,
                 allDay: true,
@@ -128,10 +130,5 @@ const KW_FullCalendar = {
                 fontSize: '3px'
             });
         });
-    },
-    getStockDiaryName: function (event) {
-        const ticker = event.ticker;
-        const name = event.stock_name;
-        return "[" + ticker + "]" + name;
     },
 }

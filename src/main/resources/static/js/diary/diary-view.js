@@ -72,14 +72,14 @@ const DiaryView = {
         console.log(`${this.name} getSearchInfo ::::`);
 
         // 국가별 공휴일 조회 select event
-        FinDiary.multiSelectEvent(
+        FinDiary.eventMultiSelectBox(
             '.search-country-checkbox'
             , 'display-selectedCountry'
             , '국가 선택'
         );
 
         // 계좌 조회 select event
-        FinDiary.multiSelectEvent(
+        FinDiary.eventMultiSelectBox(
             '.search-account-checkbox'
             , 'display-selectedAccounts'
             , '계좌 선택'
@@ -90,9 +90,41 @@ const DiaryView = {
      * User Object : 사용자 정의 함수 정의
      ********************************************************************************/
     settingAddDiary: function (event) {
+        // 팝업 초기화
+        this.resetAddDiary();
 
+        // 계좌 select box rendering
+        const userBankAccountNumList = DiaryApi.getUserBankAccountNum();
+        const renderSelectBox = userBankAccountNumList.responseJSON
+                .map(cb => {
+                    return {
+                        "value": cb.account_num,
+                        "textContent": FinDiary.getNumberAndName(cb.account_num, cb.account_name)
+                    }
+                })
+            ;
+        FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
 
+        // set 매매 일자
+        _$("#add-trading-date").val(kwfw.formatDateToYMD(event.date));
+        _$("#add-trading-selecteddate").val(event.date.toISOString());
+
+        // 매매 기록 추가 popup open
         _$("#add-trading-popup").addClass("modal-active");
+    },
+
+    resetAddDiary: function() {
+        document.querySelectorAll('.select').selectedIndex = 0;
+
+        _$("#add-trading-ticker").val("");
+
+        const selectedDate = _$("#add-trading-selecteddate").val() ? new Date(_$("#add-trading-selecteddate").val()) : new Date();
+        _$("#add-trading-date").val(kwfw.formatDateToYMD(selectedDate));
+
+        FinDiary.resetRadio('add-trading-orderMethod');
+
+        _$("#add-trading-contractPrice").val("");
+        _$("#add-trading-count").val("");
     },
 
     /********************************************************************************

@@ -2,9 +2,11 @@ package com.kwfw.findiary.controller.api.diary;
 
 import com.google.gson.Gson;
 import com.kwfw.findiary.common.ConstantCommon;
+import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.DiaryVO;
 import com.kwfw.findiary.model.UserInfoVO;
+import com.kwfw.findiary.service.bankAccount.BankAccountService;
 import com.kwfw.findiary.service.diary.DiaryService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,8 @@ public class DiaryController {
 
     private final DiaryService diaryService;
 
+    private final BankAccountService bankAccountService;
+
     @PostMapping("/getUserDiaries")
     public ResponseEntity<List<DiaryDto>> getUserDiary(
             @RequestBody DiaryVO diaryVO,
@@ -41,5 +45,14 @@ public class DiaryController {
 
         //            log.warn("유저 데이터가 없습니다. year={}, month={}", year, month);
         return ResponseEntity.ok(Objects.requireNonNullElse(userDiaries, Collections.emptyList()));
+    }
+
+    @PostMapping("/getUserBankAccountNum")
+    public ResponseEntity<List<BankAccountDto>> getUserBankAccountNum(HttpSession session) {
+        UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
+
+        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNum(loginUserInfo);
+
+        return ResponseEntity.ok(Objects.requireNonNullElse(bankAccountList, Collections.emptyList()));
     }
 }
