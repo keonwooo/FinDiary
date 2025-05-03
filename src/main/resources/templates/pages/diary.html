@@ -42,7 +42,7 @@
                                 <ul class="dropdown selectDrop-cont on">
                                     <li>
                                         <label class="formWrap item depth1">
-                                            <input type="checkbox" id="toggle-kr" class="search-country-checkbox" checked
+                                            <input type="checkbox" id="toggle-kr" class="search-country-checkbox"
                                                    th:data-label="한국">
                                             <span>한국</span>
                                         </label>
@@ -73,7 +73,7 @@
                                                 <!--                                                <input type="checkbox" checked />-->
                                                 <input type="checkbox" class="search-account-checkbox"
                                                        th:data-label="'[' + ${account.account_num} + '] ' + ${account.account_name}"
-                                                       th:value="${account.account_num}"/>
+                                                       th:value="${account.account_num}" checked/>
                                                 <span th:text="'[' + ${account.account_num} + '] ' + ${account.account_name}"></span>
                                             </label>
                                         </li>

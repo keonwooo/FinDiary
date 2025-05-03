@@ -89,54 +89,109 @@ const DiaryView = {
     /********************************************************************************
      * User Object : 사용자 정의 함수 정의
      ********************************************************************************/
-    settingAddDiary: function (event) {
-        // 팝업 초기화
-        this.resetAddDiary();
+    setting: {
+        addDiary: function (event) {
+            // 팝업 초기화
+            DiaryView.reset.addDiary();
 
-        // 계좌 select box rendering
-        const userBankAccountNumList = DiaryApi.getUserBankAccountNum();
-        const renderSelectBox = userBankAccountNumList.responseJSON
-            .map(cb => {
-                return {
-                    "value": cb.account_num,
-                    "textContent": FinDiary.getNumberAndName(cb.account_num, cb.account_name)
-                }
-            })
-        ;
-        FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
+            // 계좌 select box rendering
+            const userBankAccountNumList = DiaryApi.getUserBankAccountNumList();
+            const renderSelectBox = userBankAccountNumList.responseJSON
+                .map(cb => {
+                    return {
+                        "value": cb.account_num,
+                        "textContent": FinDiary.getNumberAndName(cb.account_num, cb.account_name)
+                    }
+                });
+            console.log(renderSelectBox);
+            FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
 
-        // set 매매 일자
-        _$("#add-trading-date").val(kwfw.formatDateToYMD(event.date));
-        _$("#add-trading-selecteddate").val(event.date.toISOString());
+            // set 매매 일자
+            _$("#add-trading-date").val(kwfw.formatDateToYMD(event.date));
+            _$("#add-trading-selecteddate").val(event.date.toISOString());
 
-        // 매매 기록 추가 popup open
-        _$("#add-trading-popup").addClass("modal-active");
+            // 매매 기록 추가 popup open
+            _$("#add-trading-popup").addClass("modal-active");
+        },
+
+        editDiary: function (event) {
+            console.log("click Diary : ");
+            console.log(event);
+            _$("#add-trading-popup .modal-title").html("매매 기록 수정");
+
+            // 계좌 select box rendering
+            let userBankAccountNum = DiaryApi.getUserBankAccountNum(event);
+            userBankAccountNum = userBankAccountNum.responseJSON;
+            const renderSelectBox = [{
+                "value": userBankAccountNum.account_num,
+                "textContent": FinDiary.getNumberAndName(userBankAccountNum.account_num, userBankAccountNum.account_name)
+            }];
+
+            FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
+            const container = document.getElementById('add-trading-bankaccount');
+            const selectBox = container.querySelector('select');
+            selectBox.disabled = true;
+
+            _$("#add-trading-popup").addClass("modal-active");
+        }
     },
 
-    resetAddDiary: function () {
-        document.querySelectorAll('.select').selectedIndex = 0;
+    reset: {
+        addDiary: function () {
+            document.querySelectorAll('.select').selectedIndex = 0;
 
-        _$("#add-trading-ticker").val("");
+            _$("#add-trading-ticker").val("");
 
-        const selectedDate = _$("#add-trading-selecteddate").val() ? new Date(_$("#add-trading-selecteddate").val()) : new Date();
-        _$("#add-trading-date").val(kwfw.formatDateToYMD(selectedDate));
+            const selectedDate = _$("#add-trading-selecteddate").val() ? new Date(_$("#add-trading-selecteddate").val()) : new Date();
+            _$("#add-trading-date").val(kwfw.formatDateToYMD(selectedDate));
 
-        FinDiary.resetRadio('add-trading-orderMethod');
+            FinDiary.resetRadio('add-trading-orderMethod');
 
-        _$("#add-trading-contractPrice").val("");
-        _$("#add-trading-count").val("");
+            _$("#add-trading-contractPrice").val("");
+            _$("#add-trading-count").val("");
 
-        this.resetAddWarningMsg();
+            DiaryView.reset.addWarningMsg();
+        },
+
+        addWarningMsg: function () {
+            _$("#add-trading-ticker-error").hide();
+            _$("#add-trading-contractPrice-error").hide();
+            _$("#add-trading-count-error").hide();
+        },
     },
 
-    resetAddWarningMsg: function () {
-        _$("#add-trading-ticker-error").hide();
-        _$("#add-trading-contractPrice-error").hide();
-        _$("#add-trading-count-error").hide();
+    checkValid: {
+        addDiary: function () {
+            let flag = true;
+            DiaryView.reset.addWarningMsg();
+
+            const ticker = _$("#add-trading-ticker").val()?.trim();
+            if (!ticker && ticker.length === 0) {
+                flag = false;
+                wrongDivAnimation("#add-trading-ticker");
+                _$("#add-trading-ticker-error").show();
+            }
+
+            const price = _$("#add-trading-contractPrice").val()?.trim();
+            if (!price && price.length === 0) {
+                flag = false;
+                wrongDivAnimation("#add-trading-contractPrice");
+                _$("#add-trading-contractPrice-error").show();
+            }
+
+            const count = _$("#add-trading-count").val()?.trim();
+            if (!count && count.length === 0) {
+                flag = false;
+                wrongDivAnimation("#add-trading-count");
+                _$("#add-trading-count-error").show();
+            }
+
+            return flag;
+        },
     },
 
     addDiary: function () {
-        if (this.diaryValidationCheck()) {
+        if (DiaryView.checkValid.addDiary()) {
             const bankAccount = _$("#add-trading-selected-bankaccount").val()?.trim();
             const ticker = _$("#add-trading-ticker").val()?.trim();
             const date = _$("#add-trading-date").val()?.trim().replaceAll('/', '');
@@ -162,34 +217,6 @@ const DiaryView = {
                 _$("#notification-popup").addClass("modal-active");
             }
         }
-    },
-
-    diaryValidationCheck: function () {
-        let flag = true;
-        this.resetAddWarningMsg();
-
-        const ticker = _$("#add-trading-ticker").val()?.trim();
-        if (!ticker && ticker.length === 0) {
-            flag = false;
-            wrongDivAnimation("#add-trading-ticker");
-            _$("#add-trading-ticker-error").show();
-        }
-
-        const price = _$("#add-trading-contractPrice").val()?.trim();
-        if (!price && price.length === 0) {
-            flag = false;
-            wrongDivAnimation("#add-trading-contractPrice");
-            _$("#add-trading-contractPrice-error").show();
-        }
-
-        const count = _$("#add-trading-count").val()?.trim();
-        if (!count && count.length === 0) {
-            flag = false;
-            wrongDivAnimation("#add-trading-count");
-            _$("#add-trading-count-error").show();
-        }
-
-        return flag;
     },
 
     /********************************************************************************

@@ -41,13 +41,23 @@ public class DiaryController {
         return ResponseEntity.ok(Objects.requireNonNullElse(userDiaries, Collections.emptyList()));
     }
 
-    @PostMapping("/getUserBankAccountNum")
-    public ResponseEntity<List<BankAccountDto>> getUserBankAccountNum(HttpSession session) {
+    @PostMapping("/getUserBankAccountNumList")
+    public ResponseEntity<List<BankAccountDto>> getUserBankAccountNumList(HttpSession session) {
         UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
 
-        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNum(loginUserInfo);
+        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNumList(loginUserInfo);
 
         return ResponseEntity.ok(Objects.requireNonNullElse(bankAccountList, Collections.emptyList()));
+    }
+
+    @PostMapping("/getUserBankAccountNum")
+    public ResponseEntity<BankAccountDto> getUserBankAccountNum(@RequestBody BankAccountDto dto, HttpSession session) {
+        UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
+        dto.setUser_id(loginUserInfo.getUser_id());
+
+        BankAccountDto bankAccount = bankAccountService.getUserBankAccountNum(dto);
+
+        return ResponseEntity.ok(bankAccount);
     }
 
     @PostMapping("/insertTradingDiary")

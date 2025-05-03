@@ -24,6 +24,8 @@ const FinDiary = {
         const checkboxes = document.querySelectorAll(inputSelector);
         const display = document.getElementById(displayId);
 
+        checkboxes.checked = 'checked';
+
         function updateSelectedAccounts() {
             const selected = Array.from(checkboxes)
                 .filter(cb => cb.checked)

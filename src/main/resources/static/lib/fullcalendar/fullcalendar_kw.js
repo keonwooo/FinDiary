@@ -22,8 +22,11 @@ const KW_FullCalendar = {
                 KW_FullCalendar.fetchHolidays();
             },
             dateClick: function (event) {
-                DiaryView.settingAddDiary(event);
+                DiaryView.setting.addDiary(event);
             },
+            eventClick: function (event) {
+                DiaryView.setting.editDiary(event.event.extendedProps);
+            }
         });
 
         calendar.render();
@@ -118,8 +121,9 @@ const KW_FullCalendar = {
                 border_color = '#2980b9';
             }
 
+            event.title = FinDiary.getNumberAndName(event.ticker, event.stock_name);
             calendar.addEvent({
-                title: FinDiary.getNumberAndName(event.ticker, event.stock_name),
+                title: event.title,
                 start: event.trading_date,
                 end: event.trading_date,
                 allDay: true,
@@ -127,7 +131,8 @@ const KW_FullCalendar = {
                 backgroundColor: background_color,
                 borderColor: border_color,
                 textColor: '#ffffff',
-                fontSize: '3px'
+                fontSize: '3px',
+                extendedProps: event
             });
         });
     },

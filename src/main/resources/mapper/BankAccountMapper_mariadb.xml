@@ -5,10 +5,19 @@
 
 <!-- SQL Mapping -->
 <mapper namespace="com.kwfw.findiary.mapper.bankAccountMapper.BankAccountMapper">
-    <select id="getSearchBankAccountNum" parameterType="com.kwfw.findiary.model.UserInfoVO" resultType="com.kwfw.findiary.model.BankAccountDto">
+    <select id="getSearchBankAccountNumList" parameterType="com.kwfw.findiary.model.UserInfoVO" resultType="com.kwfw.findiary.model.BankAccountDto">
         SELECT account_num, account_name, user_id
         FROM TB_BANK_ACCOUNT_INFO
         WHERE 1 = 1
+          AND user_id = #{user_id}
+          AND status = 1
+    </select>
+
+    <select id="getUserBankAccountNum" parameterType="com.kwfw.findiary.model.BankAccountDto" resultType="com.kwfw.findiary.model.BankAccountDto">
+        SELECT *
+        FROM TB_BANK_ACCOUNT_INFO
+        WHERE 1 = 1
+          AND account_num = #{account_num}
           AND user_id = #{user_id}
           AND status = 1
     </select>

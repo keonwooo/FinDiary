@@ -14,7 +14,11 @@ public class BankAccountService {
 
     private final BankAccountMapper bankAccountMapper;
 
-    public List<BankAccountDto> getSearchBankAccountNum(UserInfoVO userInfoVO) {
-        return bankAccountMapper.getSearchBankAccountNum(userInfoVO);
+    public List<BankAccountDto> getSearchBankAccountNumList(UserInfoVO userInfoVO) {
+        return bankAccountMapper.getSearchBankAccountNumList(userInfoVO);
+    }
+
+    public BankAccountDto getUserBankAccountNum(BankAccountDto bankAccountDto) {
+        return bankAccountMapper.getUserBankAccountNum(bankAccountDto);
     }
 }

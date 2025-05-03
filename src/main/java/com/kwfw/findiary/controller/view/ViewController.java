@@ -48,7 +48,7 @@ public class ViewController {
         UserInfoVO loginUserInfo = (UserInfoVO) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
 
         // get 계좌 정보
-        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNum(loginUserInfo);
+        List<BankAccountDto> bankAccountList = bankAccountService.getSearchBankAccountNumList(loginUserInfo);
 
         model.addAttribute("bankAccountList", bankAccountList);
         return "pages/diary";

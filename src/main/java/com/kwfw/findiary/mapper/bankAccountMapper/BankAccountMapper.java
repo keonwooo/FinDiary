@@ -8,5 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface BankAccountMapper {
-    List<BankAccountDto> getSearchBankAccountNum(UserInfoVO userInfoVO);
+    List<BankAccountDto> getSearchBankAccountNumList(UserInfoVO userInfoVO);
+
+    BankAccountDto getUserBankAccountNum(BankAccountDto bankAccountDto);
 }

@@ -30,6 +30,11 @@ const DiaryApi = {
     },
 
     // get 사용자 계좌 번호 List
+    getUserBankAccountNumList: (params) => {
+        return kwfw.ajax({url: `${DiaryApi.requestmapping}/getUserBankAccountNumList`, params});
+    },
+
+    // get 사용자 계좌 번호
     getUserBankAccountNum: (params) => {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/getUserBankAccountNum`, params});
     },
