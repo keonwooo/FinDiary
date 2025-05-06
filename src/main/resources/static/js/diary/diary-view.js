@@ -107,7 +107,7 @@ const DiaryView = {
             FinDiary.renderSelectBox('add-trading-bankaccount', renderSelectBox);
 
             // set 매매 일자
-            _$("#add-trading-date").val(kwfw.formatDateToYMD(event.date));
+            _$("#add-trading-date").val(kwfw.date.formatDateToYMD(event.date));
             _$("#add-trading-selecteddate").val(event.date.toISOString());
 
             // 매매 기록 추가 popup open
@@ -132,6 +132,28 @@ const DiaryView = {
             const selectBox = container.querySelector('select');
             selectBox.disabled = true;
 
+            // 종목 명
+            _$("#add-trading-ticker").val(event.ticker);
+            _$("#add-trading-ticker" ).prop('readonly', true);
+
+            // set 매매 일자
+            const selectedDate = kwfw.date.formatStrToDate(event.trading_date);
+            _$("#add-trading-date").val(kwfw.date.formatDateToYMD(selectedDate));
+            _$("#add-trading-selecteddate").val(selectedDate.toISOString());
+
+            // set 주문 방식
+            const orderMethods = document.querySelectorAll(`input[name="add-trading-orderMethod"]`);
+            orderMethods.forEach((radio) => {
+                radio.checked = (radio.value === event.trading_type);
+            });
+
+            // set 체결 단가
+            _$("#add-trading-contractPrice").val(event.trading_price);
+            _$("#add-trading-selected-property").val(event.currency);
+
+            // set 수량
+            _$("#add-trading-count").val(event.trading_count);
+
             _$("#add-trading-popup").addClass("modal-active");
         }
     },
@@ -141,9 +163,10 @@ const DiaryView = {
             document.querySelectorAll('.select').selectedIndex = 0;
 
             _$("#add-trading-ticker").val("");
+            _$("#add-trading-ticker" ).prop('readonly', false);
 
             const selectedDate = _$("#add-trading-selecteddate").val() ? new Date(_$("#add-trading-selecteddate").val()) : new Date();
-            _$("#add-trading-date").val(kwfw.formatDateToYMD(selectedDate));
+            _$("#add-trading-date").val(kwfw.date.formatDateToYMD(selectedDate));
 
             FinDiary.resetRadio('add-trading-orderMethod');
 

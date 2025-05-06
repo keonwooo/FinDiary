@@ -77,15 +77,29 @@ const kwfw = {
         });
     },
 
-    /********************************************************************************
-     * formatDateToYMD
-     * Date -> yyyy/mm/dd
-     ********************************************************************************/
-    formatDateToYMD: function (date) {
-        const yyyy = date.getFullYear();
-        const mm = String(date.getMonth() + 1).padStart(2, '0'); // 1월은 0이므로 +1
-        const dd = String(date.getDate()).padStart(2, '0');
+    date: {
+        /********************************************************************************
+         * formatDateToYMD
+         * Date -> yyyy/mm/dd
+         ********************************************************************************/
+        formatDateToYMD: function (date) {
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0'); // 1월은 0이므로 +1
+            const dd = String(date.getDate()).padStart(2, '0');
 
-        return `${yyyy}/${mm}/${dd}`;
-    }
+            return `${yyyy}/${mm}/${dd}`;
+        },
+
+        /********************************************************************************
+         * formatStrToDate
+         * dateStr ('yyyyMMdd') -> date
+         ********************************************************************************/
+        formatStrToDate(str) {
+            const year = parseInt(str.substring(0, 4), 10);
+            const month = parseInt(str.substring(4, 6), 10) - 1; // 0-based month
+            const day = parseInt(str.substring(6, 8), 10);
+            return new Date(year, month, day);
+        }
+    },
+
 }
