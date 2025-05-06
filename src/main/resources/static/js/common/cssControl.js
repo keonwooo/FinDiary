@@ -31,7 +31,7 @@ function ex_animateCSS() {
 * ex) element : #test or .test or ...
 * */
 function wrongDivAnimation(element) {
-    _$(element).attr("class", "c_validation_wrong");
+    _$(element).addClass("c_validation_wrong");
     animateCSS(element, 'shakeX')
         .then(() => {
             _$(element).removeClass("c_validation_wrong");

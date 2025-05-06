@@ -64,4 +64,9 @@ public class DiaryController {
     public ResponseEntity<Boolean> insertTradingDiary(@RequestBody DiaryDto diaryDto) {
         return ResponseEntity.ok(diaryService.insertTradingDiary(diaryDto));
     }
+
+    @PostMapping("/updateTradingDiary")
+    public ResponseEntity<Boolean> updateTradingDiary(@RequestBody DiaryDto diaryDto) {
+        return ResponseEntity.ok(diaryService.updateTradingDiary(diaryDto));
+    }
 }

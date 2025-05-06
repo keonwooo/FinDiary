@@ -11,4 +11,6 @@ public interface DiaryMapper {
     List<DiaryDto> getUserDiary(DiaryVO diaryVO);
 
     int insertTradingDiary(DiaryDto diaryDto);
+
+    int updateTradingDiary(DiaryDto diaryDto);
 }

@@ -1,12 +1,13 @@
 <!-- modal 활성화시 class 추가 : modal-active -->
 <section th:fragment="popup">
-    <div class="modal" id="add-trading-popup">
+    <div class="modal no-close-on-backdrop" id="add-trading-popup">
         <input type="hidden" id="add-trading-selecteddate"/>
+        <input type="hidden" id="edit-trading-selectedinfo"/>
 
         <div class="modal-dialog">
             <div class="modal-content modal-sm">
                 <div class="modal-header">
-                    <h4 class="modal-title">매매 기록 추가</h4>
+                    <h4 class="modal-title"></h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true"></span>
                     </button>
@@ -29,7 +30,8 @@
                                 <th>종목</th>
                                 <td>
                                     <input type="text" id="add-trading-ticker" placeholder="종목" class="w50p">
-                                    <p class="txt_info txt_error" id="add-trading-ticker-error"><i class="xi xi-error-o"></i>종목명을 입력해 주세요.</p>
+                                    <p class="txt_info txt_error" id="add-trading-ticker-error"><i
+                                            class="xi xi-error-o"></i>종목명을 입력해 주세요.</p>
                                 </td>
                             </tr>
                             <tr>
@@ -67,7 +69,8 @@
                                             <option value="won">₩</option>
                                         </select>
                                     </label>
-                                    <p class="txt_info txt_error" id="add-trading-contractPrice-error"><i class="xi xi-error-o"></i>체결 단가를 입력해 주세요.</p>
+                                    <p class="txt_info txt_error" id="add-trading-contractPrice-error"><i
+                                            class="xi xi-error-o"></i>체결 단가를 입력해 주세요.</p>
                                 </td>
                             </tr>
                             <tr>
@@ -77,7 +80,8 @@
                                         <input type="text" id="add-trading-count" placeholder="수량" class="w30p"
                                                autocomplete="off">
                                     </label>
-                                    <p class="txt_info txt_error" id="add-trading-count-error"><i class="xi xi-error-o"></i>수량을 입력해 주세요.</p>
+                                    <p class="txt_info txt_error" id="add-trading-count-error"><i
+                                            class="xi xi-error-o"></i>수량을 입력해 주세요.</p>
                                 </td>
                             </tr>
                         </table>
@@ -85,10 +89,10 @@
                 </div>
                 <div class="modal-footer">
                     <div class="l-item">
-                        <a href="javascript:DiaryView.reset.addDiary();" class="btn-md btn-basic">초기화</a>
+                        <a href="javascript:;" class="btn-md btn-basic" id="add-trading-reset-btn">초기화</a>
                     </div>
                     <div class="r-item">
-                        <a href="javascript:DiaryView.addDiary();" class="btn-md btn-primary">등록</a>
+                        <a href="javascript:;" class="btn-md btn-primary" id="add-trading-btn">등록</a>
                         <a href="javascript:;" class="btn-md btn-ghost" data-dismiss="modal">닫기</a>
                     </div>
                 </div>
@@ -113,7 +117,7 @@
                     </div>
                     <div class="r-item">
                         <a href="javascript:;" class="btn-md btn-basic" data-dismiss="modal">닫기</a>
-<!--                        <a href="javascript:;" class="btn-md btn-danger" data-dismiss="modal">삭제</a>-->
+                        <!--                        <a href="javascript:;" class="btn-md btn-danger" data-dismiss="modal">삭제</a>-->
                     </div>
                 </div>
             </div>

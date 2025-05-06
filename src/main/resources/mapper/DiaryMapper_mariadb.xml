@@ -19,7 +19,7 @@
     </select>
 
     <insert id="insertTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">
-        INSERT INTO kwdb.TB_TRADING_INFO
+        INSERT INTO TB_TRADING_INFO
         ( ticker
         , stock_name
         , trading_count
@@ -41,4 +41,16 @@
                , 1
                , NULL)
     </insert>
+
+    <update id="updateTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">
+        UPDATE TB_TRADING_INFO
+        SET
+          trading_count = #{trading_count}
+          , trading_type = #{trading_type}
+          , trading_price = #{trading_price}
+          , currency = #{currency}
+          , trading_date = #{trading_date}
+        WHERE
+          trading_num = #{trading_num}
+    </update>
 </mapper>

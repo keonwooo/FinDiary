@@ -93,6 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
     modals.forEach(modal => {
         modal.addEventListener('click', (event) => {
             const modalContent = modal.querySelector('.modal-content');
+
+			// no-close-on-backdrop 클래스 있는 경우 모달 닫기 제외
+			if (modal.classList.contains("no-close-on-backdrop")) {
+				return;
+			}
+
             if (!modalContent.contains(event.target)) {
                 modal.classList.remove('modal-active');
             }
