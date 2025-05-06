@@ -49,6 +49,11 @@ const DiaryApi = {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/updateTradingDiary`, params});
     },
 
+    // delete 개인 일지
+    deleteTradingDiary: (params) => {
+        return kwfw.ajax({url: `${DiaryApi.requestmapping}/deleteTradingDiary`, params});
+    },
+
     /********************************************************************************
      * Dummay Object : 더미
      ********************************************************************************/

@@ -69,4 +69,9 @@ public class DiaryController {
     public ResponseEntity<Boolean> updateTradingDiary(@RequestBody DiaryDto diaryDto) {
         return ResponseEntity.ok(diaryService.updateTradingDiary(diaryDto));
     }
+
+    @PostMapping("/deleteTradingDiary")
+    public ResponseEntity<Boolean> deleteTradingDiary(@RequestBody DiaryDto diaryDto) {
+        return ResponseEntity.ok(diaryService.deleteTradingDiary(diaryDto));
+    }
 }

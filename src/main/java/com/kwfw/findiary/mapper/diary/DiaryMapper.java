@@ -13,4 +13,6 @@ public interface DiaryMapper {
     int insertTradingDiary(DiaryDto diaryDto);
 
     int updateTradingDiary(DiaryDto diaryDto);
+
+    int deleteTradingDiary(DiaryDto diaryDto);
 }

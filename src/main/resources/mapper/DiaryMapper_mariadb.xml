@@ -54,4 +54,12 @@
         WHERE
           trading_num = #{trading_num}
     </update>
+
+    <update id="deleteTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">
+        UPDATE TB_TRADING_INFO
+        SET
+            status = 0
+        WHERE
+            trading_num = #{trading_num}
+    </update>
 </mapper>

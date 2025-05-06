@@ -25,4 +25,8 @@ public class DiaryService {
     public boolean updateTradingDiary(DiaryDto diaryDto) {
         return diaryMapper.updateTradingDiary(diaryDto) > 0;
     }
+
+    public boolean deleteTradingDiary(DiaryDto diaryDto) {
+        return diaryMapper.deleteTradingDiary(diaryDto) > 0;
+    }
 }

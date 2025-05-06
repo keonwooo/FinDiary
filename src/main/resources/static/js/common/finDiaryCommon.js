@@ -14,6 +14,42 @@ jQuery(document).ready(function () {
 });
 
 const FinDiary = {
+    popup: {
+        openNotificationModal: function (contentJson) {
+            _$("#notification-popup .modal-title").text(contentJson.titleTxt);
+            _$("#notification-popup .modal-body").text(contentJson.bodyTxt);
+
+            if (contentJson.confirmFlag) {
+                _$("#notification-popup .btn-primary").text(contentJson.confirmBtnTxt);
+                _$("#notification-popup .btn-primary").show();
+
+                if (typeof contentJson.confirmBtnFnc === "function") {
+                    _$("#notification-popup .btn-primary").unbind("click");
+                    _$("#notification-popup .btn-primary").on("click", function () {
+                        contentJson.confirmBtnFnc();
+                    });
+                }
+            } else {
+                _$("#notification-popup .btn-primary").hide();
+            }
+
+            if (contentJson.dangerFlag) {
+                _$("#notification-popup .btn-danger").text(contentJson.dangerBtnTxt);
+                _$("#notification-popup .btn-danger").show();
+
+                if (typeof contentJson.dangerBtnFnc === "function") {
+                    _$("#notification-popup .btn-danger").unbind("click");
+                    _$("#notification-popup .btn-danger").on("click", function () {
+                        contentJson.dangerBtnFnc();
+                    });
+                }
+            } else {
+                _$("#notification-popup .btn-danger").hide();
+            }
+
+            _$("#notification-popup").addClass("modal-active");
+        },
+    },
     /********************************************************************************
      * eventMultiSelectBox : Multi Select 이벤트 등록
      * inputSelector    : input tag selector 명
@@ -114,5 +150,4 @@ const FinDiary = {
             radio.checked = (index === defaultIndex);
         });
     },
-
 }

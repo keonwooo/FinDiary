@@ -111,6 +111,9 @@ const DiaryView = {
             _$("#add-trading-date").val(kwfw.date.formatDateToYMD(event.date));
             _$("#add-trading-selecteddate").val(event.date.toISOString());
 
+            // set 삭제 버튼
+            _$("#add-trading-delete-btn").hide();
+
             // set 초기화 버튼
             _$("#add-trading-reset-btn").unbind("click");
             _$("#add-trading-reset-btn").on("click", function () {
@@ -151,6 +154,13 @@ const DiaryView = {
             // 종목 명
             _$("#add-trading-ticker").val(event.ticker);
             _$("#add-trading-ticker").prop('readonly', true);
+
+            // set 삭제 버튼
+            _$("#add-trading-delete-btn").show();
+            _$("#add-trading-delete-btn").unbind('click');
+            _$("#add-trading-delete-btn").on("click", function () {
+                DiaryView.deleteDiary();
+            });
 
             // set 초기화 버튼
             _$("#add-trading-reset-btn").unbind('click');
@@ -248,7 +258,7 @@ const DiaryView = {
         },
     },
 
-    getDiaryData: function() {
+    getDiaryData: function () {
         const tradingNum = _$("#edit-trading-selectedinfo").val() ? JSON.parse(_$("#edit-trading-selectedinfo").val()).trading_num : "";
         const bankAccount = _$("#add-trading-selected-bankaccount").val()?.trim();
         const ticker = _$("#add-trading-ticker").val()?.trim();
@@ -258,7 +268,7 @@ const DiaryView = {
         const property = _$("#add-trading-selected-property").val();
         const count = _$("#add-trading-count").val()?.trim();
 
-        return  {
+        return {
             "trading_num": tradingNum
             , "account_num": bankAccount
             , "ticker": ticker
@@ -278,7 +288,13 @@ const DiaryView = {
             if (flag.responseJSON) {
                 _$("#add-trading-popup").removeClass("modal-active");
             } else {
-                _$("#notification-popup").addClass("modal-active");
+                const contentJson = {
+                    "titleTxt": "실패",
+                    "bodyTxt": "매매 기록 추가에 실패하였습니다.",
+                    "confirmFlag": false,
+                    "dangerFlag": false
+                }
+                FinDiary.popup.openNotificationModal(contentJson);
             }
         }
 
@@ -293,11 +309,45 @@ const DiaryView = {
             if (flag.responseJSON) {
                 _$("#add-trading-popup").removeClass("modal-active");
             } else {
-                _$("#notification-popup").addClass("modal-active");
+                const contentJson = {
+                    "titleTxt": "실패",
+                    "bodyTxt": "매매 기록 추가에 실패하였습니다.",
+                    "confirmFlag": false,
+                    "dangerFlag": false
+                }
+                FinDiary.popup.openNotificationModal(contentJson);
             }
 
             KW_FullCalendar.renderCalendarEvents();
         }
+    },
+
+    deleteDiary: function () {
+        const contentJson = {
+            "titleTxt": "매매 기록 삭제",
+            "bodyTxt": "매매 기록을 삭제하시겠습니까?",
+            "confirmFlag": false,
+            "dangerFlag": true,
+            "dangerBtnTxt": "삭제",
+            "dangerBtnFnc": function () {
+                const data = DiaryView.getDiaryData();
+
+                console.log(data);
+                const flag = DiaryApi.deleteTradingDiary(data);
+                if (flag.responseJSON) {
+                    _$("#add-trading-popup").removeClass("modal-active");
+                } else {
+                    _$("#notification-popup .modal-title").text('실패');
+                    _$("#notification-popup .modal-body").text('매매 기록 삭제에 실패하였습니다.');
+                    _$("#notification-popup .btn-danger").hide();
+
+                    _$("#notification-popup").addClass("modal-active");
+                }
+
+                KW_FullCalendar.renderCalendarEvents();
+            }
+        };
+        FinDiary.popup.openNotificationModal(contentJson);
     },
 
     /********************************************************************************
