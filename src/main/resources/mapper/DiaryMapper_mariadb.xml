@@ -16,6 +16,7 @@
             </foreach>
         </if>
         AND trading_date LIKE CONCAT(#{search_date}, '%')
+        AND status = 1
     </select>
 
     <insert id="insertTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">

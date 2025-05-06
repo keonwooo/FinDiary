@@ -16,7 +16,7 @@ const KW_FullCalendar = {
             },
             height: '100%',
             width: '100%',
-            editable: true,
+            editable: false,
             events: [],
             datesSet: () => {
                 KW_FullCalendar.fetchHolidays();
@@ -122,8 +122,9 @@ const KW_FullCalendar = {
             }
 
             event.title = FinDiary.getNumberAndName(event.ticker, event.stock_name);
+            const title = event.title + ' ' + event.trading_price + (event.currency === 'won' ? '₩' : '$') + ', ' + (event.trading_type === 'buy' ? '+' : '-') + event.trading_count;
             calendar.addEvent({
-                title: event.title,
+                title: title,
                 start: event.trading_date,
                 end: event.trading_date,
                 allDay: true,
