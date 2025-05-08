@@ -69,7 +69,6 @@ const SmpView = {
      ********************************************************************************/
     initDataLoading: function () {
         console.log(`${this.name} initDataLoading ::::: `);
-        this.selects();
     },
 
     /********************************************************************************
@@ -79,19 +78,6 @@ const SmpView = {
     // SELECTS: 목록 조회 관련 함수 정의
     //-------------------------------------------------------------------------------
     selects: () => {
-        gCateGridLayout.progressOn();
-        //분류 트리 XML 조회
-        SmpApi.getCateTreeXml(params)
-            .done(({data}) => {
-                gCateTree.deleteChildItems(DhtmlxConstant.treeRootId);
-                gCateTree.parse(data, "xml");
-            })
-            .always(() => {
-                AdminCateMngView.toolBarSetting('init');
-//          gCateGrid.expandAll();
-                AdminCateMngView.setCateDetail('');
-                gCateGridLayout.progressOff();
-            });
     },
 
     //-------------------------------------------------------------------------------
