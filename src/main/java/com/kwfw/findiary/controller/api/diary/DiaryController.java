@@ -1,12 +1,10 @@
 package com.kwfw.findiary.controller.api.diary;
 
 import com.kwfw.findiary.common.ConstantCommon;
-import com.kwfw.findiary.model.BankAccountDto;
-import com.kwfw.findiary.model.DiaryDto;
-import com.kwfw.findiary.model.DiaryVO;
-import com.kwfw.findiary.model.UserInfoVO;
+import com.kwfw.findiary.model.*;
 import com.kwfw.findiary.service.bankAccount.BankAccountService;
 import com.kwfw.findiary.service.diary.DiaryService;
+import com.kwfw.findiary.service.holiday.HolidayService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,9 +24,19 @@ import java.util.Objects;
 @RequestMapping("/api/diary")
 public class DiaryController {
 
+    private final HolidayService holidayService;
+
     private final DiaryService diaryService;
 
     private final BankAccountService bankAccountService;
+
+    @PostMapping("getHolidays")
+    public ResponseEntity<List<HolidayDto>> getHolidays(@RequestBody HolidayVO holidayVO) {
+
+        List<HolidayDto> holidays = holidayService.getHolidays(holidayVO);
+
+        return ResponseEntity.ok(Objects.requireNonNullElse(holidays, Collections.emptyList()));
+    }
 
     @PostMapping("/getUserDiaries")
     public ResponseEntity<List<DiaryDto>> getUserDiary(@RequestBody DiaryVO diaryVO) {

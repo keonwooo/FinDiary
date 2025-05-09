@@ -46,13 +46,15 @@ const KW_FullCalendar = {
     fetchHolidays: async function () {
         const year = calendar.getDate().getFullYear();
 
-        const [kr, us] = await Promise.all([
-            fetch(`/api/holidays?country=KR&year=${year}`).then(res => res.json()),
-            fetch(`/api/holidays?country=US&year=${year}`).then(res => res.json())
-        ]);
+        // TODO 여기서 나라 여러개 받아서 한번에 처리하도록
+        let data = {
+            "country_code": COUNTRY_CODE_KOREA,
+            "date": year
+        }
+        allHolidays.kr = await DiaryApi.getHolidays(data);
 
-        allHolidays.kr = kr;
-        allHolidays.us = us;
+        data.country_code = COUNTRY_CODE_US;
+        allHolidays.us = await DiaryApi.getHolidays(data);
 
         await KW_FullCalendar.renderCalendarEvents();
     },
@@ -88,9 +90,9 @@ const KW_FullCalendar = {
 
         const eventsMap = {};
         shownCountries.forEach(country => {
-            allHolidays[country].forEach(({date, name}) => {
-                if (!eventsMap[date]) eventsMap[date] = new Set();
-                eventsMap[date].add(name);
+            allHolidays[country].forEach(({holiday, name}) => {
+                if (!eventsMap[holiday]) eventsMap[holiday] = new Set();
+                eventsMap[holiday].add(name);
             });
         });
 

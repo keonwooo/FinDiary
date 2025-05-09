@@ -6,3 +6,6 @@ const LOGIN_CODE_FAIL_STR = "Check id or password";
 
 const TRADING_TYPE_SELL = "sell";
 const TRADING_TYPE_BUY = "buy";
+
+const COUNTRY_CODE_KOREA = "KR";
+const COUNTRY_CODE_US = "US";

@@ -1,7 +1,6 @@
 package com.kwfw.findiary.common;
 
 public class ConstantCommon {
-
     public static final String RESPONSE_CODE_SUCCESS = "0000";
     public static final String RESPONSE_CODE_SUCCESS_STR = "SUCCESS";
 

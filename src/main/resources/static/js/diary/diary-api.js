@@ -24,6 +24,11 @@ const DiaryApi = {
     /********************************************************************************
      * Main Object
      ********************************************************************************/
+    // get 공휴일
+    getHolidays: (params) => {
+        return kwfw.ajax({url: `${DiaryApi.requestmapping}/getHolidays`, params});
+    },
+
     // get 개인 일지
     getUserEvents: (params) => {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/getUserDiaries`, params});
@@ -57,5 +62,6 @@ const DiaryApi = {
     /********************************************************************************
      * Dummay Object : 더미
      ********************************************************************************/
-    endApi: function() {}
+    endApi: function () {
+    }
 };

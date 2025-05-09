@@ -1,7 +1,7 @@
 package com.kwfw.findiary.config;
 
 import com.kwfw.findiary.common.ConstantCommon;
-import com.kwfw.findiary.mapper.holiday.HolidayRepository;
+import com.kwfw.findiary.mapper.holiday.HolidayMapper;
 import com.kwfw.findiary.model.HolidayDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class HolidayInitializer {
 
-    private final HolidayRepository holidayRepository;
+    private final HolidayMapper holidayRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initializeHolidays() {

@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- SQL Mapping -->
-<mapper namespace="com.kwfw.findiary.mapper.holiday.HolidayRepository">
+<mapper namespace="com.kwfw.findiary.mapper.holiday.HolidayMapper">
     <insert id="saveAll">
         INSERT INTO TB_HOLIDAY_INFO
         ( holiday
@@ -32,4 +32,13 @@
         WHERE 1 = 1
           AND country_code = #{country_code}
     </delete>
+
+    <select id="getHolidays" parameterType="com.kwfw.findiary.model.HolidayVO" resultType="com.kwfw.findiary.model.HolidayDto">
+        SELECT *
+        FROM TB_HOLIDAY_INFO
+        WHERE 1 = 1
+          AND country_code = #{country_code}
+          AND status = 1
+          AND `year` = SUBSTRING_INDEX(SUBSTRING_INDEX(#{date}, '-', 1), '-', -1)
+    </select>
 </mapper>

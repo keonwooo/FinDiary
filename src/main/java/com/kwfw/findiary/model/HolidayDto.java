@@ -6,10 +6,18 @@ import java.util.Objects;
 
 @Data
 public class HolidayDto {
+    private int status;
+
     private String date;  // yyyy-MM-dd
     private String localName;
     private String name;
     private String countryCode;
+
+    private String holiday;
+    private String country_code;
+    private String year;
+    private String month;
+    private String descr;
 
     @Override
     public boolean equals(Object o) {
