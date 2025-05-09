@@ -798,6 +798,10 @@
   font-size: 10px !important;
 }
 
+.all-font13 * {
+  font-size: 13px !important;
+}
+
 .font0 {
   font-size: 0 !important;
 }

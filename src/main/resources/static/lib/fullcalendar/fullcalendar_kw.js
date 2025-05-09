@@ -130,7 +130,7 @@ const KW_FullCalendar = {
                 start: event.trading_date,
                 end: event.trading_date,
                 allDay: true,
-                className: ['all-font10'],
+                className: ['all-font13'],
                 backgroundColor: background_color,
                 borderColor: border_color,
                 textColor: '#ffffff',
