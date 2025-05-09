@@ -150,4 +150,58 @@ const FinDiary = {
             radio.checked = (index === defaultIndex);
         });
     },
+
+    /********************************************************************************
+     * getUSMarketStatus    : 미국장 상태 반환
+     * return               : 'closed', 'premarket', 'regular', 'aftermarket'
+     ********************************************************************************/
+    getUSMarketStatus: function(now = new Date()) {
+        const day = now.getDay();
+        if (day === 0 || day === 6) return 'closed'; // 주말
+
+        const dst = FinDiary.isDST(now);
+
+        // 시간 계산 기준
+        const offset = dst ? -13 : -14; // EDT: -13, EST: -14 (KST - UTC-5 or UTC-4)
+        const estHour = now.getUTCHours() + offset;
+        const estMin = now.getUTCMinutes();
+
+        const minutes = estHour * 60 + estMin;
+
+        if (minutes >= 240 && minutes < 570) return 'premarket';       // 04:00 ~ 09:30
+        if (minutes >= 570 && minutes < 960) return 'regular';         // 09:30 ~ 16:00
+        if (minutes >= 960 && minutes < 1200) return 'aftermarket';    // 16:00 ~ 20:00
+        return 'closed';
+    },
+
+    /********************************************************************************
+     * getKoreaMarketStatus : 한국장 상태 반환
+     * return               : 'open' or 'closed'
+     ********************************************************************************/
+    getKoreaMarketStatus: function(now = new Date()) {
+        const day = now.getDay();
+        if (day === 0 || day === 6) return 'closed'; // 주말
+
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const totalMinutes = hours * 60 + minutes;
+
+        return (totalMinutes >= 540 && totalMinutes <= 930) ? 'open' : 'closed'; // 09:00 ~ 15:30
+    },
+
+    /********************************************************************************
+     * isDST    : 미국장 서머타임 계산용
+     ********************************************************************************/
+    isDST(date = new Date()) {
+        const year = date.getFullYear();
+        const march = new Date(year, 2, 1);
+        const marchDay = march.getDay();
+        const secondSundayInMarch = 14 - marchDay;
+        const november = new Date(year, 10, 1);
+        const novemberDay = november.getDay();
+        const firstSundayInNovember = 1 + (7 - novemberDay) % 7;
+        const dstStart = new Date(year, 2, secondSundayInMarch, 2);
+        const dstEnd = new Date(year, 10, firstSundayInNovember, 2);
+        return date >= dstStart && date < dstEnd;
+    },
 }

@@ -10,4 +10,7 @@ public class ConstantCommon {
 
     public static final String SESSION_LOGIN_USER = "login-user";
 
+    public static final String COUNTRY_CODE_KOREA = "KR";
+    public static final String COUNTRY_CODE_US = "US";
+
 }

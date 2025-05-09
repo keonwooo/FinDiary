@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL Mapping -->
+<mapper namespace="com.kwfw.findiary.mapper.holiday.HolidayRepository">
+    <insert id="saveAll">
+        INSERT INTO TB_HOLIDAY_INFO
+        ( holiday
+        , name
+        , country_code
+        , `year`
+        , `month`
+        , status
+        , descr)
+        VALUES
+        <foreach collection="holidays" item="holiday" separator=",">
+            ( replace(#{holiday.date}, '-', '')
+            , #{holiday.localName}
+            , #{holiday.countryCode}
+            , SUBSTRING_INDEX(SUBSTRING_INDEX(#{holiday.date}, '-', 1), '-', -1)
+            , SUBSTRING_INDEX(SUBSTRING_INDEX(#{holiday.date}, '-', 2), '-', -1)
+            , 1
+            , NULL)
+        </foreach>
+    </insert>
+
+    <delete id="deleteAll" parameterType="String">
+        DELETE
+        FROM TB_HOLIDAY_INFO
+        WHERE 1 = 1
+          AND country_code = #{country_code}
+    </delete>
+</mapper>
