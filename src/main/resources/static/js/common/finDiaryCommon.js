@@ -155,23 +155,33 @@ const FinDiary = {
      * getUSMarketStatus    : 미국장 상태 반환
      * return               : 'closed', 'premarket', 'regular', 'aftermarket'
      ********************************************************************************/
-    getUSMarketStatus: function(now = new Date()) {
-        const day = now.getDay();
-        if (day === 0 || day === 6) return 'closed'; // 주말
+    getUSMarketStatus: function (now = new Date()) {
+        const day = now.getUTCDay(); // UTC 기준으로 요일
+        if (day === 0 || day === 6) return 'closed'; // 일요일(0), 토요일(6)
 
-        const dst = FinDiary.isDST(now);
+        const dst = FinDiary.isDST(now); // DST 여부 판단
+        const offset = dst ? -4 : -5; // UTC 기준 EST: -5, EDT: -4
+        const nyTime = new Date(now.getTime() + offset * 60 * 60 * 1000); // 뉴욕 현지 시간
 
-        // 시간 계산 기준
-        const offset = dst ? -13 : -14; // EDT: -13, EST: -14 (KST - UTC-5 or UTC-4)
-        const estHour = now.getUTCHours() + offset;
-        const estMin = now.getUTCMinutes();
+        const hour = nyTime.getHours();
+        const minute = nyTime.getMinutes();
+        const totalMinutes = hour * 60 + minute;
 
-        const minutes = estHour * 60 + estMin;
+        // 시간 기준 (현지 시간)
+        const preMarketStart = 4 * 60;      // 04:00
+        const regularMarketStart = 9 * 60 + 30; // 09:30
+        const regularMarketEnd = 16 * 60;   // 16:00
+        const afterMarketEnd = 20 * 60;     // 20:00
 
-        if (minutes >= 240 && minutes < 570) return 'premarket';       // 04:00 ~ 09:30
-        if (minutes >= 570 && minutes < 960) return 'regular';         // 09:30 ~ 16:00
-        if (minutes >= 960 && minutes < 1200) return 'aftermarket';    // 16:00 ~ 20:00
-        return 'closed';
+        if (totalMinutes >= preMarketStart && totalMinutes < regularMarketStart) {
+            return 'premarket';
+        } else if (totalMinutes >= regularMarketStart && totalMinutes < regularMarketEnd) {
+            return 'regular';
+        } else if (totalMinutes >= regularMarketEnd && totalMinutes < afterMarketEnd) {
+            return 'aftermarket';
+        } else {
+            return 'closed';
+        }
     },
 
     /********************************************************************************

@@ -85,6 +85,20 @@ const DashboardView = {
         formatOptions.timeZone = 'America/New_York';
         const usaTime = new Intl.DateTimeFormat('en-GB', formatOptions).format(now);
 
+        // 미국장 open 시 red
+        if (FinDiary.getUSMarketStatus() === 'closed') {
+            document.getElementById('usa-time').style.color = 'black';
+        } else {
+            document.getElementById('usa-time').style.color = 'red';
+        }
+
+        // 한국장 open 시 red
+        if (FinDiary.getKoreaMarketStatus() === 'closed') {
+            document.getElementById('korea-time').style.color = 'black';
+        } else {
+            document.getElementById('korea-time').style.color = 'red';
+        }
+
         document.getElementById('korea-time').textContent = koreaTime;
         document.getElementById('usa-time').textContent = usaTime;
 
