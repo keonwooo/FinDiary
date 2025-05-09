@@ -16,6 +16,9 @@
 
     <!-- [특정 Mapper 로그 비활성화] -->
     <logger name="com.kwfw.findiary.mapper.holiday.HolidayRepository" level="OFF"/>
+    <logger name="org.mybatis.spring.SqlSessionUtils" level="OFF"/>
+    <logger name="org.mybatis.spring.transaction.SpringManagedTransaction" level="OFF"/>
+
 
     <!-- [루트 로그 레벨 설정] -->
     <root level="INFO">

@@ -13,4 +13,9 @@ public class ConstantCommon {
     public static final String COUNTRY_CODE_KOREA = "KR";
     public static final String COUNTRY_CODE_US = "US";
 
+    // ANSI 색상 코드
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_RESET = "\u001B[0m";
 }
