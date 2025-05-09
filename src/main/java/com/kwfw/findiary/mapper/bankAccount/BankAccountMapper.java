@@ -1,4 +1,4 @@
-package com.kwfw.findiary.mapper.bankAccountMapper;
+package com.kwfw.findiary.mapper.bankAccount;
 
 import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.UserInfoVO;

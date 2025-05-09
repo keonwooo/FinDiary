@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- SQL Mapping -->
+<mapper namespace="com.kwfw.findiary.mapper.dashboard.DashboardMapper">
+    <select id="getQuotes" parameterType="com.kwfw.findiary.model.QuotesVO">
+        SELECT *
+        FROM TB_QUOTES_INFO
+        WHERE status = 1
+        ORDER BY rand()
+        LIMIT 1
+    </select>
+</mapper>

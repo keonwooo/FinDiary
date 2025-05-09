@@ -42,6 +42,8 @@ const DashboardView = {
         console.log(`${this.name} definePage ::::: `);
 
         DashboardView.renderWorldClock();
+
+        DashboardView.getQuotes();
     },
 
     /********************************************************************************
@@ -91,36 +93,23 @@ const DashboardView = {
         setTimeout(DashboardView.renderWorldClock, delay);
     },
 
+    getQuotes: function() {
+        const response = DashboardApi.getQuotes();
+        const quotes = response.responseJSON[0];
+
+        document.getElementById('quotes-ko').textContent = quotes.language_ko;
+        document.getElementById('author-ko').textContent ='  By.' + quotes.author_ko;
+        document.getElementById('quotes-en').textContent = quotes.language_en;
+        document.getElementById('author-en').textContent ='  By.' + quotes.author_en;
+
+    },
+
     //-------------------------------------------------------------------------------
     // ETC: 기타 함수 정의
     //-------------------------------------------------------------------------------
     etc: function (ch) {
-    }
-    ,
-
-    /********************************************************************************
-     * GO_PAGE Object : 페이지 이동
-     ********************************************************************************/
-    goPage: function (url) {
     },
 
-    /********************************************************************************
-     * Popup Object : 팝업
-     ********************************************************************************/
-    popup: function () {
-    },
-
-    /********************************************************************************
-     * User Object : 사용자 정의 함수 정의
-     ********************************************************************************/
-    userCustom: function () {
-    },
-
-    /********************************************************************************
-     * Dummay Object : 더미
-     ********************************************************************************/
-    endPage: function () {
-    }
 };
 
 

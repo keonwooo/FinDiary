@@ -3009,10 +3009,11 @@ etc start
   border: 1px solid red !important;
 }
 
-.width-90p {
-  width: 90% !important;
+.font15 {
+  font-size: 15px;
 }
 
-.width-10p {
-  width: 10% !important;
+.font15b {
+  font-size: 15px;
+  font-weight: bold;
 }

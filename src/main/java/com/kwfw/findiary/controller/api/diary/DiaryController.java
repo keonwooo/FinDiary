@@ -1,6 +1,5 @@
 package com.kwfw.findiary.controller.api.diary;
 
-import com.google.gson.Gson;
 import com.kwfw.findiary.common.ConstantCommon;
 import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.DiaryDto;
@@ -26,8 +25,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/api/diary")
 public class DiaryController {
-
-    Gson GSON = new Gson();
 
     private final DiaryService diaryService;
 

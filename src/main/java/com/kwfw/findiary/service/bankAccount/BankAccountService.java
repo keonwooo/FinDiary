@@ -1,6 +1,6 @@
 package com.kwfw.findiary.service.bankAccount;
 
-import com.kwfw.findiary.mapper.bankAccountMapper.BankAccountMapper;
+import com.kwfw.findiary.mapper.bankAccount.BankAccountMapper;
 import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.UserInfoVO;
 import lombok.RequiredArgsConstructor;

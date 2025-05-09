@@ -26,17 +26,17 @@ const SmpApi = {
      ********************************************************************************/
     //분류 트리 XML 조회
     getCateTreeXml: (params) => {
-        return efw.ajax({url: `${SmpApi.requestmapping}/cate-tree-xml`, params});
+        return kwfw.ajax({url: `${SmpApi.requestmapping}/cate-tree-xml`, params});
     },
 
     //분류 저장
     saveCate: (params) => {
-        return efw.ajax({url: `${SmpApi.requestmapping}/cate-save`, params});
+        return kwfw.ajax({url: `${SmpApi.requestmapping}/cate-save`, params});
     },
 
     //분류 표시순서 저장
     saveCateDispOrder: (params) => {
-        return efw.ajax({url: `${SmpApi.requestmapping}/cate-save-disp-order`, params});
+        return kwfw.ajax({url: `${SmpApi.requestmapping}/cate-save-disp-order`, params});
     },
 
 

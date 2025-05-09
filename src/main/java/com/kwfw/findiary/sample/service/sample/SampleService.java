@@ -1,16 +1,16 @@
 package com.kwfw.findiary.sample.service.sample;
 
-import com.kwfw.findiary.sample.mapper.sample.SampleMapper;
 import com.kwfw.findiary.sample.model.SampleVO;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class SampleService {
 
-    public SampleVO login(SampleVO userInfoVO, HttpSession session) {
+    public List<SampleVO> login(SampleVO userInfoVO) {
 //        SampleVO vo = SampleMapper.login(userInfoVO);
 //
 //        if (vo != null) {
