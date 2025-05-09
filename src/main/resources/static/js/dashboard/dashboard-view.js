@@ -98,9 +98,9 @@ const DashboardView = {
         const quotes = response.responseJSON[0];
 
         document.getElementById('quotes-ko').textContent = quotes.language_ko;
-        document.getElementById('author-ko').textContent ='  By.' + quotes.author_ko;
+        document.getElementById('author-ko').textContent ='– By.' + quotes.author_ko;
         document.getElementById('quotes-en').textContent = quotes.language_en;
-        document.getElementById('author-en').textContent ='  By.' + quotes.author_en;
+        document.getElementById('author-en').textContent ='– By.' + quotes.author_en;
 
     },
 

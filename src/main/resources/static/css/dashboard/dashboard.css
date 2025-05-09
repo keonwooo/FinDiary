@@ -3,3 +3,28 @@
     align-items: center;
     justify-content: center;
 }
+
+.quote-text {
+    font-size: 1.5em;
+    font-style: italic;
+    margin-bottom: 10px; /* 명언과 저자 간격 */
+    line-height: 1.5;
+    opacity: 0.5;
+    font-weight: bold;
+}
+
+.quote-author {
+    text-align: right;
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+    opacity: 0.5;
+}
+
+.quote-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+}
