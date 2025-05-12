@@ -5,21 +5,7 @@
 
 <!-- SQL Mapping -->
 <mapper namespace="com.kwfw.findiary.mapper.diary.DiaryMapper">
-    <select id="getUserDiary" parameterType="com.kwfw.findiary.model.DiaryVO" resultType="com.kwfw.findiary.model.DiaryDto">
-        SELECT *
-        FROM TB_TRADING_INFO
-        WHERE 1 = 1
-        <if test="search_selected_account_num != null and search_selected_account_num.size > 0">
-            AND account_num IN
-            <foreach item="account_num" collection="search_selected_account_num" open="(" separator="," close=")">
-                #{account_num}
-            </foreach>
-        </if>
-        AND trading_date LIKE CONCAT(#{search_date}, '%')
-        AND status = 1
-    </select>
-
-    <insert id="insertTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto">
+    <insert id="insertTradingDiary" parameterType="com.kwfw.findiary.model.DiaryDto" useGeneratedKeys="true" keyProperty="trading_num">
         INSERT INTO TB_TRADING_INFO
         ( ticker
         , stock_name
@@ -29,6 +15,28 @@
         , currency
         , trading_date
         , account_num
+        , status
+        , descr)
+        VALUES ( #{ticker}
+               , ''
+               , #{trading_count}
+               , #{trading_type}
+               , #{trading_price}
+               , #{currency}
+               , #{trading_date}
+               , #{account_num}
+               , 1
+               , NULL)
+    </insert>
+
+    <insert id="insertTradingMapping" parameterType="com.kwfw.findiary.model.TradingMappingVO">
+        INSERT INTO TB_TRADING_MAPPING
+        ( buy_trading_num
+        , sell_trading_num
+        , sell_count
+        , sell_price
+        , profit
+        , currency
         , status
         , descr)
         VALUES ( #{ticker}
@@ -62,4 +70,42 @@
         WHERE
             trading_num = #{trading_num}
     </update>
+
+    <select id="getUserDiary" parameterType="com.kwfw.findiary.model.DiaryVO" resultType="com.kwfw.findiary.model.DiaryDto">
+        SELECT *
+        FROM TB_TRADING_INFO
+        WHERE 1 = 1
+        <if test="search_selected_account_num != null and search_selected_account_num.size > 0">
+            AND account_num IN
+            <foreach item="account_num" collection="search_selected_account_num" open="(" separator="," close=")">
+                #{account_num}
+            </foreach>
+        </if>
+        AND trading_date LIKE CONCAT(#{search_date}, '%')
+        AND status = 1
+    </select>
+
+    <select id="selectRemainingBuyOrders" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="com.kwfw.findiary.model.DiaryDto">
+        SELECT *
+        FROM TB_TRADING_INFO tti
+        WHERE tti.ticker = #{ticker}
+          AND tti.account_num = #{account_num}
+          AND tti.trading_type = 'BUY'
+          AND tti.status = 1
+          AND (
+            tti.trading_count >
+            (
+                SELECT COALESCE(SUM(sell_count), 0)
+                FROM TB_TRADING_MAPPING ttm
+                WHERE ttm.buy_trading_num = tti.trading_num
+            )
+            )
+        ORDER BY tti.trading_date ASC
+    </select>
+
+    <select id="getAlreadyMappedCount" parameterType="int" resultType="int">
+        SELECT COALESCE(SUM(ttm.sell_count), 0)
+        FROM TB_TRADING_MAPPING ttm
+        WHERE ttm.buy_trading_num = #{tradingNum}
+    </select>
 </mapper>
