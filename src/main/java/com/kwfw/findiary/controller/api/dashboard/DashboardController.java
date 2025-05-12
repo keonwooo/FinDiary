@@ -1,5 +1,6 @@
 package com.kwfw.findiary.controller.api.dashboard;
 
+import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.QuotesVO;
 import com.kwfw.findiary.service.dashboard.DashboardService;
 import groovy.util.logging.Slf4j;
@@ -27,5 +28,13 @@ public class DashboardController {
         List<QuotesVO> userDiaries = dashboardService.getQuotes();
 
         return ResponseEntity.ok(Objects.requireNonNullElse(userDiaries, Collections.emptyList()));
+    }
+
+    @PostMapping("/getShareholding")
+    public ResponseEntity<BankAccountDto> getShareholding() {
+
+        BankAccountDto bankAccountInfo = dashboardService.getShareholding();
+
+        return ResponseEntity.ok(bankAccountInfo);
     }
 }

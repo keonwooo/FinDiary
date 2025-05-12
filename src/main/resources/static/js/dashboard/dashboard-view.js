@@ -44,6 +44,8 @@ const DashboardView = {
         DashboardView.renderWorldClock();
 
         DashboardView.getQuotes();
+
+        DashboardView.renderShareholding();
     },
 
     /********************************************************************************
@@ -85,18 +87,28 @@ const DashboardView = {
         formatOptions.timeZone = 'America/New_York';
         const usaTime = new Intl.DateTimeFormat('en-GB', formatOptions).format(now);
 
+        const usMarketStatus = FinDiary.getUSMarketStatus();
+        const krMarketStatus = FinDiary.getKoreaMarketStatus();
+
         // 미국장 open 시 red
-        if (FinDiary.getUSMarketStatus() === 'closed') {
+        if (usMarketStatus === 'closed') {
             document.getElementById('usa-time').style.color = 'black';
+            document.getElementById('usa-time').style.opacity = '0.3';
+        } else if (usMarketStatus === 'premarket' || usMarketStatus === 'aftermarket') {
+            document.getElementById('usa-time').style.color = 'blue';
+            document.getElementById('usa-time').style.opacity = '1';
         } else {
             document.getElementById('usa-time').style.color = 'red';
+            document.getElementById('usa-time').style.opacity = '1';
         }
 
         // 한국장 open 시 red
-        if (FinDiary.getKoreaMarketStatus() === 'closed') {
+        if (krMarketStatus === 'closed') {
             document.getElementById('korea-time').style.color = 'black';
+            document.getElementById('korea-time').style.opacity = '0.3';
         } else {
             document.getElementById('korea-time').style.color = 'red';
+            document.getElementById('usa-time').style.opacity = '1';
         }
 
         document.getElementById('korea-time').textContent = koreaTime;
@@ -107,15 +119,53 @@ const DashboardView = {
         setTimeout(DashboardView.renderWorldClock, delay);
     },
 
-    getQuotes: function() {
+    //-------------------------------------------------------------------------------
+    // getQuotes: 명언 rendering
+    //-------------------------------------------------------------------------------
+    getQuotes: function () {
         const response = DashboardApi.getQuotes();
         const quotes = response.responseJSON[0];
 
         document.getElementById('quotes-ko').textContent = quotes.language_ko;
-        document.getElementById('author-ko').textContent ='– By.' + quotes.author_ko;
+        document.getElementById('author-ko').textContent = '– By.' + quotes.author_ko;
         document.getElementById('quotes-en').textContent = quotes.language_en;
-        document.getElementById('author-en').textContent ='– By.' + quotes.author_en;
+        document.getElementById('author-en').textContent = '– By.' + quotes.author_en;
+    },
 
+    //-------------------------------------------------------------------------------
+    // renderShareholding: 보유 현황 rendering
+    //-------------------------------------------------------------------------------
+    renderShareholding: function () {
+        // TODO get 보유 현황
+        // DashboardApi.getShareholding();
+        const labels = ['Red', 'Blue', 'Yellow'];
+
+        // 동적으로 색상 생성
+        const backgroundColors = generateColors(labels.length);
+
+        renderChart(
+            'chart-pie-shareholding',       // canvas id
+            'pie',           // chart type
+            labels, // labels
+            [{
+                label: 'Votes',
+                data: [12, 19, 3],
+                backgroundColor: backgroundColors
+            }],
+            {
+                responsive: true,               // 반응형
+                maintainAspectRatio: false,    // div에 맞춤
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    title: {
+                        display: false,
+                        // text: 'Color Votes Chart',
+                    }
+                }
+            }
+        );
     },
 
     //-------------------------------------------------------------------------------

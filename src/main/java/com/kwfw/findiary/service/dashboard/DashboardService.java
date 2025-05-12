@@ -1,6 +1,7 @@
 package com.kwfw.findiary.service.dashboard;
 
 import com.kwfw.findiary.mapper.dashboard.DashboardMapper;
+import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.QuotesVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,5 +16,9 @@ public class DashboardService {
 
     public List<QuotesVO> getQuotes() {
         return dashboardMapper.getQuotes();
+    }
+
+    public BankAccountDto getShareholding() {
+        return dashboardMapper.getShareholding();
     }
 }

@@ -9,16 +9,18 @@
     font-style: italic;
     margin-bottom: 10px; /* 명언과 저자 간격 */
     line-height: 1.5;
-    opacity: 0.5;
-    font-weight: bold;
 }
 
 .quote-author {
     text-align: right;
     font-size: 1em;
-    font-weight: bold;
     color: #555;
+}
+
+.quotes-font {
+    font-size: 0.9vw;
     opacity: 0.5;
+    font-weight: bold;
 }
 
 .quote-box {
@@ -27,4 +29,9 @@
     align-items: center;
     text-align: center;
     flex-direction: column;
+}
+
+.market-timeer {
+    font-size: 1.2vw;
+    font-weight: bold;
 }

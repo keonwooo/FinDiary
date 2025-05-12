@@ -5,11 +5,19 @@
 
 <!-- SQL Mapping -->
 <mapper namespace="com.kwfw.findiary.mapper.dashboard.DashboardMapper">
-    <select id="getQuotes" parameterType="com.kwfw.findiary.model.QuotesVO">
+    <select id="getQuotes" resultType="com.kwfw.findiary.model.QuotesVO">
         SELECT *
         FROM TB_QUOTES_INFO
         WHERE status = 1
         ORDER BY rand()
         LIMIT 1
+    </select>
+
+    <select id="getShareholding" resultType="com.kwfw.findiary.model.BankAccountDto">
+--         SELECT *
+--         FROM TB_QUOTES_INFO
+--         WHERE status = 1
+--         ORDER BY rand()
+--             LIMIT 1
     </select>
 </mapper>

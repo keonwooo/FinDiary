@@ -9,6 +9,8 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FinDiary</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/lib/chartjs/chartjs_kw.js"></script>
     <script src="/js/dashboard/dashboard-view.js"></script>
     <script src="/js/dashboard/dashboard-api.js"></script>
 
@@ -40,14 +42,14 @@
                 </div>
             </li>
             <li class="w10p">
-                <div class="contBox h100p">
+                <div class="contBox h100p all-center">
                     <p class="center">
                         KR
-                        <span id="korea-time" class="font30b"></span>
+                        <span id="korea-time" class="market-timeer"></span>
                     </p>
                     <p class="center">
                         US
-                        <span id="usa-time" class="font30b"></span>
+                        <span id="usa-time" class="market-timeer"></span>
                     </p>
                 </div>
             </li>
@@ -58,6 +60,7 @@
             <li>
                 <div class="contBox h100p">
                     보유현황 (원형 차트)
+                    <canvas id="chart-pie-shareholding"></canvas>
                 </div>
             </li>
             <li>

@@ -30,6 +30,9 @@ const DashboardApi = {
         return kwfw.ajax({url: `${DashboardApi.requestmapping}/getQuotes`, params});
     },
 
+    getShareholding: (params) => {
+        return kwfw.ajax({url: `${DashboardApi.requestmapping}/getShareholding`, params});
+    },
 
     /********************************************************************************
      * Dummay Object : 더미
