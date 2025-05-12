@@ -161,11 +161,11 @@ const FinDiary = {
 
         const dst = FinDiary.isDST(now); // DST 여부 판단
         const offset = dst ? -4 : -5; // UTC 기준 EST: -5, EDT: -4
-        const nyTime = new Date(now.getTime() + offset * 60 * 60 * 1000); // 뉴욕 현지 시간
 
-        const hour = nyTime.getHours();
-        const minute = nyTime.getMinutes();
-        const totalMinutes = hour * 60 + minute;
+        const utcHour = now.getUTCHours();
+        const utcMin = now.getUTCMinutes();
+        const estHour = utcHour + offset;
+        const totalMinutes = estHour * 60 + utcMin;
 
         // 시간 기준 (현지 시간)
         const preMarketStart = 4 * 60;      // 04:00

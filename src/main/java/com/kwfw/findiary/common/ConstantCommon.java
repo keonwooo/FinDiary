@@ -12,6 +12,9 @@ public class ConstantCommon {
     public static final String COUNTRY_CODE_KOREA = "KR";
     public static final String COUNTRY_CODE_US = "US";
 
+    public static final String TRADING_TYPE_SELL = "sell";
+    public static final String TRADING_TYPE_BUY = "buy";
+
     // ANSI 색상 코드
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";

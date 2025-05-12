@@ -108,7 +108,7 @@ const DashboardView = {
             document.getElementById('korea-time').style.opacity = '0.3';
         } else {
             document.getElementById('korea-time').style.color = 'red';
-            document.getElementById('usa-time').style.opacity = '1';
+            document.getElementById('korea-time').style.opacity = '1';
         }
 
         document.getElementById('korea-time').textContent = koreaTime;

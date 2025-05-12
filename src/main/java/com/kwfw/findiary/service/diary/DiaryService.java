@@ -1,5 +1,6 @@
 package com.kwfw.findiary.service.diary;
 
+import com.kwfw.findiary.common.ConstantCommon;
 import com.kwfw.findiary.mapper.diary.DiaryMapper;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.DiaryVO;
@@ -23,7 +24,20 @@ public class DiaryService {
     }
 
     public boolean updateTradingDiary(DiaryDto diaryDto) {
-        return diaryMapper.updateTradingDiary(diaryDto) > 0;
+        boolean result = true;
+
+        String tradingType = diaryDto.getTrading_type();
+//        if (tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+//            // 매수
+//            result = diaryMapper.updateTradingDiary(diaryDto) > 0;
+//        } else {
+//            // 매도
+//        }
+
+        result = diaryMapper.updateTradingDiary(diaryDto) > 0;
+
+
+        return result;
     }
 
     public boolean deleteTradingDiary(DiaryDto diaryDto) {
