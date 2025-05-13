@@ -39,14 +39,12 @@
         , currency
         , status
         , descr)
-        VALUES ( #{ticker}
-               , ''
-               , #{trading_count}
-               , #{trading_type}
-               , #{trading_price}
+        VALUES ( #{buy_trading_num}
+               , #{sell_trading_num}
+               , #{sell_count}
+               , #{sell_price}
+               , #{profit}
                , #{currency}
-               , #{trading_date}
-               , #{account_num}
                , 1
                , NULL)
     </insert>
@@ -94,11 +92,9 @@
           AND tti.status = 1
           AND (
             tti.trading_count >
-            (
-                SELECT COALESCE(SUM(sell_count), 0)
-                FROM TB_TRADING_MAPPING ttm
-                WHERE ttm.buy_trading_num = tti.trading_num
-            )
+            (SELECT COALESCE(SUM(sell_count), 0)
+             FROM TB_TRADING_MAPPING ttm
+             WHERE ttm.buy_trading_num = tti.trading_num)
             )
         ORDER BY tti.trading_date ASC
     </select>

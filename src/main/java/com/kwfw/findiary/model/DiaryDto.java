@@ -8,7 +8,7 @@ public class DiaryDto {
     private int trading_count;
     private int status;
 
-    private long trading_price;
+    private float trading_price;
 
     private String ticker;
     private String stock_name;

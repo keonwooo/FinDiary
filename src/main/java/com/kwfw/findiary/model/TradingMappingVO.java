@@ -8,8 +8,8 @@ public class TradingMappingVO {
     private int buy_trading_num;
     private int sell_trading_num;
     private int sell_count;
-    private long sell_price;
-    private long profit;
+    private float sell_price;
+    private float profit;
     private int status;
 
     private String currency;
