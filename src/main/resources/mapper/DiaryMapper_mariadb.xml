@@ -102,6 +102,14 @@
     <select id="getAlreadyMappedCount" parameterType="int" resultType="int">
         SELECT COALESCE(SUM(ttm.sell_count), 0)
         FROM TB_TRADING_MAPPING ttm
-        WHERE ttm.buy_trading_num = #{tradingNum}
+        WHERE ttm.buy_trading_num = #{trading_num}
+    </select>
+
+    <select id="checkTradingMapping" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="int">
+        SELECT count(*)
+        FROM TB_TRADING_MAPPING
+        WHERE 1 = 1
+          AND sell_trading_num = #{trading_num}
+          AND status = 1
     </select>
 </mapper>

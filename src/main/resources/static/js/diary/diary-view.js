@@ -323,6 +323,10 @@ const DiaryView = {
     },
 
     deleteDiary: function () {
+        if (DiaryView.checkTradingMapping()) {
+            return;
+        }
+
         const contentJson = {
             "titleTxt": "매매 기록 삭제",
             "bodyTxt": "매매 기록을 삭제하시겠습니까?",
@@ -348,6 +352,12 @@ const DiaryView = {
             }
         };
         FinDiary.popup.openNotificationModal(contentJson);
+    },
+    checkTradingMapping: function() {
+        const data = {
+            "trading_num": JSON.parse(_$("#edit-trading-selectedinfo").val()).trading_num
+        }
+        return DiaryApi.checkTradingMapping(data).responseJSON;
     },
 
     /********************************************************************************

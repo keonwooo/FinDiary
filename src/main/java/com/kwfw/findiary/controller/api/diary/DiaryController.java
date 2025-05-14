@@ -75,6 +75,11 @@ public class DiaryController {
         return ResponseEntity.ok(diaryService.updateTradingDiary(diaryDto));
     }
 
+    @PostMapping("/checkTradingMapping")
+    public ResponseEntity<Boolean> checkTradingMapping(@RequestBody DiaryDto diaryDto) {
+        return ResponseEntity.ok(diaryService.checkTradingMapping(diaryDto));
+    }
+
     @PostMapping("/deleteTradingDiary")
     public ResponseEntity<Boolean> deleteTradingDiary(@RequestBody DiaryDto diaryDto) {
         return ResponseEntity.ok(diaryService.deleteTradingDiary(diaryDto));

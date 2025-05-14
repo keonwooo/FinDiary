@@ -15,6 +15,8 @@ public interface DiaryMapper {
 
     int updateTradingDiary(DiaryDto diaryDto);
 
+    int checkTradingMapping(DiaryDto diaryDto);
+
     int deleteTradingDiary(DiaryDto diaryDto);
 
     int getAlreadyMappedCount(int trading_num);

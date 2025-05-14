@@ -72,6 +72,10 @@ public class DiaryService {
         return diaryMapper.updateTradingDiary(diaryDto) > 0;
     }
 
+    public boolean checkTradingMapping(DiaryDto diaryDto) {
+        return diaryMapper.checkTradingMapping(diaryDto) > 0;
+    }
+
     public boolean deleteTradingDiary(DiaryDto diaryDto) {
         return diaryMapper.deleteTradingDiary(diaryDto) > 0;
     }

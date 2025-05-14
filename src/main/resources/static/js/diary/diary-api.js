@@ -54,6 +54,11 @@ const DiaryApi = {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/updateTradingDiary`, params});
     },
 
+    // 일지 삭제 전 check tradingMaping
+    checkTradingMapping: (params) => {
+        return kwfw.ajax({url: `${DiaryApi.requestmapping}/checkTradingMapping`, params});
+    },
+
     // delete 개인 일지
     deleteTradingDiary: (params) => {
         return kwfw.ajax({url: `${DiaryApi.requestmapping}/deleteTradingDiary`, params});
