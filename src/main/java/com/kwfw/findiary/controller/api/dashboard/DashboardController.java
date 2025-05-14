@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Slf4j
@@ -36,5 +37,10 @@ public class DashboardController {
         BankAccountDto bankAccountInfo = dashboardService.getShareholding();
 
         return ResponseEntity.ok(bankAccountInfo);
+    }
+
+    @PostMapping("/getFearGreedIndex")
+    public ResponseEntity<Map<String, String>> getFearGreedIndex() {
+        return ResponseEntity.ok(dashboardService.getFearGreedIndex());
     }
 }
