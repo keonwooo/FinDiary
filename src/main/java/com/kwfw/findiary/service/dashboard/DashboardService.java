@@ -43,6 +43,9 @@ public class DashboardService {
             // 2. GET 요청 설정
             conn.setRequestMethod("GET");
             conn.setRequestProperty("Accept", "application/json");
+            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+            conn.setRequestProperty("Referer", "https://edition.cnn.com/");
+            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.9");
 
             // 3. 응답 코드 확인
             int responseCode = conn.getResponseCode();
