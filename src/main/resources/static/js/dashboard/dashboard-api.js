@@ -34,6 +34,10 @@ const DashboardApi = {
         return kwfw.ajax({url: `${DashboardApi.requestmapping}/getShareholding`, params});
     },
 
+    getFearGreedIndex: (params) => {
+        return kwfw.ajax({url: `${DashboardApi.requestmapping}/getFearGreedIndex`, params});
+    },
+
     /********************************************************************************
      * Dummay Object : 더미
      ********************************************************************************/

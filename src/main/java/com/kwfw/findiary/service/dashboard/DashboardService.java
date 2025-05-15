@@ -68,7 +68,7 @@ public class DashboardService {
 
             // 6. 예시: 현재 값 출력
             JSONObject fearGreedData = json.getJSONObject("fear_and_greed");
-            String currentValue = fearGreedData.getString("score");
+            String currentValue = Integer.toString(fearGreedData.getInt("score"));
             String classification = fearGreedData.getString("rating");
 
             log.info("Fear & Greed Index: {} ({})", currentValue, classification);

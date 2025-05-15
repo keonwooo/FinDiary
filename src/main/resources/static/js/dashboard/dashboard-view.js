@@ -47,6 +47,8 @@ const DashboardView = {
         DashboardView.getQuotes();
 
         DashboardView.renderShareholding();
+
+        DashboardView.renderFearAndGreed();
     },
 
     /********************************************************************************
@@ -173,31 +175,91 @@ const DashboardView = {
     // renderFearAndGreed: Fear And Greed Index 차트
     //-------------------------------------------------------------------------------
     renderFearAndGreed: function () {
-        const value = 70; // 예: Fear & Greed Index 값 (0~100)
-        const remaining = 100 - value;
+        const response = DashboardApi.getFearGreedIndex();
+        const indexValue = response.responseJSON.currentValue;
+        // const indexValue = [72];  // 0 ~ 100
 
-        const ctx = document.getElementById('chart-gague-fearandgreed').getContext('2d');
-        const gaugeChart = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                datasets: [{
-                    data: [value, remaining],
-                    backgroundColor: ['#4caf50', '#e0e0e0'], // 초록, 회색
-                    borderWidth: 0,
-                    circumference: 180,
-                    rotation: 270,
-                    cutout: '80%',
-                }]
-            },
-            options: {
-                responsive: true,               // 반응형
-                maintainAspectRatio: false,    // div에 맞춤
-                plugins: {
-                    tooltip: {enabled: false},
-                    legend: {display: false},
+        // 정의된 범위
+        const zones = [
+            { label: 'Extreme Fear', range: [0, 24] },
+            { label: 'Fear',         range: [25, 44] },
+            { label: 'Neutral',      range: [45, 55] },
+            { label: 'Greed',        range: [56, 74] },
+            { label: 'Extreme Greed',range: [75, 100] }
+        ];
+
+        // 색상 생성 함수
+        function generateColors(count) {
+            const colors = [];
+            for (let i = 0; i < count; i++) {
+                const hue = Math.floor((360 / count) * i); // 0~360 색상 고르게 분산
+                colors.push(`hsl(${hue}, 70%, 60%)`);
+            }
+            return colors;
+        }
+
+        // 배경 zone 색상 지정
+        const colors = generateColors(zones.length);
+        const gaugeBg = document.getElementById('gauge-bg');
+        zones.forEach((zone, i) => {
+            const div = document.createElement('div');
+            div.className = 'zone';
+            div.style.backgroundColor = colors[i];
+            div.innerText = zone.label;
+            gaugeBg.appendChild(div);
+        });
+
+        // 현재 상태 판단
+        function getStatus(value) {
+            for (let i = 0; i < zones.length; i++) {
+                const [min, max] = zones[i].range;
+                if (value >= min && value <= max) {
+                    return { label: zones[i].label, color: colors[i] };
                 }
             }
+            return { label: 'Unknown', color: '#888' };
+        }
+
+        // 게이지 바 설정
+        const bar = document.getElementById('gauge-bar');
+        const label = document.getElementById('gauge-label');
+
+        window.addEventListener('load', () => {
+            const status = getStatus(indexValue);
+            bar.style.width = indexValue + '%';
+            bar.style.backgroundColor = status.color;
+            label.textContent = `${indexValue} - ${status.label}`;
         });
+
+
+
+        // const value = 70; // 예: Fear & Greed Index 값 (0~100)
+        // const remaining = 100 - value;
+        //
+        // DashboardApi.getFearGreedIndex();
+        //
+        // const ctx = document.getElementById('chart-gague-fearandgreed').getContext('2d');
+        // const gaugeChart = new Chart(ctx, {
+        //     type: 'doughnut',
+        //     data: {
+        //         datasets: [{
+        //             data: [value, remaining],
+        //             backgroundColor: ['#4caf50', '#e0e0e0'], // 초록, 회색
+        //             borderWidth: 0,
+        //             circumference: 180,
+        //             rotation: 270,
+        //             cutout: '80%',
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,               // 반응형
+        //         maintainAspectRatio: false,    // div에 맞춤
+        //         plugins: {
+        //             tooltip: {enabled: false},
+        //             legend: {display: false},
+        //         }
+        //     }
+        // });
     },
 
     //-------------------------------------------------------------------------------

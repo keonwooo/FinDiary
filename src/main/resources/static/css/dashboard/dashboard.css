@@ -35,3 +35,53 @@
     font-size: 1.2vw;
     font-weight: bold;
 }
+
+.gauge-wrapper {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.gauge-background {
+    display: flex;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.zone {
+    flex: 1;
+    text-align: center;
+    line-height: 50px;
+    font-size: 14px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.gauge-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #333;
+    width: 0;
+    transition: width 1.5s ease;
+    z-index: 1;
+    opacity: 0.3;
+}
+
+.gauge-label {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: center;
+    height: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    font-size: 18px;
+    z-index: 2;
+}
