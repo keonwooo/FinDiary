@@ -10,6 +10,7 @@
  * -------------------------------------------------------------------------------
  *********************************************************************************/
 "use strict";
+
 /********************************************************************************
  * Global Variable : 전역변수
  ********************************************************************************/
@@ -166,6 +167,37 @@ const DashboardView = {
                 }
             }
         );
+    },
+
+    //-------------------------------------------------------------------------------
+    // renderFearAndGreed: Fear And Greed Index 차트
+    //-------------------------------------------------------------------------------
+    renderFearAndGreed: function () {
+        const value = 70; // 예: Fear & Greed Index 값 (0~100)
+        const remaining = 100 - value;
+
+        const ctx = document.getElementById('chart-gague-fearandgreed').getContext('2d');
+        const gaugeChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: [value, remaining],
+                    backgroundColor: ['#4caf50', '#e0e0e0'], // 초록, 회색
+                    borderWidth: 0,
+                    circumference: 180,
+                    rotation: 270,
+                    cutout: '80%',
+                }]
+            },
+            options: {
+                responsive: true,               // 반응형
+                maintainAspectRatio: false,    // div에 맞춤
+                plugins: {
+                    tooltip: {enabled: false},
+                    legend: {display: false},
+                }
+            }
+        });
     },
 
     //-------------------------------------------------------------------------------
