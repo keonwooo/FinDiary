@@ -31,6 +31,10 @@ public class DiaryService {
             // 매도
             List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
 
+            if (buyOrders.isEmpty()) {
+                throw new RuntimeException("매도 수량 부족");
+            }
+
             // TODO 수익률 반환
             float profit = 0;
             int remainingSellCount = diaryDto.getTrading_count();
@@ -61,7 +65,7 @@ public class DiaryService {
         TradingMappingVO insertTradingVO = new TradingMappingVO();
         insertTradingVO.setBuy_trading_num(buyOrder.getTrading_num());
         insertTradingVO.setSell_trading_num(tradingNum);
-        insertTradingVO.setSell_count(buyRemaining);
+        insertTradingVO.setSell_count(Integer.min(buyRemaining, diaryDto.getTrading_count()));
         insertTradingVO.setSell_price(diaryDto.getTrading_price());
         insertTradingVO.setProfit(profit);
         insertTradingVO.setCurrency(diaryDto.getCurrency());

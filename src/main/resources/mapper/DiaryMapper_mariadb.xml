@@ -100,9 +100,11 @@
           AND tti.status = 1
           AND (
             tti.trading_count >
-            (SELECT COALESCE(SUM(sell_count), 0)
+            (SELECT COALESCE(SUM(ttm.sell_count), 0)
              FROM TB_TRADING_MAPPING ttm
-             WHERE ttm.buy_trading_num = tti.trading_num)
+             WHERE 1 = 1
+               AND ttm.sell_trading_num = tti.trading_num
+               AND ttm.status = 1)
             )
         ORDER BY tti.trading_date ASC
     </select>
@@ -110,7 +112,9 @@
     <select id="getAlreadyMappedCount" parameterType="int" resultType="int">
         SELECT COALESCE(SUM(ttm.sell_count), 0)
         FROM TB_TRADING_MAPPING ttm
-        WHERE ttm.buy_trading_num = #{trading_num}
+        WHERE 1 = 1
+          AND ttm.buy_trading_num = #{trading_num}
+          AND status = 1
     </select>
 
     <select id="checkTradingMapping" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="int">
