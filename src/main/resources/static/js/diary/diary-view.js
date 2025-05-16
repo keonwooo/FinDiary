@@ -156,11 +156,17 @@ const DiaryView = {
             _$("#add-trading-ticker").prop('readonly', true);
 
             // set 삭제 버튼
-            _$("#add-trading-delete-btn").show();
-            _$("#add-trading-delete-btn").unbind('click');
-            _$("#add-trading-delete-btn").on("click", function () {
-                DiaryView.deleteDiary();
-            });
+            if (DiaryView.checkTradingMapping()) {
+                // 매도 기록 있는 경우 삭제 버튼 보이지 않음
+                // TODO 초기화, 수정 내용들 모두 수정할 수 없게
+                _$("#add-trading-delete-btn").hide();
+            } else {
+                _$("#add-trading-delete-btn").show();
+                _$("#add-trading-delete-btn").unbind('click');
+                _$("#add-trading-delete-btn").on("click", function () {
+                    DiaryView.deleteDiary();
+                });
+            }
 
             // set 초기화 버튼
             _$("#add-trading-reset-btn").unbind('click');
@@ -324,6 +330,7 @@ const DiaryView = {
 
     deleteDiary: function () {
         if (DiaryView.checkTradingMapping()) {
+            // TODO 필요한지 확인 필요
             return;
         }
 
@@ -353,6 +360,7 @@ const DiaryView = {
         };
         FinDiary.popup.openNotificationModal(contentJson);
     },
+
     checkTradingMapping: function() {
         const data = {
             "trading_num": JSON.parse(_$("#edit-trading-selectedinfo").val()).trading_num

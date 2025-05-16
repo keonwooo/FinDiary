@@ -77,6 +77,13 @@ public class DiaryService {
     }
 
     public boolean deleteTradingDiary(DiaryDto diaryDto) {
+        // mapping된 매매 기록 삭제
+        deleteTradingMapping(diaryDto);
+
         return diaryMapper.deleteTradingDiary(diaryDto) > 0;
+    }
+
+    private void deleteTradingMapping(DiaryDto diaryDto) {
+        diaryMapper.deleteTradingMapping(diaryDto);
     }
 }

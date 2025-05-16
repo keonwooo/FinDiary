@@ -69,6 +69,14 @@
             trading_num = #{trading_num}
     </update>
 
+    <update id="deleteTradingMapping" parameterType="com.kwfw.findiary.model.DiaryDto">
+        UPDATE TB_TRADING_MAPPING
+        SET
+            status = 0
+        WHERE
+            sell_trading_num = #{trading_num}
+    </update>
+
     <select id="getUserDiary" parameterType="com.kwfw.findiary.model.DiaryVO" resultType="com.kwfw.findiary.model.DiaryDto">
         SELECT *
         FROM TB_TRADING_INFO
@@ -109,7 +117,7 @@
         SELECT count(*)
         FROM TB_TRADING_MAPPING
         WHERE 1 = 1
-          AND sell_trading_num = #{trading_num}
+          AND buy_trading_num = #{trading_num}
           AND status = 1
     </select>
 </mapper>

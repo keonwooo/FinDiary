@@ -9,3 +9,5 @@ const TRADING_TYPE_BUY = "buy";
 
 const COUNTRY_CODE_KOREA = "KR";
 const COUNTRY_CODE_US = "US";
+
+const HTTP_SERVLET_UNAUTHORIZED = 401;

@@ -9,9 +9,11 @@ import java.util.List;
 
 @Mapper
 public interface DiaryMapper {
-    int insertTradingDiary(DiaryDto diaryDto);
-
     void insertTradingMapping(TradingMappingVO tradingMappingVO);
+
+    void deleteTradingMapping(DiaryDto diaryDto);
+
+    int insertTradingDiary(DiaryDto diaryDto);
 
     int updateTradingDiary(DiaryDto diaryDto);
 

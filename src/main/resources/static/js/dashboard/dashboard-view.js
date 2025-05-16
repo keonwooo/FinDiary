@@ -44,8 +44,6 @@ const DashboardView = {
 
         DashboardView.renderWorldClock();
 
-        DashboardView.getQuotes();
-
         DashboardView.renderShareholding();
 
         DashboardView.renderFearAndGreed();
@@ -67,6 +65,8 @@ const DashboardView = {
      ********************************************************************************/
     initDataLoading: function () {
         console.log(`${this.name} initDataLoading ::::: `);
+
+        DashboardView.getQuotes();
     },
 
     /********************************************************************************

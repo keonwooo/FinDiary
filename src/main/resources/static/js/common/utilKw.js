@@ -72,7 +72,23 @@ const kwfw = {
 
             },
             error: function (xhr) {
-                console.log("ajax Error ::: ", xhr)
+                console.log("ajax Error ::: ", xhr);
+
+                if (xhr.status === HTTP_SERVLET_UNAUTHORIZED) {
+                    const contentJson = {
+                        "titleTxt": "세션 타임아웃",
+                        "bodyTxt": "다시 로그인해주세요.",
+                        "confirmFlag": false,
+                        "dangerFlag": false,
+                        "dangerBtnTxt": false,
+                        "dangerBtnFnc": false
+                    };
+                    FinDiary.popup.openNotificationModal(contentJson);
+                }
+
+                setTimeout(function() {
+                    window.location.href = "/logout";
+                }, 5000);
             }
         });
     },
