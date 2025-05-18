@@ -21,9 +21,14 @@ public class ViewController {
 
     @GetMapping("/")
     public String index(HttpSession session) {
-        String user = (String) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
-        if (user != null) {
-            return "redirect:/dashboard";
+        try {
+            String user = (String) session.getAttribute(ConstantCommon.SESSION_LOGIN_USER);
+
+            if (user != null) {
+                return "redirect:/dashboard";
+            }
+        } catch (Exception e) {
+            return "login/login";
         }
         return "login/login";
     }

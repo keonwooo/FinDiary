@@ -27,11 +27,13 @@ public class DiaryService {
 
         int tradingNum = diaryDto.getTrading_num();
         String tradingType = diaryDto.getTrading_type();
+        // TODO 자산 총액 history 테이블 update 필요
         if (result && !tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
             // 매도
             List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
 
             if (buyOrders.isEmpty()) {
+                // TODO 매도 물량 없는 경우 팝업 필요
                 throw new RuntimeException("매도 수량 부족");
             }
 
