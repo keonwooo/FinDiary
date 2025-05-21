@@ -21,4 +21,20 @@
           AND user_id = #{user_id}
           AND status = 1
     </select>
+
+    <select id="getBankAccountProperty" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="com.kwfw.findiary.model.BankAccountDto">
+        SELECT *
+        FROM TB_BANK_ACCOUNT_PROPERTY_INFO
+        WHERE 1 = 1
+          AND account_num = #{account_num}
+          AND currency = #{currency}
+    </select>
+
+    <update id="updateBankAccountProperty" parameterType="com.kwfw.findiary.model.BankAccountDto">
+        UPDATE TB_BANK_ACCOUNT_PROPERTY_INFO
+        SET account_total_property = #{account_total_property}
+        WHERE 1 = 1
+          AND account_num = #{account_num}
+          AND currency = #{currency}
+    </update>
 </mapper>

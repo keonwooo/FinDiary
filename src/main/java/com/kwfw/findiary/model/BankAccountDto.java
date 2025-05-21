@@ -14,8 +14,10 @@ public class BankAccountDto {
     private String create_date;
     private String modify_date;
 
-    private int account_total_property;
+    private float account_total_property;
     private String currency;
+
+
 
     private List<DiaryDto> diaryList;
 }

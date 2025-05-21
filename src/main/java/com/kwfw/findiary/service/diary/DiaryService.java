@@ -1,7 +1,9 @@
 package com.kwfw.findiary.service.diary;
 
 import com.kwfw.findiary.common.ConstantCommon;
+import com.kwfw.findiary.mapper.bankAccount.BankAccountMapper;
 import com.kwfw.findiary.mapper.diary.DiaryMapper;
+import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.DiaryVO;
 import com.kwfw.findiary.model.TradingMappingVO;
@@ -18,17 +20,45 @@ public class DiaryService {
 
     private final DiaryMapper diaryMapper;
 
+    private final BankAccountMapper bankAccountMapper;
+
     public List<DiaryDto> getUserDiary(DiaryVO diaryVO) {
         return diaryMapper.getUserDiary(diaryVO);
     }
 
     public boolean insertTradingDiary(DiaryDto diaryDto) {
-        boolean result = diaryMapper.insertTradingDiary(diaryDto) > 0;
-
-        int tradingNum = diaryDto.getTrading_num();
         String tradingType = diaryDto.getTrading_type();
-        // TODO 자산 총액 history 테이블 update 필요
-        if (result && !tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+
+        BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
+        if (bankAccountDto == null) {
+            // 보유 자산 없음
+            return false;
+        }
+
+        float current_property = bankAccountDto.getAccount_total_property();
+        float trading_price = diaryDto.getTrading_price() * diaryDto.getTrading_count();
+
+        float total_property;
+        if (tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+            // 매수
+            total_property = current_property - trading_price;
+            if (total_property < 0) {
+                return false;
+            }
+        } else {
+            // 매도
+            total_property = current_property + trading_price;
+        }
+
+        bankAccountDto.setAccount_total_property(total_property);
+        bankAccountMapper.updateBankAccountProperty(bankAccountDto);
+
+        // 매매 일지 insert
+        boolean result = diaryMapper.insertTradingDiary(diaryDto) > 0;
+        int tradingNum = diaryDto.getTrading_num();
+
+        // TODO 보유 주식 테이블(TB_HELDING_STOCK) Update or Insert 필요
+        if (result && tradingType.equals(ConstantCommon.TRADING_TYPE_SELL)) {
             // 매도
             List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
 
