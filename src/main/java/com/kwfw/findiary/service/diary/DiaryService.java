@@ -3,10 +3,7 @@ package com.kwfw.findiary.service.diary;
 import com.kwfw.findiary.common.ConstantCommon;
 import com.kwfw.findiary.mapper.bankAccount.BankAccountMapper;
 import com.kwfw.findiary.mapper.diary.DiaryMapper;
-import com.kwfw.findiary.model.BankAccountDto;
-import com.kwfw.findiary.model.DiaryDto;
-import com.kwfw.findiary.model.DiaryVO;
-import com.kwfw.findiary.model.TradingMappingVO;
+import com.kwfw.findiary.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,29 +32,25 @@ public class DiaryService {
             return false;
         }
 
-        float current_property = bankAccountDto.getAccount_total_property();
-        float trading_price = diaryDto.getTrading_price() * diaryDto.getTrading_count();
-
-        float total_property;
-        if (tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
-            // 매수
-            total_property = current_property - trading_price;
-            if (total_property < 0) {
-                return false;
-            }
-        } else {
-            // 매도
-            total_property = current_property + trading_price;
+        // 계좌별 현금 자산 update
+        if (!updateAccountProperty(bankAccountDto, diaryDto.getTrading_price(), diaryDto.getTrading_count(), tradingType)) {
+            return false;
         }
-
-        bankAccountDto.setAccount_total_property(total_property);
-        bankAccountMapper.updateBankAccountProperty(bankAccountDto);
 
         // 매매 일지 insert
         boolean result = diaryMapper.insertTradingDiary(diaryDto) > 0;
         int tradingNum = diaryDto.getTrading_num();
 
-        // TODO 보유 주식 테이블(TB_HELDING_STOCK) Update or Insert 필요
+        // TODO 보유 주식 테이블(TB_HOLDING_STOCK) Update or Insert 필요
+        HoldingStockDto holdingStock = bankAccountMapper.getHoldingStock(diaryDto);
+        if (holdingStock == null) {
+            // 보유 주식 테이블 insert
+            bankAccountMapper.insertHoldingStock(diaryDto);
+        } else {
+            // 보유 주식 테이블 update
+//            bankAccountMapper.updateHoldingStock(diaryDto);
+        }
+
         if (result && tradingType.equals(ConstantCommon.TRADING_TYPE_SELL)) {
             // 매도
             List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
@@ -121,5 +114,26 @@ public class DiaryService {
 
     private void deleteTradingMapping(DiaryDto diaryDto) {
         diaryMapper.deleteTradingMapping(diaryDto);
+    }
+
+    private boolean updateAccountProperty(BankAccountDto bankAccountDto, float trading_price, int trading_count, String trading_type) {
+        float current_property = bankAccountDto.getAccount_total_property();
+        float total_price = trading_price * trading_count;
+
+        float total_property;
+        if (trading_type.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+            // 매수
+            total_property = current_property - total_price;
+            if (total_property < 0) {
+                return false;
+            }
+        } else {
+            // 매도
+            total_property = current_property + total_price;
+        }
+
+        // 계좌 자산 현황 insert
+        bankAccountDto.setAccount_total_property(total_property);
+        return bankAccountMapper.updateBankAccountProperty(bankAccountDto) > 0;
     }
 }

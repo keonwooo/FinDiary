@@ -5,6 +5,35 @@
 
 <!-- SQL Mapping -->
 <mapper namespace="com.kwfw.findiary.mapper.bankAccount.BankAccountMapper">
+
+    <insert id="insertHoldingStock" parameterType="com.kwfw.findiary.model.DiaryDto">
+        INSERT INTO TB_HOLDING_STOCK
+        ( ticker
+        , stock_name
+        , holding_count
+        , holding_price
+        , currency
+        , account_num
+        , status
+        , descr)
+        VALUES ( #{ticker}
+               , ''
+               , #{trading_count}
+               , #{trading_price}
+               , #{currency}
+               , #{account_num}
+               , 1
+               , '')
+    </insert>
+
+    <update id="updateBankAccountProperty" parameterType="com.kwfw.findiary.model.BankAccountDto">
+        UPDATE TB_BANK_ACCOUNT_PROPERTY_INFO
+        SET account_total_property = #{account_total_property}
+        WHERE 1 = 1
+          AND account_num = #{account_num}
+          AND currency = #{currency}
+    </update>
+
     <select id="getSearchBankAccountNumList" parameterType="com.kwfw.findiary.model.UserInfoVO" resultType="com.kwfw.findiary.model.BankAccountDto">
         SELECT account_num, account_name, user_id
         FROM TB_BANK_ACCOUNT_INFO
@@ -30,11 +59,11 @@
           AND currency = #{currency}
     </select>
 
-    <update id="updateBankAccountProperty" parameterType="com.kwfw.findiary.model.BankAccountDto">
-        UPDATE TB_BANK_ACCOUNT_PROPERTY_INFO
-        SET account_total_property = #{account_total_property}
+    <select id="getHoldingStock" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="com.kwfw.findiary.model.HoldingStockDto">
+        SELECT *
+        FROM TB_HOLDING_STOCK
         WHERE 1 = 1
+          AND ticker = #{ticker}
           AND account_num = #{account_num}
-          AND currency = #{currency}
-    </update>
+    </select>
 </mapper>
