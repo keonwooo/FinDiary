@@ -20,5 +20,7 @@ public interface BankAccountMapper {
 
     HoldingStockDto getHoldingStock(DiaryDto diaryDto);
 
-    int insertHoldingStock(DiaryDto diaryDto);
+    void insertHoldingStock(HoldingStockDto holdingStockDto);
+
+    void updateHoldingStock(HoldingStockDto holdingStockDto);
 }
