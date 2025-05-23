@@ -72,7 +72,7 @@ public class DiaryService {
                 totalTradingCount = holdingStock.getHolding_count() - diaryDto.getTrading_count();
                 totalTradingPrice = currentTradingPrice - addTradingPrice;
 
-                if (totalTradingPrice < 0 || totalTradingCount < 0) {
+                if (totalTradingCount < 0) {
                     // 매도 수량 부족
                     throw new RuntimeException("매도 수량 부족");
                 } else if (totalTradingCount == 0) {
