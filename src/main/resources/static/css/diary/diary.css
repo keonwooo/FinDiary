@@ -3,3 +3,15 @@
     align-items: center;
     justify-content: center;
 }
+
+.profit {
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(231, 76, 60);
+}
+
+.loss {
+    font-size: 25px;
+    font-weight: bold;
+    color: rgb(52, 152, 219);
+}

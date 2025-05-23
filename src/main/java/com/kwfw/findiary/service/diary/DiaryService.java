@@ -140,6 +140,8 @@ public class DiaryService {
 
                 if (remainingSellCount == 0) break;
             }
+            response.put("profit", String.valueOf(profit));
+            response.put("currency", UtilKw.convertCurrency(diaryDto.getCurrency()));
         }
 
         response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
@@ -163,7 +165,7 @@ public class DiaryService {
     }
 
     private static TradingMappingVO getTradingMappingVO(DiaryDto diaryDto, DiaryDto buyOrder, int tradingNum, int buyRemaining) {
-        float profit = (diaryDto.getTrading_price() - buyOrder.getTrading_price()) * buyRemaining;
+        float profit = (diaryDto.getTrading_price() - buyOrder.getTrading_price()) * diaryDto.getTrading_count();
 
         TradingMappingVO insertTradingVO = new TradingMappingVO();
         insertTradingVO.setBuy_trading_num(buyOrder.getTrading_num());

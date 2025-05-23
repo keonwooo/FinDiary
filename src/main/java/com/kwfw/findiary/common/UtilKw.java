@@ -36,4 +36,14 @@ public class UtilKw {
     public static void rollback() {
         TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
     }
+
+    public static String convertCurrency(String currency) {
+        String currencyChar = "";
+        if (currency.equals("dollar")) {
+            return "$";
+        } else if (currency.equals("won")) {
+            return "₩";
+        }
+        return currencyChar;
+    }
 }

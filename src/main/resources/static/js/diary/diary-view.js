@@ -295,14 +295,25 @@ const DiaryView = {
 
             if (resultMap.responseCode === RESPONSE_CODE_SUCCESS) {
                 _$("#add-trading-popup").removeClass("modal-active");
+
+                if (resultMap.profit) {
+                    const contentJson = {
+                        "titleTxt": "수익률",
+                        "bodyTxt": DiaryView.getProfitAndLoss(resultMap.profit, resultMap.currency),
+                        "confirmFlag": false,
+                        "dangerFlag": false
+                    }
+
+                    FinDiary.popup.openNotificationModal(contentJson);
+                }
             } else {
                 const contentJson = {
-                    "titleTxt": "실패",
-                    "bodyTxt": "매매 기록 추가에 실패하였습니다. " +
-                        "<br>사유 : " + resultMap.responseMsg,
+                    "titleTxt": "매매 기록 추가에 실패하였습니다.",
+                    "bodyTxt": "사유 : " + resultMap.responseMsg,
                     "confirmFlag": false,
                     "dangerFlag": false
                 }
+
                 FinDiary.popup.openNotificationModal(contentJson);
             }
         }
@@ -372,10 +383,16 @@ const DiaryView = {
     },
 
     /********************************************************************************
-     * Dummay Object : 더미
+     * etc : 기타 함수
      ********************************************************************************/
-    endPage: function () {
-
+    getProfitAndLoss: function (profit, currency) {
+        let msg;
+        if (profit >= 0) {
+            msg = "<span class = 'profit'>+" + profit + currency + "</span>"
+        } else {
+            msg = "<span class = 'loss'>" + profit + currency + "</span>"
+        }
+        return msg;
     }
 };
 
