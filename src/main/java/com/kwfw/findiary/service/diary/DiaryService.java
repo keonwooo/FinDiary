@@ -1,6 +1,7 @@
 package com.kwfw.findiary.service.diary;
 
 import com.kwfw.findiary.common.ConstantCommon;
+import com.kwfw.findiary.common.UtilKw;
 import com.kwfw.findiary.mapper.bankAccount.BankAccountMapper;
 import com.kwfw.findiary.mapper.diary.DiaryMapper;
 import com.kwfw.findiary.model.*;
@@ -8,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -23,25 +26,37 @@ public class DiaryService {
         return diaryMapper.getUserDiary(diaryVO);
     }
 
-    public boolean insertTradingDiary(DiaryDto diaryDto) {
+    public Map<String, String> insertTradingDiary(DiaryDto diaryDto) {
+        Map<String, String> response = new HashMap<>();
+
         String tradingType = diaryDto.getTrading_type();
 
         BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
         if (bankAccountDto == null) {
             // 보유 자산 없음
-            return false;
+            UtilKw.rollback();
+
+            response.put("responseCode", ConstantCommon.NO_MONEY);
+            response.put("responseMsg", ConstantCommon.NO_MONEY_STR);
+
+            return response;
         }
 
         // 계좌별 현금 자산 update
         if (!updateAccountProperty(bankAccountDto, diaryDto.getTrading_price(), diaryDto.getTrading_count(), tradingType)) {
-            return false;
+            // 보유 자산 부족
+            UtilKw.rollback();
+
+            response.put("responseCode", ConstantCommon.NOT_ENOUGH_MONEY);
+            response.put("responseMsg", ConstantCommon.NOT_ENOUGH_MONEY_STR);
+
+            return response;
         }
 
         // 매매 일지 insert
         boolean result = diaryMapper.insertTradingDiary(diaryDto) > 0;
         int tradingNum = diaryDto.getTrading_num();
 
-        // TODO 보유 주식 테이블(TB_HOLDING_STOCK) Update or Insert 필요
         HoldingStockDto holdingStock = bankAccountMapper.getHoldingStock(diaryDto);
         if (holdingStock == null) {
             // 보유 주식 테이블 insert
@@ -68,13 +83,17 @@ public class DiaryService {
                 updateHoldingStock.setStatus(1);
             } else {
                 // 매도
-                // TODO 수익 내고 파는 경우 확인 필요
                 totalTradingCount = holdingStock.getHolding_count() - diaryDto.getTrading_count();
                 totalTradingPrice = currentTradingPrice - addTradingPrice;
 
                 if (totalTradingCount < 0) {
                     // 매도 수량 부족
-                    throw new RuntimeException("매도 수량 부족");
+                    UtilKw.rollback();
+
+                    response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
+                    response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
+
+                    return response;
                 } else if (totalTradingCount == 0) {
                     // 전부 매도인 경우
                     totalTradingPrice = 0;
@@ -94,8 +113,12 @@ public class DiaryService {
             List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
 
             if (buyOrders.isEmpty()) {
-                // TODO 매도 물량 없는 경우 팝업 필요
-                throw new RuntimeException("매도 수량 부족");
+                UtilKw.rollback();
+
+                response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
+                response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
+
+                return response;
             }
 
             // TODO 수익률 반환
@@ -119,7 +142,10 @@ public class DiaryService {
             }
         }
 
-        return result;
+        response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
+        response.put("responseMsg", ConstantCommon.RESPONSE_CODE_SUCCESS_STR);
+
+        return response;
     }
 
     private static HoldingStockDto getHoldingStockDto(DiaryDto diaryDto) {

@@ -16,11 +16,11 @@ jQuery(document).ready(function () {
 const FinDiary = {
     popup: {
         openNotificationModal: function (contentJson) {
-            _$("#notification-popup .modal-title").text(contentJson.titleTxt);
-            _$("#notification-popup .modal-body").text(contentJson.bodyTxt);
+            _$("#notification-popup .modal-title").html(contentJson.titleTxt);
+            _$("#notification-popup .modal-body").html(contentJson.bodyTxt);
 
             if (contentJson.confirmFlag) {
-                _$("#notification-popup .btn-primary").text(contentJson.confirmBtnTxt);
+                _$("#notification-popup .btn-primary").html(contentJson.confirmBtnTxt);
                 _$("#notification-popup .btn-primary").show();
 
                 if (typeof contentJson.confirmBtnFnc === "function") {
@@ -34,7 +34,7 @@ const FinDiary = {
             }
 
             if (contentJson.dangerFlag) {
-                _$("#notification-popup .btn-danger").text(contentJson.dangerBtnTxt);
+                _$("#notification-popup .btn-danger").html(contentJson.dangerBtnTxt);
                 _$("#notification-popup .btn-danger").show();
 
                 if (typeof contentJson.dangerBtnFnc === "function") {

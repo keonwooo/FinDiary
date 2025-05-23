@@ -290,13 +290,16 @@ const DiaryView = {
         if (DiaryView.checkValid.addDiary()) {
             const data = DiaryView.getDiaryData();
 
-            const flag = DiaryApi.insertTradingDiary(data);
-            if (flag.responseJSON) {
+            const response = DiaryApi.insertTradingDiary(data);
+            const resultMap = response.responseJSON;
+
+            if (resultMap.responseCode === RESPONSE_CODE_SUCCESS) {
                 _$("#add-trading-popup").removeClass("modal-active");
             } else {
                 const contentJson = {
                     "titleTxt": "실패",
-                    "bodyTxt": "매매 기록 추가에 실패하였습니다.",
+                    "bodyTxt": "매매 기록 추가에 실패하였습니다. " +
+                        "<br>사유 : " + resultMap.responseMsg,
                     "confirmFlag": false,
                     "dangerFlag": false
                 }
@@ -361,7 +364,7 @@ const DiaryView = {
         FinDiary.popup.openNotificationModal(contentJson);
     },
 
-    checkTradingMapping: function() {
+    checkTradingMapping: function () {
         const data = {
             "trading_num": JSON.parse(_$("#edit-trading-selectedinfo").val()).trading_num
         }

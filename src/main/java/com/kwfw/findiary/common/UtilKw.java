@@ -1,5 +1,7 @@
 package com.kwfw.findiary.common;
 
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
 public class UtilKw {
     // 밀리초 → 초
     public static int millisToSeconds(int millis) {
@@ -29,5 +31,9 @@ public class UtilKw {
     // 분 → 초
     public static int minutesToSeconds(int minutes) {
         return minutes * 60;
+    }
+
+    public static void rollback() {
+        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
     }
 }
