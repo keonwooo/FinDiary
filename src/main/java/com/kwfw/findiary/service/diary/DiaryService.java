@@ -121,7 +121,6 @@ public class DiaryService {
                 return response;
             }
 
-            // TODO 수익률 반환
             float profit = 0;
             int remainingSellCount = diaryDto.getTrading_count();
             for (DiaryDto buyOrder : buyOrders) {

@@ -157,22 +157,40 @@ const DiaryView = {
 
             // set 삭제 버튼
             if (DiaryView.checkTradingMapping()) {
-                // 매도 기록 있는 경우 삭제 버튼 보이지 않음
-                // TODO 초기화, 수정 내용들 모두 수정할 수 없게
+                // 매도 기록 있는 매수 건
+                _$("#add-trading-date").prop('readonly', true);
+                _$(".datepicker").datepicker('option', 'disabled', true);
+                _$("input:radio[name='add-trading-orderMethod']").attr("disabled", true);
+                _$("#add-trading-contractPrice").prop('readonly', true);
+                _$("#add-trading-selected-property").prop('disabled', true);
+                _$("#add-trading-count").prop('readonly', true);
+
                 _$("#add-trading-delete-btn").hide();
+                _$("#add-trading-btn").hide();
+            } else if (event.trading_type === TRADING_TYPE_BUY) {
+                // 매도 기록 없는 매수 건
+                _$("#add-trading-delete-btn").hide();
+                _$("#add-trading-btn").show();
             } else {
+                // 매도 건
+                _$("#add-trading-date").prop('readonly', true);
+                _$(".datepicker").datepicker('option', 'disabled', true);
+                _$("input:radio[name='add-trading-orderMethod']").attr("disabled", true);
+                _$("#add-trading-contractPrice").prop('readonly', false);
+                _$("#add-trading-selected-property").prop('disabled', true);
+                _$("#add-trading-count").prop('readonly', false);
+
                 _$("#add-trading-delete-btn").show();
                 _$("#add-trading-delete-btn").unbind('click');
                 _$("#add-trading-delete-btn").on("click", function () {
                     DiaryView.deleteDiary();
                 });
+
+                _$("#add-trading-btn").show();
             }
 
             // set 초기화 버튼
-            _$("#add-trading-reset-btn").unbind('click');
-            _$("#add-trading-reset-btn").on("click", function () {
-                DiaryView.reset.editDiary();
-            });
+            _$("#add-trading-reset-btn").hide();
 
             // set 수정 버튼
             _$('#add-trading-btn').text('수정');
@@ -199,6 +217,16 @@ const DiaryView = {
 
             _$("#add-trading-contractPrice").val("");
             _$("#add-trading-count").val("");
+
+            _$("#add-trading-date").prop('readonly', false);
+            _$(".datepicker").datepicker('option', 'disabled', false);
+            _$("input:radio[name='add-trading-orderMethod']").attr("disabled",false);
+            _$("#add-trading-contractPrice").prop('readonly', false);
+            _$("#add-trading-selected-property").prop('disabled', false);
+            _$("#add-trading-count").prop('readonly', false);
+
+            _$("#add-trading-reset-btn").show();
+            _$("#add-trading-btn").show();
 
             DiaryView.reset.addWarningMsg();
         },
