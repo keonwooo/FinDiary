@@ -155,31 +155,31 @@ const DiaryView = {
             _$("#add-trading-ticker").val(event.ticker);
             _$("#add-trading-ticker").prop('readonly', true);
 
+            // 주문 방식
+            _$("input:radio[name='add-trading-orderMethod']").attr("disabled", true);
+
             // set 삭제 버튼
             if (DiaryView.checkTradingMapping()) {
                 // 매도 기록 있는 매수 건
                 _$("#add-trading-date").prop('readonly', true);
                 _$(".datepicker").datepicker('option', 'disabled', true);
-                _$("input:radio[name='add-trading-orderMethod']").attr("disabled", true);
                 _$("#add-trading-contractPrice").prop('readonly', true);
                 _$("#add-trading-selected-property").prop('disabled', true);
                 _$("#add-trading-count").prop('readonly', true);
 
                 _$("#add-trading-delete-btn").hide();
                 _$("#add-trading-btn").hide();
-            } else if (event.trading_type === TRADING_TYPE_BUY) {
-                // 매도 기록 없는 매수 건
-                _$("#add-trading-delete-btn").hide();
-                _$("#add-trading-btn").show();
             } else {
-                // 매도 건
-                _$("#add-trading-date").prop('readonly', true);
-                _$(".datepicker").datepicker('option', 'disabled', true);
-                _$("input:radio[name='add-trading-orderMethod']").attr("disabled", true);
-                _$("#add-trading-contractPrice").prop('readonly', false);
-                _$("#add-trading-selected-property").prop('disabled', true);
-                _$("#add-trading-count").prop('readonly', false);
+                if (event.trading_type === TRADING_TYPE_SELL) {
+                    // 매도 건
+                    _$("#add-trading-date").prop('readonly', true);
+                    _$(".datepicker").datepicker('option', 'disabled', true);
+                    _$("#add-trading-contractPrice").prop('readonly', false);
+                    _$("#add-trading-selected-property").prop('disabled', true);
+                    _$("#add-trading-count").prop('readonly', false);
+                }
 
+                // 매도 기록 없는 매수 건
                 _$("#add-trading-delete-btn").show();
                 _$("#add-trading-delete-btn").unbind('click');
                 _$("#add-trading-delete-btn").on("click", function () {
