@@ -24,7 +24,6 @@ public class LoginService {
             // 세션 유효 시간 30분 설정
             session.setMaxInactiveInterval(UtilKw.minutesToSeconds(ApplicationConfig.sessionTimeout));
         }
-
         return vo;
     }
 }
