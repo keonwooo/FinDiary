@@ -220,7 +220,7 @@ const DiaryView = {
 
             _$("#add-trading-date").prop('readonly', false);
             _$(".datepicker").datepicker('option', 'disabled', false);
-            _$("input:radio[name='add-trading-orderMethod']").attr("disabled",false);
+            _$("input:radio[name='add-trading-orderMethod']").attr("disabled", false);
             _$("#add-trading-contractPrice").prop('readonly', false);
             _$("#add-trading-selected-property").prop('disabled', false);
             _$("#add-trading-count").prop('readonly', false);
