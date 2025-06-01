@@ -43,6 +43,7 @@ public class DiaryService {
         }
 
         // 계좌별 현금 자산 update
+        // TODO 매수 후, 매도 시 계좌 자산 update 로직 확인 필요 (TB_BANK_ACCOUNT_PROPERTY)
         if (!updateAccountProperty(bankAccountDto, diaryDto.getTrading_price(), diaryDto.getTrading_count(), tradingType)) {
             // 보유 자산 부족
             UtilKw.rollback();
@@ -83,6 +84,7 @@ public class DiaryService {
                 updateHoldingStock.setStatus(1);
             } else {
                 // 매도
+                // TODO 매수 후, 매도 하는 경우 확인 필요 (tb_holding_stock)
                 totalTradingCount = holdingStock.getHolding_count() - diaryDto.getTrading_count();
                 totalTradingPrice = currentTradingPrice - addTradingPrice;
 
@@ -187,14 +189,64 @@ public class DiaryService {
     public boolean deleteTradingDiary(DiaryDto diaryDto) {
         // mapping된 매매 기록 삭제
 
-        // TODO 매수, 매도 관련 기록 모두 삭제 (TB_HOLDING_STOCK, TB_BANK_ACCOUNT_PROPERTY, ...)
-        deleteTradingMapping(diaryDto);
+        String account_num = diaryDto.getAccount_num();
+        String currency = diaryDto.getCurrency();
+        String ticker = diaryDto.getTicker();
+        String trading_type = diaryDto.getTrading_type();
+        float trading_price = diaryDto.getTrading_price();
+        int trading_count = diaryDto.getTrading_count();
+        float account_total_property = trading_price * trading_count;
 
-        return diaryMapper.deleteTradingDiary(diaryDto) > 0;
+        // trading_info update
+        if (!(diaryMapper.deleteTradingDiary(diaryDto) > 0)) {
+            UtilKw.rollback();
+            return false;
+        }
+
+        // bank_account_property update
+        BankAccountDto bankAccountDto = new BankAccountDto();
+        bankAccountDto.setAccount_num(account_num);
+        bankAccountDto.setCurrency(currency);
+        bankAccountDto.setAccount_total_property(account_total_property);
+        if (!(bankAccountMapper.updateBankAccountPropertyAtDelete(bankAccountDto) > 0)) {
+            UtilKw.rollback();
+            return false;
+        }
+
+        // holding_stock update
+        HoldingStockDto holdingStockDto = bankAccountMapper.getHoldingStock(diaryDto);
+        if (trading_type.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+            // 매수
+            holdingStockDto.setHolding_count(holdingStockDto.getHolding_count() - trading_count);
+            holdingStockDto.setHolding_total_price(holdingStockDto.getHolding_total_price() - (trading_price * trading_count));
+
+            if (holdingStockDto.getHolding_count() != 0 || holdingStockDto.getHolding_total_price() != 0) {
+                float average_price = holdingStockDto.getHolding_total_price() / holdingStockDto.getHolding_count();
+                holdingStockDto.setHolding_average_price(average_price);
+            } else {
+                holdingStockDto.setHolding_average_price(0);
+            }
+        } else {
+            // 매도
+            holdingStockDto.setHolding_count(holdingStockDto.getHolding_count() + trading_count);
+            holdingStockDto.setHolding_total_price(holdingStockDto.getHolding_total_price() + trading_price);
+        }
+        if (!(bankAccountMapper.updateHoldingStockAtDelete(holdingStockDto) > 0)) {
+            UtilKw.rollback();
+            return false;
+        }
+
+        // trading_mapping update
+        if (trading_type.equals(ConstantCommon.TRADING_TYPE_SELL) && !deleteTradingMapping(diaryDto)) {
+            UtilKw.rollback();
+            return false;
+        }
+
+        return true;
     }
 
-    private void deleteTradingMapping(DiaryDto diaryDto) {
-        diaryMapper.deleteTradingMapping(diaryDto);
+    private boolean deleteTradingMapping(DiaryDto diaryDto) {
+        return diaryMapper.deleteTradingMapping(diaryDto) > 0;
     }
 
     private boolean updateAccountProperty(BankAccountDto bankAccountDto, float trading_price, int trading_count, String trading_type) {
@@ -215,6 +267,6 @@ public class DiaryService {
 
         // 계좌 자산 현황 insert
         bankAccountDto.setAccount_total_property(total_property);
-        return bankAccountMapper.updateBankAccountProperty(bankAccountDto) > 0;
+        return bankAccountMapper.updateBankAccountPropertyAtInsert(bankAccountDto) > 0;
     }
 }

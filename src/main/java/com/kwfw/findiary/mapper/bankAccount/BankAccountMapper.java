@@ -16,11 +16,15 @@ public interface BankAccountMapper {
 
     BankAccountDto getBankAccountProperty(DiaryDto diaryDto);
 
-    int updateBankAccountProperty(BankAccountDto bankAccountDto);
+    int updateBankAccountPropertyAtInsert(BankAccountDto bankAccountDto);
+
+    int updateBankAccountPropertyAtDelete(BankAccountDto bankAccountDto);
 
     HoldingStockDto getHoldingStock(DiaryDto diaryDto);
 
     void insertHoldingStock(HoldingStockDto holdingStockDto);
 
     void updateHoldingStock(HoldingStockDto holdingStockDto);
+
+    int updateHoldingStockAtDelete(HoldingStockDto holdingStockDto);
 }

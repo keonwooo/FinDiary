@@ -11,7 +11,7 @@ import java.util.List;
 public interface DiaryMapper {
     void insertTradingMapping(TradingMappingVO tradingMappingVO);
 
-    void deleteTradingMapping(DiaryDto diaryDto);
+    int deleteTradingMapping(DiaryDto diaryDto);
 
     int insertTradingDiary(DiaryDto diaryDto);
 
