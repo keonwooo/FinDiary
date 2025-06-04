@@ -27,122 +27,27 @@ public class DiaryService {
     }
 
     public Map<String, String> insertTradingDiary(DiaryDto diaryDto) {
-        Map<String, String> response = new HashMap<>();
+        Map<String, String> response;
 
-        String tradingType = diaryDto.getTrading_type();
-
-        BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
-        if (bankAccountDto == null) {
-            // 보유 자산 없음
-            UtilKw.rollback();
-
-            response.put("responseCode", ConstantCommon.NO_MONEY);
-            response.put("responseMsg", ConstantCommon.NO_MONEY_STR);
-
-            return response;
-        }
-
-        // 계좌별 현금 자산 update
-        // TODO 매수 후, 매도 시 계좌 자산 update 로직 확인 필요 (TB_BANK_ACCOUNT_PROPERTY)
-        if (!updateAccountProperty(bankAccountDto, diaryDto.getTrading_price(), diaryDto.getTrading_count(), tradingType)) {
-            // 보유 자산 부족
-            UtilKw.rollback();
-
-            response.put("responseCode", ConstantCommon.NOT_ENOUGH_MONEY);
-            response.put("responseMsg", ConstantCommon.NOT_ENOUGH_MONEY_STR);
-
+        // 보유 자산 update
+        response = updateAccountProperty(diaryDto);
+        if (!response.get("responseCode").equals(ConstantCommon.RESPONSE_CODE_SUCCESS)) {
             return response;
         }
 
         // 매매 일지 insert
-        boolean result = diaryMapper.insertTradingDiary(diaryDto) > 0;
-        int tradingNum = diaryDto.getTrading_num();
+        diaryMapper.insertTradingDiary(diaryDto);
 
-        HoldingStockDto holdingStock = bankAccountMapper.getHoldingStock(diaryDto);
-        if (holdingStock == null) {
-            // 보유 주식 테이블 insert
-            HoldingStockDto holdingStockDto = getHoldingStockDto(diaryDto);
-            bankAccountMapper.insertHoldingStock(holdingStockDto);
-        } else {
-            // 보유 주식 테이블 update
-            float currentTradingPrice = holdingStock.getHolding_total_price();
-            float addTradingPrice = diaryDto.getTrading_price() * diaryDto.getTrading_count();
-
-            float totalTradingPrice;
-            int totalTradingCount;
-
-            HoldingStockDto updateHoldingStock = holdingStock.clone();
-
-            if (tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
-                // 매수
-                totalTradingCount = holdingStock.getHolding_count() + diaryDto.getTrading_count();
-
-                totalTradingPrice = currentTradingPrice + addTradingPrice;
-                float averageTradingPrice = totalTradingPrice / totalTradingCount;
-
-                updateHoldingStock.setHolding_average_price(averageTradingPrice);
-                updateHoldingStock.setStatus(1);
-            } else {
-                // 매도
-                // TODO 매수 후, 매도 하는 경우 확인 필요 (tb_holding_stock)
-                totalTradingCount = holdingStock.getHolding_count() - diaryDto.getTrading_count();
-                totalTradingPrice = currentTradingPrice - addTradingPrice;
-
-                if (totalTradingCount < 0) {
-                    // 매도 수량 부족
-                    UtilKw.rollback();
-
-                    response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
-                    response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
-
-                    return response;
-                } else if (totalTradingCount == 0) {
-                    // 전부 매도인 경우
-                    totalTradingPrice = 0;
-                    updateHoldingStock.setHolding_average_price(0);
-                    updateHoldingStock.setStatus(0);
-                }
-            }
-
-            updateHoldingStock.setHolding_count(totalTradingCount);
-            updateHoldingStock.setHolding_total_price(totalTradingPrice);
-
-            bankAccountMapper.updateHoldingStock(updateHoldingStock);
+        // 보유 주식 update
+        response = updateHoldingStock(diaryDto);
+        if (!response.get("responseCode").equals(ConstantCommon.RESPONSE_CODE_SUCCESS)) {
+            return response;
         }
 
-        if (result && tradingType.equals(ConstantCommon.TRADING_TYPE_SELL)) {
-            // 매도
-            List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
-
-            if (buyOrders.isEmpty()) {
-                UtilKw.rollback();
-
-                response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
-                response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
-
-                return response;
-            }
-
-            float profit = 0;
-            int remainingSellCount = diaryDto.getTrading_count();
-            for (DiaryDto buyOrder : buyOrders) {
-                int buyRemaining = buyOrder.getTrading_count()
-                        - diaryMapper.getAlreadyMappedCount(buyOrder.getTrading_num());
-
-                int useCount = Math.min(remainingSellCount, buyRemaining);
-                if (useCount > 0) {
-                    TradingMappingVO insertTradingVO = getTradingMappingVO(diaryDto, buyOrder, tradingNum, buyRemaining);
-                    profit += insertTradingVO.getProfit();
-
-                    diaryMapper.insertTradingMapping(insertTradingVO);
-
-                    remainingSellCount -= useCount;
-                }
-
-                if (remainingSellCount == 0) break;
-            }
-            response.put("profit", String.valueOf(profit));
-            response.put("currency", UtilKw.convertCurrency(diaryDto.getCurrency()));
+        // 매도인 경우 trading_mapping update
+        response = updateTradingMappingAtSell(diaryDto);
+        if (!response.get("responseCode").equals(ConstantCommon.RESPONSE_CODE_SUCCESS)) {
+            return response;
         }
 
         response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
@@ -220,11 +125,12 @@ public class DiaryService {
             holdingStockDto.setHolding_count(holdingStockDto.getHolding_count() - trading_count);
             holdingStockDto.setHolding_total_price(holdingStockDto.getHolding_total_price() - (trading_price * trading_count));
 
-            if (holdingStockDto.getHolding_count() != 0 || holdingStockDto.getHolding_total_price() != 0) {
+            if (holdingStockDto.getHolding_count() != 0 && holdingStockDto.getHolding_total_price() != 0) {
                 float average_price = holdingStockDto.getHolding_total_price() / holdingStockDto.getHolding_count();
                 holdingStockDto.setHolding_average_price(average_price);
             } else {
                 holdingStockDto.setHolding_average_price(0);
+                holdingStockDto.setHolding_total_price(0);
             }
         } else {
             // 매도
@@ -249,7 +155,24 @@ public class DiaryService {
         return diaryMapper.deleteTradingMapping(diaryDto) > 0;
     }
 
-    private boolean updateAccountProperty(BankAccountDto bankAccountDto, float trading_price, int trading_count, String trading_type) {
+    private Map<String, String> updateAccountProperty(DiaryDto diaryDto) {
+        Map<String, String> response = new HashMap<>();
+
+        float trading_price = diaryDto.getTrading_price();
+        int trading_count = diaryDto.getTrading_count();
+        String trading_type = diaryDto.getTrading_type();
+
+        BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
+        if (bankAccountDto == null) {
+            // 보유 자산 없음
+            UtilKw.rollback();
+
+            response.put("responseCode", ConstantCommon.NO_MONEY);
+            response.put("responseMsg", ConstantCommon.NO_MONEY_STR);
+
+            return response;
+        }
+
         float current_property = bankAccountDto.getAccount_total_property();
         float total_price = trading_price * trading_count;
 
@@ -258,7 +181,14 @@ public class DiaryService {
             // 매수
             total_property = current_property - total_price;
             if (total_property < 0) {
-                return false;
+                // TODO 매수 후, 매도 시 계좌 자산 update 로직 확인 필요 (TB_BANK_ACCOUNT_PROPERTY)
+                // 보유 자산 부족
+                UtilKw.rollback();
+
+                response.put("responseCode", ConstantCommon.NOT_ENOUGH_MONEY);
+                response.put("responseMsg", ConstantCommon.NOT_ENOUGH_MONEY_STR);
+
+                return response;
             }
         } else {
             // 매도
@@ -267,6 +197,117 @@ public class DiaryService {
 
         // 계좌 자산 현황 insert
         bankAccountDto.setAccount_total_property(total_property);
-        return bankAccountMapper.updateBankAccountPropertyAtInsert(bankAccountDto) > 0;
+        bankAccountMapper.updateBankAccountPropertyAtInsert(bankAccountDto);
+
+        response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
+        response.put("responseMsg", ConstantCommon.RESPONSE_CODE_SUCCESS_STR);
+        return response;
+    }
+
+    private Map<String, String> updateHoldingStock(DiaryDto diaryDto) {
+        Map<String, String> response = new HashMap<>();
+
+        String tradingType = diaryDto.getTrading_type();
+
+        HoldingStockDto holdingStock = bankAccountMapper.getHoldingStock(diaryDto);
+        if (holdingStock == null) {
+            // 보유 주식 테이블 insert
+            HoldingStockDto holdingStockDto = getHoldingStockDto(diaryDto);
+            bankAccountMapper.insertHoldingStock(holdingStockDto);
+        } else {
+            // 보유 주식 테이블 update
+            float currentTradingPrice = holdingStock.getHolding_total_price();
+            float addTradingPrice = diaryDto.getTrading_price() * diaryDto.getTrading_count();
+
+            float totalTradingPrice;
+            int totalTradingCount;
+
+            HoldingStockDto updateHoldingStock = holdingStock.clone();
+
+            if (tradingType.equals(ConstantCommon.TRADING_TYPE_BUY)) {
+                // 매수
+                totalTradingCount = holdingStock.getHolding_count() + diaryDto.getTrading_count();
+
+                totalTradingPrice = currentTradingPrice + addTradingPrice;
+                float averageTradingPrice = totalTradingPrice / totalTradingCount;
+
+                updateHoldingStock.setHolding_average_price(averageTradingPrice);
+                updateHoldingStock.setStatus(1);
+            } else {
+                // 매도
+                // TODO 매수 후, 매도 하는 경우 확인 필요 (tb_holding_stock)
+                totalTradingCount = holdingStock.getHolding_count() - diaryDto.getTrading_count();
+                totalTradingPrice = currentTradingPrice - addTradingPrice;
+
+                if (totalTradingCount < 0) {
+                    // 매도 수량 부족
+                    UtilKw.rollback();
+
+                    response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
+                    response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
+                    return response;
+                } else if (totalTradingCount == 0) {
+                    // 전부 매도인 경우
+                    totalTradingPrice = 0;
+                    updateHoldingStock.setHolding_average_price(0);
+                    updateHoldingStock.setStatus(0);
+                }
+            }
+
+            updateHoldingStock.setHolding_count(totalTradingCount);
+            updateHoldingStock.setHolding_total_price(totalTradingPrice);
+
+            bankAccountMapper.updateHoldingStock(updateHoldingStock);
+        }
+
+        response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
+        response.put("responseMsg", ConstantCommon.RESPONSE_CODE_SUCCESS_STR);
+        return response;
+    }
+
+    private Map<String, String> updateTradingMappingAtSell(DiaryDto diaryDto) {
+        Map<String, String> response = new HashMap<>();
+
+        String tradingType = diaryDto.getTrading_type();
+        int tradingNum = diaryDto.getTrading_num();
+
+        if (tradingType.equals(ConstantCommon.TRADING_TYPE_SELL)) {
+            // 매도
+            List<DiaryDto> buyOrders = diaryMapper.selectRemainingBuyOrders(diaryDto);
+
+            if (buyOrders.isEmpty()) {
+                UtilKw.rollback();
+
+                response.put("responseCode", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK);
+                response.put("responseMsg", ConstantCommon.NOT_ENOUGH_HOLDING_STOCK_STR);
+
+                return response;
+            }
+
+            float profit = 0;
+            int remainingSellCount = diaryDto.getTrading_count();
+            for (DiaryDto buyOrder : buyOrders) {
+                int buyRemaining = buyOrder.getTrading_count()
+                        - diaryMapper.getAlreadyMappedCount(buyOrder.getTrading_num());
+
+                int useCount = Math.min(remainingSellCount, buyRemaining);
+                if (useCount > 0) {
+                    TradingMappingVO insertTradingVO = getTradingMappingVO(diaryDto, buyOrder, tradingNum, buyRemaining);
+                    profit += insertTradingVO.getProfit();
+
+                    diaryMapper.insertTradingMapping(insertTradingVO);
+
+                    remainingSellCount -= useCount;
+                }
+
+                if (remainingSellCount == 0) break;
+            }
+            response.put("profit", String.valueOf(profit));
+            response.put("currency", UtilKw.convertCurrency(diaryDto.getCurrency()));
+        }
+
+        response.put("responseCode", ConstantCommon.RESPONSE_CODE_SUCCESS);
+        response.put("responseMsg", ConstantCommon.RESPONSE_CODE_SUCCESS_STR);
+        return response;
     }
 }
