@@ -16,7 +16,7 @@ public interface BankAccountMapper {
 
     BankAccountDto getBankAccountProperty(DiaryDto diaryDto);
 
-    int updateBankAccountPropertyAtInsert(BankAccountDto bankAccountDto);
+    void updateBankAccountPropertyAtInsert(BankAccountDto bankAccountDto);
 
     int updateBankAccountPropertyAtDelete(BankAccountDto bankAccountDto);
 
