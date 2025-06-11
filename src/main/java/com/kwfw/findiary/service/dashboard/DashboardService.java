@@ -1,7 +1,10 @@
 package com.kwfw.findiary.service.dashboard;
 
+import com.kwfw.findiary.mapper.bankAccount.BankAccountMapper;
 import com.kwfw.findiary.mapper.dashboard.DashboardMapper;
 import com.kwfw.findiary.model.BankAccountDto;
+import com.kwfw.findiary.model.DiaryDto;
+import com.kwfw.findiary.model.HoldingStockDto;
 import com.kwfw.findiary.model.QuotesVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +25,20 @@ import java.util.Map;
 public class DashboardService {
 
     private final DashboardMapper dashboardMapper;
+    private final BankAccountMapper bankAccountMapper;
 
     public List<QuotesVO> getQuotes() {
         return dashboardMapper.getQuotes();
     }
 
-    public BankAccountDto getShareholding() {
+    public BankAccountDto getShareholding(DiaryDto diaryDto) {
+
+        BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
+
+        HoldingStockDto holdingStockDto = bankAccountMapper.getHoldingStock(diaryDto);
+
+        // TODO 보유 주식 가지고 보유현황 뿌려주기 
+        
         return dashboardMapper.getShareholding();
     }
 

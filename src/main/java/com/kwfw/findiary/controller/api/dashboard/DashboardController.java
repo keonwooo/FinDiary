@@ -1,6 +1,7 @@
 package com.kwfw.findiary.controller.api.dashboard;
 
 import com.kwfw.findiary.model.BankAccountDto;
+import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.QuotesVO;
 import com.kwfw.findiary.service.dashboard.DashboardService;
 import groovy.util.logging.Slf4j;
@@ -32,9 +33,9 @@ public class DashboardController {
     }
 
     @PostMapping("/getShareholding")
-    public ResponseEntity<BankAccountDto> getShareholding() {
+    public ResponseEntity<BankAccountDto> getShareholding(DiaryDto diaryDto) {
 
-        BankAccountDto bankAccountInfo = dashboardService.getShareholding();
+        BankAccountDto bankAccountInfo = dashboardService.getShareholding(diaryDto);
 
         return ResponseEntity.ok(bankAccountInfo);
     }

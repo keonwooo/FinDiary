@@ -144,7 +144,15 @@ const DashboardView = {
     //-------------------------------------------------------------------------------
     renderShareholding: function () {
         // TODO get 보유 현황
-        // DashboardApi.getShareholding();
+
+        // TODO 계좌 선택 후 계좌 별 보유 현황 get
+        const data = {
+            "account_num": "6370-0000"
+            , "currency": "dollar"
+        }
+
+        const responseData = DashboardApi.getShareholding(data).responseJSON;
+
         const labels = ['Red', 'Blue', 'Yellow'];
 
         // 동적으로 색상 생성

@@ -17,7 +17,5 @@ public class BankAccountDto {
     private float account_total_property;
     private String currency;
 
-
-
     private List<DiaryDto> diaryList;
 }
