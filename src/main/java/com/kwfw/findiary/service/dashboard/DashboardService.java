@@ -31,15 +31,17 @@ public class DashboardService {
         return dashboardMapper.getQuotes();
     }
 
-    public BankAccountDto getShareholding(DiaryDto diaryDto) {
+    public Map<String, Object> getShareholding(DiaryDto diaryDto) {
 
         BankAccountDto bankAccountDto = bankAccountMapper.getBankAccountProperty(diaryDto);
 
-        HoldingStockDto holdingStockDto = bankAccountMapper.getHoldingStock(diaryDto);
+        List<HoldingStockDto> holdingStockList = bankAccountMapper.getAllHoldingStock(diaryDto);
 
-        // TODO 보유 주식 가지고 보유현황 뿌려주기 
-        
-        return dashboardMapper.getShareholding();
+        Map<String, Object> map = new HashMap<>();
+        map.put("bankAccount", bankAccountDto);
+        map.put("holdingStockList", holdingStockList);
+
+        return map;
     }
 
     public Map<String, String> getFearGreedIndex() {

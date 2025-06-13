@@ -93,6 +93,15 @@
           AND currency = #{currency}
     </select>
 
+    <select id="getAllHoldingStock" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="com.kwfw.findiary.model.HoldingStockDto">
+        SELECT *
+        FROM TB_HOLDING_STOCK
+        WHERE 1 = 1
+          AND account_num = #{account_num}
+          AND currency = #{currency}
+          AND status = 1
+    </select>
+
     <select id="getHoldingStock" parameterType="com.kwfw.findiary.model.DiaryDto" resultType="com.kwfw.findiary.model.HoldingStockDto">
         SELECT *
         FROM TB_HOLDING_STOCK

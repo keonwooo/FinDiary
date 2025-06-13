@@ -20,6 +20,8 @@ public interface BankAccountMapper {
 
     int updateBankAccountPropertyAtDelete(BankAccountDto bankAccountDto);
 
+    List<HoldingStockDto> getAllHoldingStock(DiaryDto diaryDto);
+
     HoldingStockDto getHoldingStock(DiaryDto diaryDto);
 
     void insertHoldingStock(HoldingStockDto holdingStockDto);

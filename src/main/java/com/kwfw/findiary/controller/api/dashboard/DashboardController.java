@@ -8,6 +8,7 @@ import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,11 +34,11 @@ public class DashboardController {
     }
 
     @PostMapping("/getShareholding")
-    public ResponseEntity<BankAccountDto> getShareholding(DiaryDto diaryDto) {
+    public ResponseEntity<Map<String, Object>> getShareholding(@RequestBody DiaryDto diaryDto) {
 
-        BankAccountDto bankAccountInfo = dashboardService.getShareholding(diaryDto);
+        Map<String, Object> map = dashboardService.getShareholding(diaryDto);
 
-        return ResponseEntity.ok(bankAccountInfo);
+        return ResponseEntity.ok(map);
     }
 
     @PostMapping("/getFearGreedIndex")

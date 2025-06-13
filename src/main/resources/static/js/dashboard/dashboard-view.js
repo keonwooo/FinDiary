@@ -152,8 +152,11 @@ const DashboardView = {
         }
 
         const responseData = DashboardApi.getShareholding(data).responseJSON;
+        const bankAccount = responseData.bankAccount;
+        const holdingStock = responseData.holdingStockList;
 
-        const labels = ['Red', 'Blue', 'Yellow'];
+        let labels = DashboardView.getHoldingStockName(holdingStock);
+        labels.push(bankAccount.currency);
 
         // 동적으로 색상 생성
         const backgroundColors = generateColors(labels.length);
@@ -164,7 +167,7 @@ const DashboardView = {
             labels, // labels
             [{
                 label: 'Votes',
-                data: [12, 19, 3],
+                data: DashboardView.getHoldingStockPrice(bankAccount, holdingStock),
                 backgroundColor: backgroundColors
             }],
             {
@@ -228,6 +231,29 @@ const DashboardView = {
         if (value < 56) return "Neutral";
         if (value < 75) return "Greed";
         return "Extreme Greed";
+    },
+
+    //-------------------------------------------------------------------------------
+    // get holding stock name
+    // get 보유중인 주식의 이름
+    //-------------------------------------------------------------------------------
+    getHoldingStockName: function (holdingStockList) {
+        const length = holdingStockList.length;
+        let returnName = new Array();
+        for (let i = 0; i < length; i++) {
+            returnName.push(holdingStockList[i].ticker);
+        }
+        return returnName;
+    },
+
+    getHoldingStockPrice(bankAccount, holdingStock) {
+        const length = holdingStock.length;
+        let returnPrice = new Array();
+        for (let i = 0; i < length; i++) {
+            returnPrice.push(holdingStock[i].holding_total_price);
+        }
+        returnPrice.push(bankAccount.account_total_property);
+        return returnPrice;
     },
 
     //-------------------------------------------------------------------------------
