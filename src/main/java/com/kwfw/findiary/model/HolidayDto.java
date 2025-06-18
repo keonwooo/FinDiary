@@ -18,6 +18,8 @@ public class HolidayDto {
     private String year;
     private String month;
     private String descr;
+    private String create_date;
+    private String modify_date;
 
     @Override
     public boolean equals(Object o) {

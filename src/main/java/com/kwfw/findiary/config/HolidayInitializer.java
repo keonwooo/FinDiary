@@ -1,6 +1,7 @@
 package com.kwfw.findiary.config;
 
 import com.kwfw.findiary.common.ConstantCommon;
+import com.kwfw.findiary.common.UtilKw;
 import com.kwfw.findiary.mapper.holiday.HolidayMapper;
 import com.kwfw.findiary.model.HolidayDto;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,14 @@ public class HolidayInitializer {
         final String[] countryCodes = {ConstantCommon.COUNTRY_CODE_KOREA, ConstantCommon.COUNTRY_CODE_US};
 
         RestTemplate restTemplate = new RestTemplate();
+
+        // update한 날짜가 오늘이라면 skip
+        HolidayDto tempDto = holidayRepository.checkCreateDate();
+        if (tempDto != null && !UtilKw.isBeforeToday(tempDto.getCreate_date())) {
+            log.info("공휴일 데이터 업데이트 날짜 : {}", tempDto.getCreate_date());
+            log.info("공휴일 데이터 업데이트 스킵");
+            return;
+        }
 
         // 기존 공휴일 삭제
         for (String countryCode : countryCodes) {

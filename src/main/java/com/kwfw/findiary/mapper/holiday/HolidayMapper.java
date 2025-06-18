@@ -14,4 +14,6 @@ public interface HolidayMapper {
     void saveAll(Set<HolidayDto> holidays);
 
     List<HolidayDto> getHolidays(HolidayVO holidayVO);
+
+    HolidayDto checkCreateDate();
 }

@@ -2,6 +2,10 @@ package com.kwfw.findiary.common;
 
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class UtilKw {
     // 밀리초 → 초
     public static int millisToSeconds(int millis) {
@@ -45,5 +49,17 @@ public class UtilKw {
             return "₩";
         }
         return currencyChar;
+    }
+
+    public static boolean isBeforeToday(String date) {
+        // 1. 문자열 -> LocalDateTime 파싱
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime targetDateTime = LocalDateTime.parse(date, formatter);
+
+        // 2. 오늘 날짜 가져오기
+        LocalDate today = LocalDate.now();  // 시스템 날짜 기준
+
+        // 3. 비교 (LocalDate 비교)
+        return targetDateTime.toLocalDate().isBefore(today);
     }
 }
