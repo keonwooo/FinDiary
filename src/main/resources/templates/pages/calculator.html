@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout/main}">
+<meta name="_csrf_header" content="X-CSRF-TOKEN">
+<meta name="_csrf" content="your-csrf-token-value">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinDiary</title>
+    <script src="/js/calculator/calculator-view.js"></script>
+    <script src="/js/calculator/calculator-api.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="../css/calculator/calculator.css">
+</head>
+
+<section class="contents" layout:fragment="content">
+    <div class="tit-h2">
+        <div class="l-item">
+            <h2><i class="ri-calculator-line"></i> 주가 계산기</h2>
+        </div>
+        <div class="r-item">
+        </div>
+    </div>
+
+    <div class="contBox-wrap type-column">
+        <div class="contBox">
+            <!-- 1. 예상 등락율 계산기 -->
+            <div class="calculator-row">
+                <div class="calculator-box">
+                    <h3>예상 등락율 계산기</h3>
+                    <label>현재가: <input type="number" id="currentPrice"/></label><br>
+                    <label>예상가: <input type="number" id="expectedPrice"/></label><br>
+                    <button onclick="CalculatorView.calculateReturnRate()">등락율 계산</button>
+                    <div id="returnRateResult"></div>
+                </div>
+                <div class="calculator-box">
+                    <h4>기록</h4>
+                    <ul id="returnRateLog"></ul>
+                </div>
+            </div>
+
+            <!-- 2. 목표 수익률 도달 금액 -->
+            <div class="calculator-row">
+                <div class="calculator-box">
+                    <h3>목표 수익률 도달 예상가</h3>
+                    <label>매수가: <input type="number" id="buyPrice"/></label><br>
+                    <label>목표 수익률 (%): <input type="number" id="targetRate"/></label><br>
+                    <button onclick="CalculatorView.calculateTargetPrice()">예상가 계산</button>
+                    <div id="targetPriceResult"></div>
+                </div>
+                <div class="calculator-box">
+                    <h4>기록</h4>
+                    <ul id="targetPriceLog"></ul>
+                </div>
+            </div>
+
+            <!-- 3. 평단가 계산기 -->
+            <div class="calculator-row">
+                <div class="calculator-box">
+                    <h3>평단가 계산기</h3>
+                    <label>매수가: <input type="number" id="firstPrice"/></label><br>
+                    <label>보유 수량: <input type="number" id="firstQty"/></label><br>
+                    <label>추가 매수가: <input type="number" id="secondPrice"/></label><br>
+                    <label>추가 수량: <input type="number" id="secondQty"/></label><br>
+                    <button onclick="CalculatorView.calculateAvgPrice()">평단가 계산</button>
+                    <div id="avgPriceResult"></div>
+                </div>
+                <div class="calculator-box">
+                    <h4>기록</h4>
+                    <ul id="avgPriceLog"></ul>
+                </div>
+            </div>
+
+            <!-- 4. 예상 배당금 계산기 -->
+            <div class="calculator-row">
+                <div class="calculator-box">
+                    <h3>예상 배당금 계산기</h3>
+                    <label>보유 주식 수: <input type="number" id="stockCount"/></label><br>
+                    <label>주당 배당금: <input type="number" id="dividendPerShare"/></label><br>
+                    <button onclick="CalculatorView.calculateDividend()">배당금 계산</button>
+                    <div id="dividendResult"></div>
+                </div>
+                <div class="calculator-box">
+                    <h4>기록</h4>
+                    <ul id="dividendLog"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</html>

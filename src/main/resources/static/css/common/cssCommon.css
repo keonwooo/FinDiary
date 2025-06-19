@@ -1,3 +1,9 @@
+.r-item .r-itme-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 초기 상태: 안 보이는 상태 */
 .fade-toggle {
     opacity: 0;

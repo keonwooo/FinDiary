@@ -58,4 +58,9 @@ public class ViewController {
         model.addAttribute("bankAccountList", bankAccountList);
         return "pages/diary";
     }
+
+    @GetMapping("/calculator")
+    public String calculator() {
+        return "pages/calculator";
+    }
 }
