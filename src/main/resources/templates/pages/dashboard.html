@@ -80,8 +80,22 @@
                 </div>
             </li>
             <li>
-                <div class="contBox h100p">
-                    매매 캘린더
+                <div class="contBox h100p liveTrading">
+                    <div class="tradingview-widget-container liveTradingChart">
+                        <div class="tradingview-widget-container__widget"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                            {
+                                "symbol": "NASDAQ:TSLA",
+                                "interval": "D",
+                                "timezone": "Etc/UTC",
+                                "theme": "light",
+                                "style": "1",
+                                "locale": "en",
+                                "allow_symbol_change": true,
+                                "support_host": "https://www.tradingview.com"
+                            }
+                        </script>
+                    </div>
                 </div>
             </li>
         </ul>

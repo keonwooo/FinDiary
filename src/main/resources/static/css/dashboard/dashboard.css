@@ -118,3 +118,17 @@
         height: 20px;
     }
 }
+
+.liveTrading {
+    display: flex;
+    flex-direction: column;
+}
+
+.symbolSelector {
+    width: 100%;
+}
+
+.liveTradingChart {
+    width: 100%;
+    height: 100%;
+}
