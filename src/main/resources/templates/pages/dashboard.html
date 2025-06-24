@@ -15,6 +15,36 @@
     <script src="/js/dashboard/dashboard-api.js"></script>
 
     <link type="text/css" rel="stylesheet" href="../css/dashboard/dashboard.css">
+    <style>
+        .news-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .news-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .news-item h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .news-item p {
+            margin: 5px 0;
+        }
+
+        .news-item a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .news-item a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <section class="contents" layout:fragment="content">
@@ -78,23 +108,54 @@
                     <!-- TradingView Widget BEGIN -->
                     <div class="tradingview-widget-container">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
+                        <script type="text/javascript"
+                                src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>
                             {
-                                "dataSource": "SPX500",
-                                "blockSize": "market_cap_basic",
-                                "blockColor": "change",
-                                "grouping": "sector",
-                                "locale": "kr",
-                                "symbolUrl": "",
-                                "colorTheme": "light",
-                                "exchanges": [],
-                                "hasTopBar": false,
-                                "isDataSetEnabled": false,
-                                "isZoomEnabled": true,
-                                "hasSymbolTooltip": true,
-                                "isMonoSize": false,
-                                "width": "100%",
-                                "height": "100%"
+                                "dataSource"
+                            :
+                                "SPX500",
+                                    "blockSize"
+                            :
+                                "market_cap_basic",
+                                    "blockColor"
+                            :
+                                "change",
+                                    "grouping"
+                            :
+                                "sector",
+                                    "locale"
+                            :
+                                "kr",
+                                    "symbolUrl"
+                            :
+                                "",
+                                    "colorTheme"
+                            :
+                                "light",
+                                    "exchanges"
+                            :
+                                [],
+                                    "hasTopBar"
+                            :
+                                false,
+                                    "isDataSetEnabled"
+                            :
+                                false,
+                                    "isZoomEnabled"
+                            :
+                                true,
+                                    "hasSymbolTooltip"
+                            :
+                                true,
+                                    "isMonoSize"
+                            :
+                                false,
+                                    "width"
+                            :
+                                "100%",
+                                    "height"
+                            :
+                                "100%"
                             }
                         </script>
                     </div>
@@ -105,16 +166,34 @@
                 <div class="contBox h100p liveTrading">
                     <div class="tradingview-widget-container liveTradingChart">
                         <div class="tradingview-widget-container__widget"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
+                        <script type="text/javascript"
+                                src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+                                async>
                             {
-                                "symbol": "NASDAQ:TSLA",
-                                "interval": "D",
-                                "timezone": "Etc/UTC",
-                                "theme": "light",
-                                "style": "1",
-                                "locale": "kr",
-                                "allow_symbol_change": true,
-                                "support_host": "https://www.tradingview.com"
+                                "symbol"
+                            :
+                                "NASDAQ:TSLA",
+                                    "interval"
+                            :
+                                "D",
+                                    "timezone"
+                            :
+                                "Etc/UTC",
+                                    "theme"
+                            :
+                                "light",
+                                    "style"
+                            :
+                                "1",
+                                    "locale"
+                            :
+                                "kr",
+                                    "allow_symbol_change"
+                            :
+                                true,
+                                    "support_host"
+                            :
+                                "https://www.tradingview.com"
                             }
                         </script>
                     </div>
@@ -126,7 +205,28 @@
         <ul class="colWrap col2 h100p">
             <li>
                 <div class="contBox h100p">
-                    수익률 현황
+                    최신 뉴스
+                    <ul id="news-list">불러오는 중...</ul>
+
+                    <script>
+                        const rssUrl = 'https://news.google.com/rss/search?q=TSLA&hl=ko&gl=KR&ceid=KR:ko';
+                        console.log(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+                        fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                const list = document.getElementById('news-list');
+                                list.innerHTML = '';
+                                data.items.slice(0, 20).forEach(item => {
+                                    const li = document.createElement('li');
+                                    li.innerHTML = `<a href="${item.link}" target="_blank">${item.title} - ${item.pubDate}</a>`;
+                                    list.appendChild(li);
+                                });
+                            })
+                            .catch(err => {
+                                document.getElementById('news-list').innerHTML = '뉴스를 불러오지 못했습니다.';
+                                console.error(err);
+                            });
+                    </script>
                 </div>
             </li>
             <li>
