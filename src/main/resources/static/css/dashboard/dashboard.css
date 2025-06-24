@@ -92,7 +92,7 @@
     transform: translateX(0%);
 }
 
-.gauge-pointer:hover .gauge-tooltip {
+.gauge-bar:hover .gauge-tooltip {
     opacity: 1;
 }
 
