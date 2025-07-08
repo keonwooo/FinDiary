@@ -47,6 +47,10 @@ const DashboardView = {
         DashboardView.renderShareholding();
 
         DashboardView.renderFearAndGreed();
+
+        DashboardView.renderStockHeatmap();
+
+        DashboardView.renderLiveTradingChart();
     },
 
     /********************************************************************************
@@ -212,6 +216,61 @@ const DashboardView = {
         } else {
             tooltip.classList.add("tooltip-center");
         }
+    },
+
+    //-------------------------------------------------------------------------------
+    // renderStockHeatmap: 히트맵 차트 렌더링
+    //-------------------------------------------------------------------------------
+    renderStockHeatmap: function() {
+        const config = {
+            "dataSource": "SPX500",
+            "blockSize": "market_cap_basic",
+            "blockColor": "change",
+            "grouping": "sector",
+            "locale": "kr",
+            "symbolUrl": "",
+            "colorTheme": "light",
+            "exchanges": [],
+            "hasTopBar": false,
+            "isDataSetEnabled": false,
+            "isZoomEnabled": true,
+            "hasSymbolTooltip": true,
+            "isMonoSize": false,
+            "width": "100%",
+            "height": "100%"
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js";
+        script.type = "text/javascript";
+        script.async = true;
+        script.innerHTML = JSON.stringify(config, null, 2);  // 줄바꿈 포함된 JSON 문자열 삽입
+
+        document.querySelector(".tradingview-widget-container").appendChild(script);
+    },
+
+    //-------------------------------------------------------------------------------
+    // renderLiveTradingChart: 실시간 주가 차트 렌더링
+    //-------------------------------------------------------------------------------
+    renderLiveTradingChart: function() {
+        const config = {
+            symbol: "NASDAQ:TSLA",
+            interval: "D",
+            timezone: "Etc/UTC",
+            theme: "light",
+            style: "1",
+            locale: "en",
+            allow_symbol_change: true,
+            support_host: "https://www.tradingview.com"
+        };
+
+        const script = document.createElement("script");
+        script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
+        script.type = "text/javascript";
+        script.async = true;
+        script.innerHTML = JSON.stringify(config, null, 2);
+
+        document.querySelector(".tradingview-widget-container.liveTradingChart").appendChild(script);
     },
 
     //-------------------------------------------------------------------------------
