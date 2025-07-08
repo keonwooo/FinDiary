@@ -51,6 +51,8 @@ const DashboardView = {
         DashboardView.renderStockHeatmap();
 
         DashboardView.renderLiveTradingChart();
+
+        DashboardView.renderLiveNews();
     },
 
     /********************************************************************************
@@ -221,7 +223,7 @@ const DashboardView = {
     //-------------------------------------------------------------------------------
     // renderStockHeatmap: 히트맵 차트 렌더링
     //-------------------------------------------------------------------------------
-    renderStockHeatmap: function() {
+    renderStockHeatmap: function () {
         const config = {
             "dataSource": "SPX500",
             "blockSize": "market_cap_basic",
@@ -252,7 +254,7 @@ const DashboardView = {
     //-------------------------------------------------------------------------------
     // renderLiveTradingChart: 실시간 주가 차트 렌더링
     //-------------------------------------------------------------------------------
-    renderLiveTradingChart: function() {
+    renderLiveTradingChart: function () {
         const config = {
             symbol: "NASDAQ:TSLA",
             interval: "D",
@@ -271,6 +273,38 @@ const DashboardView = {
         script.innerHTML = JSON.stringify(config, null, 2);
 
         document.querySelector(".tradingview-widget-container.liveTradingChart").appendChild(script);
+    },
+
+    //-------------------------------------------------------------------------------
+    // renderLiveNews: 실시간 뉴스 렌더링
+    //-------------------------------------------------------------------------------
+    renderLiveNews: function () {
+        const API_KEY = 'DyYR1qP9yXkkuYGnLRwW9fpr5ZUqETxHmoR2u2Ct'; // 여기에 본인의 Marketaux API 키 입력
+        const SYMBOLS = 'TSLA';     // 원하는 종목들을 쉼표로 구분
+        const API_URL = `https://api.marketaux.com/v1/news/all?symbols=${SYMBOLS}&language=ko&api_token=${API_KEY}&limit=20`;
+
+        const container = document.getElementById("news-container");
+
+        fetch(API_URL)
+            .then(res => res.json())
+            .then(data => {
+                if (!data.data || data.data.length === 0) {
+                    container.innerHTML = '<p>표시할 뉴스가 없습니다.</p>';
+                    return;
+                }
+
+                container.innerHTML = data.data.slice(0, 5).map(news => `
+          <div class="news-item">
+            <a href="${news.url}" target="_blank" rel="noopener noreferrer">${news.title}</a><br>
+            <small>${new Date(news.published_at).toLocaleString()} • ${news.source}</small>
+            <p>${news.description || ''}</p>
+          </div>
+        `).join('');
+            })
+            .catch(err => {
+                console.error('뉴스 로딩 오류:', err);
+                container.innerHTML = '<p style="color:red;">뉴스를 불러오지 못했습니다.</p>';
+            });
     },
 
     //-------------------------------------------------------------------------------
