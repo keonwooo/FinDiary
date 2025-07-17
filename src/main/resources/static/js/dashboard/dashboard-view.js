@@ -354,7 +354,6 @@ const DashboardView = {
 
 };
 
-
 /********************************************************************************
  * Page Public Object (외부접근용)
  ********************************************************************************/
@@ -362,4 +361,3 @@ var PublicDashboardView = {
     name: "PublicDashboardView",
     selects: DashboardView.selects
 };
-
