@@ -1,6 +1,5 @@
 package com.kwfw.findiary.controller.api.dashboard;
 
-import com.kwfw.findiary.model.BankAccountDto;
 import com.kwfw.findiary.model.DiaryDto;
 import com.kwfw.findiary.model.QuotesVO;
 import com.kwfw.findiary.service.dashboard.DashboardService;
