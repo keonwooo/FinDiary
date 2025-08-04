@@ -33,7 +33,6 @@ public class ViewController {
         return "login/login";
     }
 
-
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
