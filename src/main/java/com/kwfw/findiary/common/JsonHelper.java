@@ -154,7 +154,6 @@ public class JsonHelper {
         }
     }
 
-
     /**
      * 이거 사용하면 gson 에서 map 사용시 숫자를 double 로 변경함
      * 추후 수정해서 사용 필요

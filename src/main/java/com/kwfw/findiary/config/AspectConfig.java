@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 public class AspectConfig {
 
     @Pointcut("execution(* com.kwfw.findiary.controller..*(..))")
-    private void doExecute() {
-    }
+    private void doExecute() { }
 
     @Around("doExecute()")
     public Object doLogging(ProceedingJoinPoint joinPoint) throws Throwable {
