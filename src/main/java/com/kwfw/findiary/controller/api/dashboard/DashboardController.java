@@ -34,10 +34,7 @@ public class DashboardController {
 
     @PostMapping("/getShareholding")
     public ResponseEntity<Map<String, Object>> getShareholding(@RequestBody DiaryDto diaryDto) {
-
-        Map<String, Object> map = dashboardService.getShareholding(diaryDto);
-
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(dashboardService.getShareholding(diaryDto));
     }
 
     @PostMapping("/getFearGreedIndex")
