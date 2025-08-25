@@ -15,9 +15,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     // 컨트롤러 실행 전
     @Override
-    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler)
-            throws Exception {
-
+    public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
 //        String requestURI = request.getRequestURI();
 //        log.info("[interceptor] : {}", requestURI);
         HttpSession session = request.getSession();
