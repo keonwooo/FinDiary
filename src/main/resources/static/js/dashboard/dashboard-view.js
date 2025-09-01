@@ -54,7 +54,6 @@ const DashboardView = {
 
         DashboardView.renderLiveNews();
 
-
         // TODO 거래량 top10 목록 (일, 월, 연도별)
     },
 
