@@ -296,12 +296,12 @@ const DashboardView = {
                 }
 
                 container.innerHTML = data.data.slice(0, 5).map(news => `
-          <div class="news-item">
-            <a href="${news.url}" target="_blank" rel="noopener noreferrer">${news.title}</a><br>
-            <small>${new Date(news.published_at).toLocaleString()} • ${news.source}</small>
-            <p>${news.description || ''}</p>
-          </div>
-        `).join('');
+                    <div class="news-item">
+                        <a href="${news.url}" target="_blank" rel="noopener noreferrer">${news.title}</a><br>
+                        <small>${new Date(news.published_at).toLocaleString()} • ${news.source}</small>
+                        <p>${news.description || ''}</p>
+                    </div>
+                `).join('');
             })
             .catch(err => {
                 console.error('뉴스 로딩 오류:', err);
@@ -331,16 +331,17 @@ const DashboardView = {
     //-------------------------------------------------------------------------------
     getHoldingStockName: function (holdingStockList) {
         const length = holdingStockList.length;
-        let returnName = new Array();
+        let returnName = [];
         for (let i = 0; i < length; i++) {
             returnName.push(holdingStockList[i].ticker);
         }
+
         return returnName;
     },
 
     getHoldingStockPrice(bankAccount, holdingStock) {
         const length = holdingStock.length;
-        let returnPrice = new Array();
+        let returnPrice = [];
         for (let i = 0; i < length; i++) {
             returnPrice.push(holdingStock[i].holding_total_price);
         }
