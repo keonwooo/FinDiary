@@ -34,5 +34,4 @@ public class ConstantCommon {
     public static final String NO_MONEY_STR = "보유 자산 없음";
     public static final String NOT_ENOUGH_MONEY_STR = "보유 자산 부족";
     public static final String NOT_ENOUGH_HOLDING_STOCK_STR = "매도 수량 부족";
-
 }
