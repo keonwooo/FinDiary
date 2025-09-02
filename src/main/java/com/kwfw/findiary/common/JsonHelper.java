@@ -157,15 +157,12 @@ public class JsonHelper {
     /**
      * 이거 사용하면 gson 에서 map 사용시 숫자를 double 로 변경함
      * 추후 수정해서 사용 필요
-     *
-     * @param json
-     * @return
      */
     public static String orderByKey(String json) {
         // 추후 수정
         try {
             if (isObject(json)) {
-                TreeMap<String, Object> map = new TreeMap<String, Object>();
+                TreeMap<String, Object> map = new TreeMap<>();
                 JsonObject jsonObject = _Gson.fromJson(json, JsonObject.class);
                 for (String key : jsonObject.keySet()) {
                     map.put(key, jsonObject.get(key));
@@ -210,7 +207,7 @@ public class JsonHelper {
     public static Map<String, Object> strToMap(String json) {
         try {
             // remove warning: Type safety: The expression of type Map needs unchecked conversion to conform to Map<String,Object>
-            TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
+            TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {
             };
             return _ObjectMapperAcceptCaseIsensitiveProperties.readValue(json, typeRef);
         } catch (Exception e) {
@@ -222,7 +219,7 @@ public class JsonHelper {
     public static Map<String, Object> objToMap(Object object) {
         try {
             // remove warning: Type safety: The expression of type Map needs unchecked conversion to conform to Map<String,Object>
-            TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {
+            TypeReference<HashMap<String, Object>> typeRef = new TypeReference<>() {
             };
             return _ObjectMapperAcceptCaseIsensitiveProperties.convertValue(object, typeRef);
         } catch (Exception e) {
