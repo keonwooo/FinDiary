@@ -335,7 +335,6 @@ const DashboardView = {
         for (let i = 0; i < length; i++) {
             returnName.push(holdingStockList[i].ticker);
         }
-
         return returnName;
     },
 
