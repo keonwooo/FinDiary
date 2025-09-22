@@ -175,12 +175,6 @@ public class JsonHelper {
             } else {
                 return json;
             }
-//			if (isObject(json) || isArray(json)) {
-//				// order by key
-//				@SuppressWarnings("unchecked")
-//				TreeMap<String, Object> map = new Gson().fromJson(json, TreeMap.class);
-//				return gson.toJson(map);
-//			}
         } catch (Exception e) {
             logger.error("exception", e);
         }

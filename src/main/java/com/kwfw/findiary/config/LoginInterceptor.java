@@ -16,8 +16,6 @@ public class LoginInterceptor implements HandlerInterceptor {
     // 컨트롤러 실행 전
     @Override
     public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
-//        String requestURI = request.getRequestURI();
-//        log.info("[interceptor] : {}", requestURI);
         HttpSession session = request.getSession();
 
         if (session == null || session.getAttribute(ConstantCommon.SESSION_LOGIN_USER) == null) {
@@ -42,7 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     // 컨트롤러 실행 후, 뷰 실행 전
 //    @Override
-//    public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndVilew throws Exception {
+//    public void postHandle(HttpServletRequest request, HttpServletResponse response, ModelAndView modelAndView throws Exception {
 //        log.info("[interceptor] postHandle");
 //    }
 

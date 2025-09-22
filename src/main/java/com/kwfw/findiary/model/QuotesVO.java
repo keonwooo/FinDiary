@@ -6,7 +6,7 @@ import lombok.Data;
 public class QuotesVO {
     private int quotes_num;
     private int status;
-    
+
     private String language_en;
     private String author_en;
     private String language_ko;

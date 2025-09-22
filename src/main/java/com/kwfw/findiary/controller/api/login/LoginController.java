@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/login")
 public class LoginController {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
+    private final Logger log = LoggerFactory.getLogger(LoginController.class);
 
     Gson GSON = new Gson();
 
