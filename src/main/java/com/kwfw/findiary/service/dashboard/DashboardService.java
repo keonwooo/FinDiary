@@ -12,8 +12,10 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +25,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class DashboardService {
+
 
     private final DashboardMapper dashboardMapper;
     private final BankAccountMapper bankAccountMapper;
@@ -50,34 +53,7 @@ public class DashboardService {
 
         try {
             // 1. URL 연결
-            URL url = new URL(apiUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-            // 2. GET 요청 설정
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
-            conn.setRequestProperty("Referer", "https://edition.cnn.com/");
-            conn.setRequestProperty("Accept-Language", "en-US,en;q=0.9");
-
-            // 3. 응답 코드 확인
-            int responseCode = conn.getResponseCode();
-            if (responseCode != 200) {
-                throw new RuntimeException("HTTP 요청 실패: 응답 코드 " + responseCode);
-            }
-
-            // 4. 응답 데이터 읽기
-            BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            StringBuilder responseContent = new StringBuilder();
-            String line;
-            while ((line = in.readLine()) != null) {
-                responseContent.append(line);
-            }
-            in.close();
-            conn.disconnect();
-
-            // 5. JSON 파싱
-            JSONObject json = new JSONObject(responseContent.toString());
+            JSONObject json = getJsonObject(apiUrl);
 
             // 6. 예시: 현재 값 출력
             JSONObject fearGreedData = json.getJSONObject("fear_and_greed");
@@ -88,9 +64,42 @@ public class DashboardService {
             fearGreedIndex.put("currentValue", currentValue);
             fearGreedIndex.put("classification", classification);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         return fearGreedIndex;
+    }
+
+    private static JSONObject getJsonObject(String apiUrl) throws IOException {
+        URI uri = URI.create(apiUrl);
+        URL url = uri.toURL();
+
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+        // 2. GET 요청 설정
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("Accept", "application/json");
+        conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
+        conn.setRequestProperty("Referer", "https://edition.cnn.com/");
+        conn.setRequestProperty("Accept-Language", "en-US,en;q=0.9");
+
+        // 3. 응답 코드 확인
+        int responseCode = conn.getResponseCode();
+        if (responseCode != 200) {
+            throw new RuntimeException("HTTP 요청 실패: 응답 코드 " + responseCode);
+        }
+
+        // 4. 응답 데이터 읽기
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        StringBuilder responseContent = new StringBuilder();
+        String line;
+        while ((line = in.readLine()) != null) {
+            responseContent.append(line);
+        }
+        in.close();
+        conn.disconnect();
+
+        // 5. JSON 파싱
+        return new JSONObject(responseContent.toString());
     }
 }
