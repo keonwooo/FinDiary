@@ -156,12 +156,15 @@ const DashboardView = {
             , "currency": "dollar"
         }
 
-        const responseData = DashboardApi.getShareholding(data).responseJSON;
-        const bankAccount = responseData.bankAccount;
-        const holdingStock = responseData.holdingStockList;
+        const apiResp = DashboardApi.getShareholding(data);
+        const responseData = apiResp && apiResp.responseJSON ? apiResp.responseJSON : {};
+        const bankAccount = responseData.bankAccount || null;
+        const holdingStock = Array.isArray(responseData.holdingStockList) ? responseData.holdingStockList : [];
 
         let labels = DashboardView.getHoldingStockName(holdingStock);
-        labels.push(bankAccount.currency);
+        if (bankAccount && bankAccount.currency) {
+            labels.push(bankAccount.currency);
+        }
 
         // 동적으로 색상 생성
         const backgroundColors = generateColors(labels.length);
@@ -330,6 +333,7 @@ const DashboardView = {
     // get 보유중인 주식의 이름
     //-------------------------------------------------------------------------------
     getHoldingStockName: function (holdingStockList) {
+        if (!Array.isArray(holdingStockList)) return [];
         const length = holdingStockList.length;
         let returnName = [];
         for (let i = 0; i < length; i++) {
@@ -339,12 +343,14 @@ const DashboardView = {
     },
 
     getHoldingStockPrice(bankAccount, holdingStock) {
-        const length = holdingStock.length;
+        const length = Array.isArray(holdingStock) ? holdingStock.length : 0;
         let returnPrice = [];
         for (let i = 0; i < length; i++) {
             returnPrice.push(holdingStock[i].holding_total_price);
         }
-        returnPrice.push(bankAccount.account_total_property);
+        if (bankAccount && typeof bankAccount.account_total_property === 'number' && bankAccount.account_total_property > 0) {
+            returnPrice.push(bankAccount.account_total_property);
+        }
         return returnPrice;
     },
 
